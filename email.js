@@ -37,9 +37,8 @@ var adapter = require(__dirname + '/../../lib/adapter.js')({
     
     // New message arrived. obj is array with current messages
     message: function (obj) {
-        if (obj && obj.command == "send")
-            processMessage(obj.message);
-        }
+        if (obj && obj.command == "send") processMessage(obj.message);
+        processMessages();
         return true;
     }
 
@@ -56,7 +55,7 @@ function stop() {
     stopTimer = setTimeout(function() { 
         stopTimer = null;
         adapter.stop(); 
-    }, 30000);
+    }, 300000);
 }
 
 function processMessage(message) {
@@ -69,17 +68,18 @@ function processMessage(message) {
     stop();
 }
 
-function main() {
-    // Adapter is started only if some one writes into "system.adapter.email.X.messagebox" new value
-    adapter.getState("messagebox", function (err, obj) {
-        if (obj && obj.length) {
-            adapter.setState("messagebox", [], function () {
-                for (var i = 0; i < obj.length; i++) {
-                    processMessage(obj);
-                }
-            });
+function processMessages() {
+    adapter.getMessage(function (err, obj) {
+        if (obj) {
+            processMessage(obj);
+            processMessages();
         }
     });
+}
+
+function main() {
+    // Adapter is started only if some one writes into "system.adapter.email.X.messagebox" new value
+    processMessages();
     stop();
 }
 
@@ -92,10 +92,10 @@ function sendEmail(message) {
         message = {text: message};
     }
     var msg = {
-        from:    message.from    || adapter.config.defaults.from;
-        to:      message.to      || adapter.config.defaults.to;
-        subject: message.subject || adapter.config.defaults.subject;
-        text:    message.text    || adapter.config.defaults.text;
+        from:    message.from    || adapter.config.defaults.from,
+        to:      message.to      || adapter.config.defaults.to,
+        subject: message.subject || adapter.config.defaults.subject,
+        text:    message.text    || adapter.config.defaults.text
     };
     
     emailTransport.sendMail(msg, function(error, response){

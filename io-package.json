@@ -5,12 +5,14 @@
         "title":                    "Email Adapter",
         "desc":                     "This adapter allows to send emails from ioBroker",
         "authors": [
-            "blueofx <blueofx@ccu.io>"
+            "bluefox <bluefox@ccu.io>"
         ],
         "license":                  "MIT",
         "platform":                 "Javascript/Node.js",
-        "mode":                     "schedule",
-        "loglevel":                 "info"
+        "mode":                     "subscribe",
+        "loglevel":                 "info",
+        "messagebox":               true,
+        "subscribe":                "messagebox"
     },
     "native": {
         "transport": "SMTP",
