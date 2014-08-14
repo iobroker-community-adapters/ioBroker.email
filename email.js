@@ -84,6 +84,10 @@ function main() {
 }
 
 function sendEmail(message) {
+    if (!message) {
+        message = {};
+    }
+    
     if (!emailTransport) {
         emailTransport = nodemailer.createTransport(adapter.config.transport, adapter.config.transportOptions);
     }
@@ -91,14 +95,12 @@ function sendEmail(message) {
     if (typeof message != "object") {
         message = {text: message};
     }
-    var msg = {
-        from:    message.from    || adapter.config.defaults.from,
-        to:      message.to      || adapter.config.defaults.to,
-        subject: message.subject || adapter.config.defaults.subject,
-        text:    message.text    || adapter.config.defaults.text
-    };
-    
-    emailTransport.sendMail(msg, function(error, response){
+    message.from =    message.from    || adapter.config.defaults.from;
+    message.to =      message.to      || adapter.config.defaults.to;
+    message.subject = message.subject || adapter.config.defaults.subject;
+    message.text =    message.text    || adapter.config.defaults.text;
+
+    emailTransport.sendMail(message, function(error, response){
         if (error) {
             adapter.log.error("Error " + JSON.stringify(error))
         } else {
