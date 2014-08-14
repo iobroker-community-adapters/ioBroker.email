@@ -8,7 +8,7 @@
  *
  */
 
-var hue = require("nodemailer");
+var nodemailer;
 
 var adapter = require(__dirname + '/../../lib/adapter.js')({
 
@@ -85,7 +85,7 @@ function main() {
 
 function sendEmail(message) {
     if (!emailTransport) {
-        emailTransport = nodemailer.createTransport(adapter.config.transport, adapter.config.transportOptions);
+        emailTransport = require("nodemailer").createTransport(adapter.config.transport, adapter.config.transportOptions);
     }
 
     if (typeof message != "object") {
@@ -104,6 +104,6 @@ function sendEmail(message) {
         } else {
             adapter.log.info("sent to " + msg.to);
         }
-        adapter.stop();
+        stop();
     });
 }

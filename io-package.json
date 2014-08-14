@@ -12,7 +12,8 @@
         "mode":                     "subscribe",
         "loglevel":                 "info",
         "messagebox":               true,
-        "subscribe":                "messagebox"
+        "subscribe":                "system.adapter.email.<INSTANCE>.messagebox",
+        "wakeup":                   true
     },
     "native": {
         "transport": "SMTP",
