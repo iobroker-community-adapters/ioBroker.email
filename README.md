@@ -1,7 +1,16 @@
-ioBroker.email
+ioBroker email Adapter
 ==============
 
 Send emails from ioBroker. 
+
+## Install
+
+```node iobroker.js add email```
+
+## Configuration
+
+
+## Usage
 
 To send email from ScriptEngine just write: 
 
@@ -32,7 +41,7 @@ sendTo("email", {
     ]
 });
 
-// To send html
+// To send in html format
 sendTo("email", {
     html: "<p>Embedded image: <img src='cid:image1'/></p>",
     attachments:[
@@ -45,10 +54,7 @@ sendTo("email", {
 To send email from other adapter use **adapter.sendTo** function.
 
 
-
-
-
-Supported services:
+## Supported services
 - 1und1
 - AOL
 - DynectEmail
