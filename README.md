@@ -2,6 +2,7 @@ ioBroker.email
 ==============
 
 Send emails from ioBroker. 
+
 To send email from ScriptEngine just write: 
 ```javascript
 // send email to all instances of email adapter
