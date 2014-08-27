@@ -1,0 +1,235 @@
+<html>
+
+<!-- these 4 files always have to be included -->
+<link rel="stylesheet" type="text/css" href="../../lib/css/themes/jquery-ui/redmond/jquery-ui.min.css"/>
+<script type="text/javascript" src="../../lib/js/jquery-1.11.1.min.js"></script>
+<script type="text/javascript" src="../../socket.io/socket.io.js"></script>
+<script type="text/javascript" src="../../lib/js/jquery-ui-1.10.3.full.min.js"></script>
+
+
+<!-- optional: use jqGrid
+<link rel="stylesheet" type="text/css" href="../../lib/css/jqGrid/ui.jqgrid-4.5.4.css"/>
+<script type="text/javascript" src="../../lib/js/jqGrid/jquery.jqGrid-4.5.4.min.js"></script>
+<script type="text/javascript" src="../../lib/js/jqGrid/i18n/grid.locale-en.js"></script>
+-->
+
+<!-- optional: use multiselect
+<link rel="stylesheet" type="text/css" href="../../lib/css/jquery.multiselect-1.13.css"/>
+<script type="text/javascript" src="../../lib/js/jquery.multiselect-1.13.min.js"></script>
+-->
+
+<!-- these two file always have to be included -->
+<link rel="stylesheet" type="text/css" href="../../css/adapter.css"/>
+<script type="text/javascript" src="../../js/adapter-settings.js"></script>
+
+<style>
+    .table_header {
+        background-color: blue;
+        color: white;
+    }
+    h4 {
+        width: 370px;
+        padding-left:5px;
+        padding-right: 5px;
+        padding-top: 2px;
+        padding-bottom: 2px;
+        background-color: lightblue;
+    }
+    .ip {
+        width: 150px;
+        text-align: right;
+    }
+</style>
+<!-- you have to define 2 functions in the global scope: -->
+<script type="text/javascript">
+    var rooms =       [];
+    var roomsSelect = "";
+    var devices =     [];
+    var processed =   1000;
+    var isStarted =   null;
+
+    function showDevices() {
+        $('#devices').html('');
+
+        roomsSelect = '';
+        if (rooms && rooms.length) {
+            for (var i = 0; i < rooms.length; i++) {
+                roomsSelect += '<option value="' + rooms[i] + '">' +
+                        rooms[i].substring(0, 1).toUpperCase() + rooms[i].substring(1).toLowerCase() + '</option>';
+            }
+        }
+        $('#devices').append('<tr class="table_header ui-widget-header"><td style="width:150px;text-align: center">IP</td><td style="width:100px;text-align: center"" class="translate">Room</td><td></td></tr>')
+
+        for (var i = 0; i < devices.length; i++) {
+            $('#devices').append('<tr><td class="ip">' + devices[i].obj.common.name + '</td>' +
+                '<td><select data-id="' + devices[i].id + '" class="room">' + roomsSelect + '</select></td>' +
+                '<td><button class="delete" data-id="' + devices[i].id + '" /></td>');
+            $('.room[data-id="' + devices[i].id + '"]').val('');
+        }
+
+        $('.delete').button({icons: {primary: "ui-icon-trash"}}).click(function () {
+            sendTo('sonos.' + instance, 'del', $(this).attr('data-id'), function (err) {
+                if (!err || typeof err != "string") {
+                    readDevices();
+                } else {
+                    alert(err);
+                }
+            });
+        });
+        if (!isStarted) {
+            $('.delete').hide();
+        }
+    }
+
+    function getInfoForOneDevice (id) {
+        getObject(id, function (err, obj) {
+            if (obj && obj.common && obj.common.name) {
+                devices.push({id: id, obj: obj});
+            }
+            processed--;
+            if (!processed) {
+                showDevices();
+            }
+        });
+    }
+
+    function readDevices () {
+        getObject('sonos.' + instance + '.root', function (err, obj) {
+            devices = [];
+            if (obj && obj.children && obj.children.length) {
+                processed = obj.children.length;
+
+                for (var i = 0; i < obj.children.length; i++) {
+                    getInfoForOneDevice(obj.children[i]);
+                }
+            } else {
+                showDevices();
+            }
+        });
+    }
+
+    function init() {
+        getState('system.adapter.sonos.' + instance + '.alive', function (err, obj) {
+            if (!obj || !obj.val) {
+                $('#add_warning').show();
+                $('.delete').hide();
+                isStarted = false;
+            } else {
+                $('#add_line').show();
+                $('.delete').show();
+                isStarted = true;
+
+                // Read list of sonos devices
+                sendTo('sonos.' + instance, 'browse', null, function(list) {
+                    $('#ips').html();
+                    $('#add_ip').show();
+                    $('#ips').append('<option value="" class="translate">' + 'User defined' + '</option>');
+
+                    if (list && list.length) {
+                        for (var i = 0; i < list.length; i++) {
+                            $('#ips').append('<option value="' + list[i].ip + '">' + list[i].roomName + ' [' + list[i].ip + ']</option>');
+                        }
+                    }
+                });
+
+            }
+        });
+        getEnums("rooms", function (err, list) {
+            rooms = list;
+            readDevices();
+        });
+
+        $('#add').button({icons: {primary: "ui-icon-plusthick"}}).click(function (err) {
+            if (!err || typeof err != "string") {
+                var ip = $('#ips').val();
+
+                if (ip == "") {
+                    ip = $('#add_ip').val();
+                }
+
+                sendTo('sonos.' + instance, 'add', ip, function() {
+                    readDevices();
+                });
+            } else {
+                alert(err);
+            }
+        }).button("option", "disabled", true);
+
+        $('#add_ip').keyup(function() {
+            $("#add").button("option", "disabled", $(this).val() == '');
+        });
+
+        $('#ips').change(function () {
+            if ($(this).val() == '') {
+                $("#add").button( "option", "disabled", $('#add_ip').val() == "");
+                $('#add_ip').show();
+            } else {
+                $('#add_ip').hide();
+                $("#add").button( "option", "disabled", false);
+            }
+        });
+    }
+
+    // the function loadSettings has to exist ...
+    function load(settings) {
+        if (!settings) return;
+
+        for (var key in settings) {
+            for (var key in settings) {
+                // example: select elements with id=key and class=value and insert value
+                if ($('#' + key + '.value').attr('type') == 'checkbox') {
+                    $('#' + key + '.value').prop('checked', settings[key]);
+                } else {
+                    $('#' + key + '.value').val(settings[key]);
+                }
+            }
+        }
+
+        init ();
+    }
+
+    // ... and the function save has to exist.
+    // you have to make sure the callback is called with the settings object as first param!
+    function save(callback) {
+        // example: select elements with class=value and build settings object
+        var obj = {};
+        $('.value').each(function () {
+            var $this = $(this);
+            if ($this.attr('type') == 'checkbox') {
+                obj[$this.attr('id')] = $this.prop('checked');
+            } else {
+                obj[$this.attr('id')] = $this.val();
+            }
+        });
+        callback(obj);
+    }
+</script>
+
+<!-- you have to put your config page in a div with id adapter-container -->
+<div id="adapter-container">
+
+    <table><tr>
+        <td><img src="sonos.png"></td>
+        <td style="padding-top: 20px;padding-left: 10px"><h3 class="translate">SONOS adapter settings</h3></td>
+    </tr></table>
+
+    <h4 class="translate">SONOS Server settings</h4>
+    <table>
+        <tr><td class="translate">Web server:</td><td>    <input  class="value" id="webserverEnabled" type="checkbox" /></td></tr>
+        <tr><td class="translate">Port:</td><td>          <input  class="value" id="webserverPort"    size="5"  maxsize="5"/></td></tr>
+        <tr><td class="translate">Update of elapsed time(ms):</td><td><input  class="value" id="elapsedInterval"  size="5"  maxsize="5"/></td></tr>
+    </table>
+
+    <br>
+    <h4 class="translate">SONOS devices</h4>
+    <table id="devices"></table>
+    <br>
+    <table id="add_line" style="display:none"><tr><td><select id="ips"></select></td>
+        <td><input id="add_ip" type="text" maxsize="40" size="16"/></td>
+        <td><button id="add" /></td></tr></table>
+    <div id="add_warning" style="display:none" class="translate">Enable adapter first to add or delete the devices</div>
+
+    <p class="translate">On save the adapter restarts with new configuration immediately.</p>
+
+</div>
+</html>
