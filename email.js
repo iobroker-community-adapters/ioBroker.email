@@ -32,6 +32,7 @@ var adapter = require(__dirname + '/../../lib/adapter.js')({
     },
 
     ready: function () {
+        adapter.config.transportOptions.auth.pass = decrypt("Zgfr56gFe87jJOM", adapter.config.transportOptions.auth.pass);
         main();
     },
     
@@ -47,6 +48,14 @@ var adapter = require(__dirname + '/../../lib/adapter.js')({
 var stopTimer = null;
 var emailTransport;
 
+function decrypt(key, value) {
+    var result = "";
+    for(var i = 0; i < value.length; ++i) {
+        result += String.fromCharCode(key[i % key.length].charCodeAt(0) ^ value.charCodeAt(i));
+    }
+    return result;
+}
+
 // Terminate adapter after 30 seconds idle
 function stop() {
     if (stopTimer) {
@@ -55,7 +64,7 @@ function stop() {
     stopTimer = setTimeout(function() { 
         stopTimer = null;
         adapter.stop(); 
-    }, 300000);
+    }, 30000);
 }
 
 function processMessage(message) {
@@ -71,7 +80,7 @@ function processMessage(message) {
 function processMessages() {
     adapter.getMessage(function (err, obj) {
         if (obj) {
-            processMessage(obj);
+            processMessage(obj.message);
             processMessages();
         }
     });
@@ -83,13 +92,19 @@ function main() {
     stop();
 }
 
-function sendEmail(message) {
+function sendEmail(message, callback) {
     if (!message) {
         message = {};
     }
     
     if (!emailTransport) {
-        emailTransport = require("nodemailer").createTransport(adapter.config.transport, adapter.config.transportOptions);
+        if (!adapter.config.transportOptions.host || !adapter.config.transportOptions.port) {
+            delete adapter.config.transportOptions.host;
+            delete adapter.config.transportOptions.port;
+            delete adapter.config.transportOptions.secure;
+        }
+
+        emailTransport = require("nodemailer").createTransport(adapter.config.transportOptions);
     }
 
     if (typeof message != "object") {
@@ -100,11 +115,15 @@ function sendEmail(message) {
     message.subject = message.subject || adapter.config.defaults.subject;
     message.text =    message.text    || adapter.config.defaults.text;
 
+    adapter.log.info("Send email: " + JSON.stringify(message));
+
     emailTransport.sendMail(message, function(error, response){
         if (error) {
-            adapter.log.error("Error " + JSON.stringify(error))
+            adapter.log.error("Error " + JSON.stringify(error));
+            if (callback) callback(error);
         } else {
-            adapter.log.info("sent to " + msg.to);
+            adapter.log.info("sent to " + message.to);
+            if (callback) callback(null);
         }
         stop();
     });

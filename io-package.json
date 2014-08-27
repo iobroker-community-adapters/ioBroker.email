@@ -13,7 +13,8 @@
         "loglevel":                 "info",
         "messagebox":               true,
         "subscribe":                "system.adapter.email.<INSTANCE>.messagebox",
-        "wakeup":                   true
+        "wakeup":                   true,
+        "icon":                     "email.png"
     },
     "native": {
         "transport": "SMTP",
