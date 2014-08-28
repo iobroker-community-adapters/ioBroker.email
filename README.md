@@ -1,3 +1,4 @@
+![Logo](admin/email.png)
 ioBroker email Adapter
 ==============
 
