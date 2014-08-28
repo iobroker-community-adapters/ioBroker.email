@@ -80,6 +80,7 @@ To send email from other adapter use **adapter.sendTo** function.
 - Yahoo
 - Yandex
 - Zoho
+- User specific (Server, port and security defined manually)
 
 
 For other services see documentation of **Nodemailer**: https://github.com/andris9/Nodemailer
@@ -88,7 +89,7 @@ For other services see documentation of **Nodemailer**: https://github.com/andri
 
 The MIT License (MIT)
 
-Copyright (c) 2014 hobbyquaker
+Copyright (c) 2014 bluefox
 
 Permission is hereby granted, free of charge, to any person obtaining a copy
 of this software and associated documentation files (the "Software"), to deal
