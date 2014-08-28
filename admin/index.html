@@ -177,15 +177,15 @@
     function test() {
         var newValue = JSON.stringify(getSettings());
         if (!common.enabled) {
-            alert("Enable first the adapter to test email.");
+            showMessage("Enable first the adapter to test email.");
             return;
         }
         if (changed) {
-            alert("First save the adapter");
+            showMessage("First save the adapter");
             return;
         }
         sendTo('email.' + instance, 'send', 'This is test email!');
-        alert('Check the log or your email');
+        showMessage('Check the log or your email');
     }
 
     function saveHelper(obj, id, value) {
@@ -239,7 +239,7 @@
     </tr></table>
 
     <h4 class="translate">E-mail Server settings</h4>
-    <table style="font-size: 12px">
+    <table>
         <tr>
             <td colspan='3'><h2 class="translate">Connection settings</h2></td>
         </tr>

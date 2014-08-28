@@ -14,7 +14,9 @@
         "messagebox":               true,
         "subscribe":                "system.adapter.email.<INSTANCE>.messagebox",
         "wakeup":                   true,
-        "icon":                     "email.png"
+        "enabled":                  true,
+        "icon":                     "email.png",
+        "keywords":                 ["notification", "email", "message"]
     },
     "native": {
         "transport": "SMTP",
