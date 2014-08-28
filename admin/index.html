@@ -6,26 +6,11 @@
 <script type="text/javascript" src="../../socket.io/socket.io.js"></script>
 <script type="text/javascript" src="../../lib/js/jquery-ui-1.10.3.full.min.js"></script>
 
-<!-- optional: use jqGrid
-<link rel="stylesheet" type="text/css" href="../../lib/css/jqGrid/ui.jqgrid-4.5.4.css"/>
-<script type="text/javascript" src="../../lib/js/jqGrid/jquery.jqGrid-4.5.4.min.js"></script>
-<script type="text/javascript" src="../../lib/js/jqGrid/i18n/grid.locale-en.js"></script>
--->
-
-<!-- optional: use multiselect
-<link rel="stylesheet" type="text/css" href="../../lib/css/jquery.multiselect-1.13.css"/>
-<script type="text/javascript" src="../../lib/js/jquery.multiselect-1.13.min.js"></script>
--->
-
 <!-- these two file always have to be included -->
 <link rel="stylesheet" type="text/css" href="../../css/adapter.css"/>
 <script type="text/javascript" src="../../js/adapter-settings.js"></script>
 
 <style>
-    .table_header {
-        background-color: blue;
-        color: white;
-    }
     h4 {
         width: 370px;
         padding-left:5px;
@@ -33,10 +18,6 @@
         padding-top: 2px;
         padding-bottom: 2px;
         background-color: lightblue;
-    }
-    .ip {
-        width: 150px;
-        text-align: right;
     }
 </style>
 <!-- you have to define 2 functions in the global scope: -->
@@ -49,18 +30,19 @@
     var changed =     false;
 
     var adapterWords = {
-        "Connection settings":{"en": "Connection settings", "de": "Verbindungseinstellungen", "ru": "Настройки соединения"},
-        "Transport:"         :{"en": "Transport:",     "de": "Transport:",      "ru": "Протокол:"},
-        "Service:"           :{"en": "Service:",       "de": "Service:",        "ru": "Сервисе:"},
-        "Host:"              :{"en": "Host:",          "de": "Host:",           "ru": "Хост:"},
-        "Port:"              :{"en": "Port:",          "de": "Port:",           "ru": "Порт:"},
-        "SSL connection:"    :{"en": "SSL connection", "de": "SSL Verbindung:", "ru": "SSL соединиение:"},
-        "User:"              :{"en": "User:",          "de": "Anwender:",       "ru": "Пользователь:"},
-        "Password:"          :{"en": "Password:",      "de": "Kennwort:",       "ru": "Пароль:"},
-        "Defaults"           :{"en": "Defaults",       "de": "Voreinstellung",  "ru": "Значения по умолчанию"},
-        "From:"              :{"en": "From:",          "de": "Von:",            "ru": "От:"},
-        "To:"                :{"en": "To:",            "de": "Nach:",           "ru": "Кому:"},
-        "Subject:"           :{"en": "Subject:",       "de": "Thema:",          "ru": "Тема:"}
+        "Connection settings":{"de": "Verbindungseinstellungen", "ru": "Настройки соединения"},
+        "Transport:"         :{"de": "Transport:",      "ru": "Протокол:"},
+        "Service:"           :{"de": "Service:",        "ru": "Сервисе:"},
+        "Host:"              :{"de": "Host:",           "ru": "Хост:"},
+        "Port:"              :{"de": "Port:",           "ru": "Порт:"},
+        "SSL connection:"    :{"de": "SSL Verbindung:", "ru": "SSL соединиение:"},
+        "User:"              :{"de": "Anwender:",       "ru": "Пользователь:"},
+        "Password:"          :{"de": "Kennwort:",       "ru": "Пароль:"},
+        "Defaults"           :{"de": "Voreinstellung",  "ru": "Значения по умолчанию"},
+        "From:"              :{"de": "Von:",            "ru": "От:"},
+        "To:"                :{"de": "Nach:",           "ru": "Кому:"},
+        "Subject:"           :{"de": "Thema:",          "ru": "Тема:"},
+        "Test"               :{"de": "Test",            "ru": "Тест"}
     };
 
     function encrypt(key, value) {
@@ -98,6 +80,25 @@
     function init() {
         $('#transportOptions_service').change(showHideSettings);
         $('#test').button().click(test);
+        $('#save').button("disable");
+    }
+
+    function setValue(id, value) {
+        // example: select elements with id=key and class=value and insert value
+        if ($('#' + id + '.value').attr('type') == 'checkbox') {
+            $('#' + id + '.value').prop('checked', value).change(function() {
+                changed = true;
+                $('#save').button("enable");
+            });
+        } else {
+            $('#' + id + '.value').val(value).change(function() {
+                changed = true;
+                $('#save').button("enable");
+            }).keyup(function() {
+                changed = true;
+                $('#save').button("enable");
+            });
+        }
     }
 
     function loadHelper(settings, param, subparam) {
@@ -109,19 +110,7 @@
                     if (key == "pass") {
                         settings[param][subparam][key] = decrypt("Zgfr56gFe87jJOM", settings[param][subparam][key]);
                     };
-
-                    // example: select elements with id=key and class=value and insert value
-                    if ($('#' + param + '_' + subparam + '_' + key + '.value').attr('type') == 'checkbox') {
-                        $('#' + param + '_' + subparam + '_' + key + '.value').prop('checked', settings[param][subparam][key]).change(function() {
-                            changed = true;
-                        });
-                    } else {
-                        $('#' + param + '_' + subparam + '_' + key + '.value').val(settings[param][subparam][key]).change(function() {
-                            changed = true;
-                        }).keyup(function() {
-                            changed = true;
-                        });
-                    }
+                    setValue(param + '_' + subparam + '_' + key, settings[param][subparam][key]);
                 } else {
                     alert("4th level is not supported");
                 }
@@ -129,18 +118,7 @@
         } else if (param) {
             for (var key in settings[param]) {
                 if (typeof settings[param][key] != 'object') {
-                    // example: select elements with id=key and class=value and insert value
-                    if ($('#' + param + '_' + key + '.value').attr('type') == 'checkbox') {
-                        $('#' + param + '_' + key + '.value').prop('checked', settings[param][key]).change(function() {
-                            changed = true;
-                        });
-                    } else {
-                        $('#' + param + '_' + key + '.value').val(settings[param][key]).change(function() {
-                            changed = true;
-                        }).keyup(function() {
-                            changed = true;
-                        });
-                    }
+                    setValue(param + '_' + key, settings[param][key]);
                 } else {
                     loadHelper(settings, param, key);
                 }
@@ -148,18 +126,7 @@
         } else {
             for (var key in settings) {
                 if (typeof settings[key] != 'object') {
-                    // example: select elements with id=key and class=value and insert value
-                    if ($('#' + key + '.value').attr('type') == 'checkbox') {
-                        $('#' + key + '.value').prop('checked', settings[key]).change(function() {
-                            changed = true;
-                        });
-                    } else {
-                        $('#' + key + '.value').val(settings[key]).change(function() {
-                            changed = true;
-                        }).keyup(function() {
-                            changed = true;
-                        });
-                    }
+                    setValue(key, settings[key]);
                 } else {
                     loadHelper(settings, key);
                 }
@@ -227,6 +194,7 @@
         // example: select elements with class=value and build settings object
         changed = false;
         callback(getSettings());
+        $('#save').button("disable");
     }
 </script>
 
@@ -238,10 +206,9 @@
         <td style="padding-top: 20px;padding-left: 10px"><h3 class="translate">E-mail adapter settings</h3></td>
     </tr></table>
 
-    <h4 class="translate">E-mail Server settings</h4>
     <table>
         <tr>
-            <td colspan='3'><h2 class="translate">Connection settings</h2></td>
+            <td colspan='3'><h4 class="translate">Connection settings</h4></td>
         </tr>
         <tr>
             <td class="translate">Transport:</td>
@@ -309,7 +276,7 @@
             <td class="translate"></td>
         </tr>
         <tr>
-            <td colspan='3'><br><h2 class="translate">Defaults</h2></td>
+            <td colspan='3'><br><h4 class="translate">Defaults</h4></td>
         </tr>
         <tr>
             <td class="translate">From:</td>
