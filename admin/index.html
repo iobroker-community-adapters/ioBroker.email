@@ -6,20 +6,11 @@
 <script type="text/javascript" src="../../socket.io/socket.io.js"></script>
 <script type="text/javascript" src="../../lib/js/jquery-ui-1.10.3.full.min.js"></script>
 
-<!-- these two file always have to be included -->
+<!-- these three files  have to be always included -->
 <link rel="stylesheet" type="text/css" href="../../css/adapter.css"/>
+<script type="text/javascript" src="../../js/translate.js"></script>
 <script type="text/javascript" src="../../js/adapter-settings.js"></script>
 
-<style>
-    h4 {
-        width: 370px;
-        padding-left:5px;
-        padding-right: 5px;
-        padding-top: 2px;
-        padding-bottom: 2px;
-        background-color: lightblue;
-    }
-</style>
 <!-- you have to define 2 functions in the global scope: -->
 <script type="text/javascript">
     var rooms =       [];
@@ -29,20 +20,30 @@
     var isStarted =   null;
     var changed =     false;
 
-    var adapterWords = {
+    systemDictionary = {
         "Connection settings":{"de": "Verbindungseinstellungen", "ru": "Настройки соединения"},
-        "Transport:"         :{"de": "Transport:",      "ru": "Протокол:"},
-        "Service:"           :{"de": "Service:",        "ru": "Сервисе:"},
-        "Host:"              :{"de": "Host:",           "ru": "Хост:"},
-        "Port:"              :{"de": "Port:",           "ru": "Порт:"},
-        "SSL connection:"    :{"de": "SSL Verbindung:", "ru": "SSL соединиение:"},
-        "User:"              :{"de": "Anwender:",       "ru": "Пользователь:"},
-        "Password:"          :{"de": "Kennwort:",       "ru": "Пароль:"},
-        "Defaults"           :{"de": "Voreinstellung",  "ru": "Значения по умолчанию"},
-        "From:"              :{"de": "Von:",            "ru": "От:"},
-        "To:"                :{"de": "Nach:",           "ru": "Кому:"},
-        "Subject:"           :{"de": "Thema:",          "ru": "Тема:"},
-        "Test"               :{"de": "Test",            "ru": "Тест"}
+        "Transport:"         :{"de": "Transport:",               "ru": "Протокол:"},
+        "Service:"           :{"de": "Service:",                 "ru": "Сервисе:"},
+        "Host:"              :{"de": "Host:",                    "ru": "Хост:"},
+        "Port:"              :{"de": "Port:",                    "ru": "Порт:"},
+        "SSL connection:"    :{"de": "SSL Verbindung:",          "ru": "SSL соединиение:"},
+        "User:"              :{"de": "Anwender:",                "ru": "Пользователь:"},
+        "Password:"          :{"de": "Kennwort:",                "ru": "Пароль:"},
+        "Defaults"           :{"de": "Voreinstellung",           "ru": "Значения по умолчанию"},
+        "From:"              :{"de": "Von:",                     "ru": "От:"},
+        "To:"                :{"de": "Nach:",                    "ru": "Кому:"},
+        "Subject:"           :{"de": "Thema:",                   "ru": "Тема:"},
+        "Test"               :{"de": "Test",                     "ru": "Тест"},
+        "E-mail adapter settings": {
+            "en": "E-mail adapter settings",
+            "de": "E-mail Adapter Einstellungen",
+            "ru": "Настройки драйвера E-mail"
+        },
+        "Is secure connection": {
+            "en": "Is secure connection",
+            "de": "Verschlüsselte Verbindung",
+            "ru": "SSL соединение"
+        }
     };
 
     function encrypt(key, value) {
