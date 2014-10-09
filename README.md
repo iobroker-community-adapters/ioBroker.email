@@ -4,6 +4,11 @@ ioBroker email Adapter
 
 Send emails from ioBroker. 
 
+## Changelog
+### 0.0.3 (2014-10-09)
+(Bluefox) support of daemon mode
+(Bluefox) add Gruntfile.js
+
 ## Install
 
 ```node iobroker.js add email```

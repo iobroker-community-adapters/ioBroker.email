@@ -1,7 +1,7 @@
 {
     "common": {
         "name":                     "email",
-        "version":                  "0.0.2",
+        "version":                  "0.0.3",
         "title":                    "Email Adapter",
         "desc":                     "This adapter allows to send emails from ioBroker",
         "authors": [
@@ -9,7 +9,8 @@
         ],
         "license":                  "MIT",
         "platform":                 "Javascript/Node.js",
-        "mode":                     "subscribe",
+        "mode":                     "daemon",
+        "availableModes":           ["daemon", "subscribe"],
         "loglevel":                 "info",
         "messagebox":               true,
         "subscribe":                "system.adapter.email.<INSTANCE>.messagebox",

@@ -61,10 +61,13 @@ function stop() {
     if (stopTimer) {
         clearTimeout(stopTimer);
     }
-    stopTimer = setTimeout(function() { 
-        stopTimer = null;
-        adapter.stop(); 
-    }, 30000);
+    // Stop only if subscribe mode
+    if (adapter.common && adapter.common.mode == 'subscribe') {
+        stopTimer = setTimeout(function () {
+            stopTimer = null;
+            adapter.stop();
+        }, 30000);
+    }
 }
 
 function processMessage(message) {
@@ -117,7 +120,7 @@ function sendEmail(message, callback) {
 
     adapter.log.info("Send email: " + JSON.stringify(message));
 
-    emailTransport.sendMail(message, function(error, response){
+    emailTransport.sendMail(message, function (error, response) {
         if (error) {
             adapter.log.error("Error " + JSON.stringify(error));
             if (callback) callback(error);
