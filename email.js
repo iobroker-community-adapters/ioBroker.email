@@ -10,39 +10,16 @@
 
 var nodemailer;
 
-var adapter = require(__dirname + '/../../lib/adapter.js')({
+var adapter = require(__dirname + '/../../lib/adapter.js')('email');
 
-    name:           'email',
+adapter.on('message', function (obj) {
+    if (obj && obj.command == "send") processMessage(obj.message);
+    processMessages();
+});
 
-    objectChange: function (id, obj) {
-
-    },
-
-    stateChange: function (id, state) {
-        
-    },
-
-    unload: function (callback) {
-        try {
-            adapter.log.info('terminating');
-            callback();
-        } catch (e) {
-            callback();
-        }
-    },
-
-    ready: function () {
-        adapter.config.transportOptions.auth.pass = decrypt("Zgfr56gFe87jJOM", adapter.config.transportOptions.auth.pass);
-        main();
-    },
-    
-    // New message arrived. obj is array with current messages
-    message: function (obj) {
-        if (obj && obj.command == "send") processMessage(obj.message);
-        processMessages();
-        return true;
-    }
-
+adapter.on('ready', function () {
+    adapter.config.transportOptions.auth.pass = decrypt("Zgfr56gFe87jJOM", adapter.config.transportOptions.auth.pass);
+    main();
 });
 
 var stopTimer = null;
