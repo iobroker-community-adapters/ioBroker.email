@@ -16,9 +16,6 @@
     var rooms =       [];
     var roomsSelect = "";
     var devices =     [];
-    var processed =   1000;
-    var isStarted =   null;
-    var changed =     false;
 
     systemDictionary = {
         "Connection settings":{"de": "Verbindungseinstellungen", "ru": "Настройки соединения"},
@@ -174,6 +171,7 @@
         }
         return obj;
     }
+
     function getSettings() {
         var obj = {};
         $('.value').each(function () {
