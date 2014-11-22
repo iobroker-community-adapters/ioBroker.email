@@ -1,7 +1,7 @@
 {
     "common": {
         "name":                     "email",
-        "version":                  "0.0.3",
+        "version":                  "0.0.4",
         "title":                    "Email Adapter",
         "desc":                     "This adapter allows to send emails from ioBroker",
         "authors": [
@@ -13,7 +13,7 @@
         "availableModes":           ["daemon", "subscribe"],
         "loglevel":                 "info",
         "messagebox":               true,
-        "subscribe":                "system.adapter.email.<INSTANCE>.messagebox",
+        "subscribe":                "messagebox",
         "wakeup":                   true,
         "enabled":                  true,
         "icon":                     "email.png",

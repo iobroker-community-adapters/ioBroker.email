@@ -5,6 +5,9 @@ ioBroker email Adapter
 Send emails from ioBroker. 
 
 ## Changelog
+### 0.0.4 (2014-11-2)
+(bluefox) support of new naming concept 
+
 ### 0.0.3 (2014-10-09)
 (Bluefox) support of daemon mode
 (Bluefox) add Gruntfile.js
