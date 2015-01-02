@@ -9,8 +9,8 @@
  */
 
 var nodemailer;
-
-var adapter = require(__dirname + '/../../lib/adapter.js')('email');
+var utils =   require(__dirname + '/lib/utils'); // Get common adapter utils
+var adapter = utils.adapter('email');
 
 adapter.on('message', function (obj) {
     if (obj && obj.command == "send") processMessage(obj.message);
