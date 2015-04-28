@@ -42,6 +42,16 @@
             "en": "Is secure connection",
             "de": "Verschlüsselte Verbindung",
             "ru": "SSL соединение"
+        },
+        "Check the log or your email": {
+            "en": "Check the log or your email",
+            "de": "Prüfe Mailbox or ioBroker log",
+            "ru": "Проверьте ваш почтовый ящик или логи ioBroker"
+        },
+        "Enable first the adapter to test email.": {
+            "en": "Enable first the adapter to test email.",
+            "de": "Aktiviere Adapter um Test-Email versenden zu können.",
+            "ru": "Что бы протестировать драйвер, его надо сначало активировать."
         }
     };
 
@@ -142,7 +152,7 @@
     function test() {
         var newValue = JSON.stringify(getSettings());
         if (!common.enabled) {
-            showMessage("Enable first the adapter to test email.");
+            showMessage(_("Enable first the adapter to test email."));
             return;
         }
         if (changed) {
@@ -150,7 +160,7 @@
             return;
         }
         sendTo('email.' + instance, 'send', 'This is test email!');
-        showMessage('Check the log or your email');
+        showMessage(_('Check the log or your email'));
     }
 
     function saveHelper(obj, id, value) {
