@@ -18,7 +18,7 @@ adapter.on('message', function (obj) {
 });
 
 adapter.on('ready', function () {
-    adapter.config.transportOptions.auth.pass = decrypt("Zgfr56gFe87jJOM", adapter.config.transportOptions.auth.pass);
+    adapter.config.transportOptions.auth.pass = decrypt('Zgfr56gFe87jJOM', adapter.config.transportOptions.auth.pass);
     main();
 });
 
@@ -82,9 +82,19 @@ function sendEmail(message, callback) {
             delete adapter.config.transportOptions.host;
             delete adapter.config.transportOptions.port;
             delete adapter.config.transportOptions.secure;
+        } else {
+            delete adapter.config.transportOptions.name;
+        }
+        if (adapter.config.transportOptions.service == "web.de") {
+            adapter.config.transportOptions.domains = ["web.de"];
+            adapter.config.transportOptions.host = "smtp.web.de";
+            adapter.config.transportOptions.port = "587";
+            //adapter.config.transportOptions.tls = {"ciphers": "SSLv3"};
+            delete adapter.config.transportOptions.service;
         }
 
-        emailTransport = require("nodemailer").createTransport(adapter.config.transportOptions);
+
+        emailTransport = require('nodemailer').createTransport(adapter.config.transportOptions);
     }
 
     if (typeof message != "object") {
@@ -95,14 +105,14 @@ function sendEmail(message, callback) {
     message.subject = message.subject || adapter.config.defaults.subject;
     message.text =    message.text    || adapter.config.defaults.text;
 
-    adapter.log.info("Send email: " + JSON.stringify(message));
+    adapter.log.info('Send email: ' + JSON.stringify(message));
 
     emailTransport.sendMail(message, function (error, response) {
         if (error) {
-            adapter.log.error("Error " + JSON.stringify(error));
+            adapter.log.error('Error ' + error);
             if (callback) callback(error);
         } else {
-            adapter.log.info("sent to " + message.to);
+            adapter.log.info('sent to ' + message.to);
             if (callback) callback(null);
         }
         stop();

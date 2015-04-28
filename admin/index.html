@@ -16,6 +16,7 @@
     var rooms =       [];
     var roomsSelect = "";
     var devices =     [];
+    var onChange =    null;
 
     systemDictionary = {
         "Connection settings":{"de": "Verbindungseinstellungen", "ru": "Настройки соединения"},
@@ -31,6 +32,7 @@
         "To:"                :{"de": "Nach:",                    "ru": "Кому:"},
         "Subject:"           :{"de": "Thema:",                   "ru": "Тема:"},
         "Test"               :{"de": "Test",                     "ru": "Тест"},
+        "User defined"       :{"de": "Anwender definiert",       "ru": "Пользовательские"},
         "E-mail adapter settings": {
             "en": "E-mail adapter settings",
             "de": "E-mail Adapter Einstellungen",
@@ -78,23 +80,19 @@
     function init() {
         $('#transportOptions_service').change(showHideSettings);
         $('#test').button().click(test);
-        $('#save').button("disable");
     }
 
     function setValue(id, value) {
         // example: select elements with id=key and class=value and insert value
         if ($('#' + id + '.value').attr('type') == 'checkbox') {
             $('#' + id + '.value').prop('checked', value).change(function() {
-                changed = true;
-                $('#save').button("enable");
+                onChange();
             });
         } else {
             $('#' + id + '.value').val(value).change(function() {
-                changed = true;
-                $('#save').button("enable");
+                onChange();
             }).keyup(function() {
-                changed = true;
-                $('#save').button("enable");
+                onChange();
             });
         }
     }
@@ -133,10 +131,12 @@
     }
 
     // the function loadSettings has to exist ...
-    function load(settings) {
+    function load(settings, _onChange) {
         loadHelper(settings);
-
+        onChange = _onChange;
         init ();
+        onChange(false);
+        showHideSettings();
     }
 
     function test() {
@@ -187,13 +187,8 @@
         return obj;
     }
 
-    // ... and the function save has to exist.
-    // you have to make sure the callback is called with the settings object as first param!
     function save(callback) {
-        // example: select elements with class=value and build settings object
-        changed = false;
         callback(getSettings());
-        $('#save').button("disable");
     }
 </script>
 
@@ -241,10 +236,11 @@
                 <option value="SendCloud">        SendCloud</option>
                 <option value="SendGrid">         SendGrid</option>
                 <option value="SES">              SES</option>
+                <option value="web.de">           Web.de</option>
                 <option value="Yahoo">            Yahoo</option>
                 <option value="Yandex">           Yandex</option>
                 <option value="Zoho">             Zoho</option>
-                <option value="">User defined</option>
+                <option value="" class="translate">User defined</option>
             </select></td>
             <td class="translate"></td>
         </tr>

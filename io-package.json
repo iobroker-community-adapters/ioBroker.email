@@ -1,7 +1,7 @@
 {
     "common": {
         "name":                     "email",
-        "version":                  "0.1.0",
+        "version":                  "0.1.1",
         "title":                    "Email Adapter",
         "desc":                     "This adapter allows to send emails from ioBroker",
         "authors": [
@@ -14,11 +14,13 @@
         "loglevel":                 "info",
         "messagebox":               true,
         "subscribe":                "messagebox",
+        "readme":                   "https://github.com/ioBroker/ioBroker.email/blob/master/README.md",
         "wakeup":                   true,
         "enabled":                  true,
         "icon":                     "email.png",
         "keywords":                 ["notification", "email", "message"],
-        "extIcon":                  "https://raw.githubusercontent.com/ioBroker/ioBroker.email/master/admin/email.png"
+        "extIcon":                  "https://raw.githubusercontent.com/ioBroker/ioBroker.email/master/admin/email.png",
+		"type":                     "communication"
     },
     "native": {
         "transport": "SMTP",

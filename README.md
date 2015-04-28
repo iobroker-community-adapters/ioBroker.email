@@ -5,6 +5,9 @@ ioBroker email Adapter
 Send emails from ioBroker. 
 
 ## Changelog
+### 0.1.1 (2015-04-28)
+(bluefox) update configuration page and decode errors
+
 ### 0.1.0 (2015-01-02)
 (bluefox) prepare npm
 
