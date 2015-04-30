@@ -48,9 +48,7 @@ function stop() {
 }
 
 function processMessage(message) {
-    if (stopTimer) {
-        clearTimeout(stopTimer);
-    }
+    if (stopTimer) clearTimeout(stopTimer);
 
     sendEmail(message);
 
@@ -92,7 +90,6 @@ function sendEmail(message, callback) {
             //adapter.config.transportOptions.tls = {"ciphers": "SSLv3"};
             delete adapter.config.transportOptions.service;
         }
-
 
         emailTransport = require('nodemailer').createTransport(adapter.config.transportOptions);
     }

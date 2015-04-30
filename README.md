@@ -5,6 +5,9 @@ ioBroker email Adapter
 Send emails from ioBroker. 
 
 ## Changelog
+### 0.1.2 (2015-04-30)
+(bluefox) fix settings if "user defined" was selected
+
 ### 0.1.1 (2015-04-28)
 (bluefox) update configuration page and decode errors
 
