@@ -1,11 +1,18 @@
 {
     "common": {
         "name":                     "email",
-        "version":                  "0.1.2",
+        "version":                  "0.2.0",
+        "news": {
+            "0.2.0": {
+                "en": "filter out double messages\nuse new nodemailer packet",
+                "de": "Ausfiltern doppelte Meldungen\nNeue Version von nodemailer Paket",
+                "ru": "Отфильтровывать двойные сообщения\nНовая версия модуля nodemailer"
+            }
+        },
         "title":                    "Email Adapter",
         "desc":                     "This adapter allows to send emails from ioBroker",
         "authors": [
-            "bluefox <bluefox@ccu.io>"
+            "bluefox <dogafox@gmail.com>"
         ],
         "license":                  "MIT",
         "platform":                 "Javascript/Node.js",

@@ -2,7 +2,7 @@
  *
  *      ioBroker email Adapter
  *
- *      (c) 2014 bluefox
+ *      (c) 2014-2016 bluefox <dogafox@gmail.com>
  *
  *      MIT License
  *
@@ -10,24 +10,28 @@
 
 var nodemailer;
 var utils =   require(__dirname + '/lib/utils'); // Get common adapter utils
+//noinspection JSUnresolvedFunction
 var adapter = utils.adapter('email');
 
 adapter.on('message', function (obj) {
-    if (obj && obj.command == "send") processMessage(obj.message);
+    //noinspection JSUnresolvedVariable
+    if (obj && obj.command === 'send') processMessage(obj.message);
     processMessages();
 });
 
 adapter.on('ready', function () {
+    //noinspection JSUnresolvedVariable
     adapter.config.transportOptions.auth.pass = decrypt('Zgfr56gFe87jJOM', adapter.config.transportOptions.auth.pass);
     main();
 });
 
-var stopTimer = null;
 var emailTransport;
-
+var stopTimer       =  null;
+var lastMessageTime = 0;
+var lastMessageText = '';
 function decrypt(key, value) {
-    var result = "";
-    for(var i = 0; i < value.length; ++i) {
+    var result = '';
+    for (var i = 0; i < value.length; ++i) {
         result += String.fromCharCode(key[i % key.length].charCodeAt(0) ^ value.charCodeAt(i));
     }
     return result;
@@ -37,9 +41,12 @@ function decrypt(key, value) {
 function stop() {
     if (stopTimer) {
         clearTimeout(stopTimer);
+        stopTimer = null;
     }
+
     // Stop only if subscribe mode
-    if (adapter.common && adapter.common.mode == 'subscribe') {
+    //noinspection JSUnresolvedVariable
+    if (adapter.common && adapter.common.mode === 'subscribe') {
         stopTimer = setTimeout(function () {
             stopTimer = null;
             adapter.stop();
@@ -47,18 +54,41 @@ function stop() {
     }
 }
 
-function processMessage(message) {
-    if (stopTimer) clearTimeout(stopTimer);
+function processMessage(obj) {
+    if (!obj || !obj.message) return;
 
-    sendEmail(message);
+    // filter out double messages
+    var json = JSON.stringify(obj.message);
+    if (lastMessageTime && lastMessageText === JSON.stringify(obj.message) && new Date().getTime() - lastMessageTime < 1000) {
+        adapter.log.debug('Filter out double message [first was for ' + (new Date().getTime() - lastMessageTime) + 'ms]: ' + json);
+        return;
+    }
+    lastMessageTime = new Date().getTime();
+    lastMessageText = json;
+
+    if (stopTimer) {
+        clearTimeout(stopTimer);
+        stopTimer = null;
+    }
+
+    if (obj.message.options) {
+        var options = JSON.parse(JSON.stringify(obj.message.options));
+        delete obj.message.options;
+        sendEmail(null, options, obj.message, function (error) {
+            if (obj.callback) adapter.sendTo(obj.from, 'send', {error: error}, obj.callback);
+        });
+    } else {
+        emailTransport = sendEmail(emailTransport, adapter.config.transportOptions, obj.message);
+    }
 
     stop();
 }
 
 function processMessages() {
+    //noinspection JSUnresolvedFunction
     adapter.getMessage(function (err, obj) {
         if (obj) {
-            processMessage(obj.message);
+            processMessage(obj);
             processMessages();
         }
     });
@@ -70,48 +100,66 @@ function main() {
     stop();
 }
 
-function sendEmail(message, callback) {
-    if (!message) {
-        message = {};
-    }
-    
-    if (!emailTransport) {
-        if (!adapter.config.transportOptions.host || !adapter.config.transportOptions.port) {
-            delete adapter.config.transportOptions.host;
-            delete adapter.config.transportOptions.port;
-            delete adapter.config.transportOptions.secure;
+function sendEmail(transport, options, message, callback) {
+    if (!message) message = {};
+
+    options = options || adapter.config.transportOptions;
+
+    if (!transport) {
+        //noinspection JSUnresolvedVariable
+        if (!options.host || !options.port) {
+            //noinspection JSUnresolvedVariable
+            if (options.host    !== undefined) delete options.host;
+            //noinspection JSUnresolvedVariable
+            if (options.port    !== undefined) delete options.port;
+            //noinspection JSUnresolvedVariable
+            if (options.secure  !== undefined) delete options.secure;
         } else {
-            delete adapter.config.transportOptions.name;
+            //noinspection JSUnresolvedVariable
+            if (options.service !== undefined) delete options.service;
         }
-        if (adapter.config.transportOptions.service == "web.de") {
-            adapter.config.transportOptions.domains = ["web.de"];
-            adapter.config.transportOptions.host = "smtp.web.de";
-            adapter.config.transportOptions.port = "587";
-            //adapter.config.transportOptions.tls = {"ciphers": "SSLv3"};
-            delete adapter.config.transportOptions.service;
+        //noinspection JSUnresolvedVariable
+        if (options.service === 'web.de') {
+            //noinspection JSUnresolvedVariable
+            options.domains = ['web.de'];
+            //noinspection JSUnresolvedVariable
+            options.host = 'smtp.web.de';
+            //noinspection JSUnresolvedVariable
+            options.port = '587';
+            //options.tls = {ciphers: 'SSLv3'};
+            //noinspection JSUnresolvedVariable
+            delete options.service;
         }
 
-        emailTransport = require('nodemailer').createTransport(adapter.config.transportOptions);
+        //noinspection JSUnresolvedFunction, JSUnresolvedVariable
+        transport = require('nodemailer').createTransport(options);
     }
 
-    if (typeof message != "object") {
-        message = {text: message};
-    }
+    if (typeof message !== 'object') message = {text: message};
+
+    //noinspection JSUnresolvedVariable
     message.from =    message.from    || adapter.config.defaults.from;
+    //noinspection JSUnresolvedVariable
     message.to =      message.to      || adapter.config.defaults.to;
+    //noinspection JSUnresolvedVariable
     message.subject = message.subject || adapter.config.defaults.subject;
+    //noinspection JSUnresolvedVariable
     message.text =    message.text    || adapter.config.defaults.text;
 
     adapter.log.info('Send email: ' + JSON.stringify(message));
 
-    emailTransport.sendMail(message, function (error, response) {
+    //noinspection JSUnresolvedFunction
+    transport.sendMail(message, function (error, info) {
         if (error) {
-            adapter.log.error('Error ' + error);
-            if (callback) callback(error);
+            adapter.log.error('Error ' + JSON.stringify(error));
+            if (callback) callback(error.response || error.message || error.code || JSON.stringify(error));
         } else {
+            //noinspection JSUnresolvedVariable
             adapter.log.info('sent to ' + message.to);
+            adapter.log.debug('Response: ' + info.response);
             if (callback) callback(null);
         }
         stop();
     });
+    return transport;
 }

@@ -1,38 +1,35 @@
 <html>
 
-<!-- these 4 files always have to be included -->
 <link rel="stylesheet" type="text/css" href="../../lib/css/themes/jquery-ui/redmond/jquery-ui.min.css"/>
 <script type="text/javascript" src="../../lib/js/jquery-1.11.1.min.js"></script>
 <script type="text/javascript" src="../../socket.io/socket.io.js"></script>
 <script type="text/javascript" src="../../lib/js/jquery-ui-1.10.3.full.min.js"></script>
 
-<!-- these three files  have to be always included -->
 <link rel="stylesheet" type="text/css" href="../../css/adapter.css"/>
 <script type="text/javascript" src="../../js/translate.js"></script>
 <script type="text/javascript" src="../../js/adapter-settings.js"></script>
 
-<!-- you have to define 2 functions in the global scope: -->
 <script type="text/javascript">
-    var rooms =       [];
-    var roomsSelect = "";
-    var devices =     [];
-    var onChange =    null;
+    var onChange = null;
+    var isAlive  = false;
 
     systemDictionary = {
-        "Connection settings":{"de": "Verbindungseinstellungen", "ru": "Настройки соединения"},
-        "Transport:"         :{"de": "Transport:",               "ru": "Протокол:"},
-        "Service:"           :{"de": "Service:",                 "ru": "Сервисе:"},
-        "Host:"              :{"de": "Host:",                    "ru": "Хост:"},
-        "Port:"              :{"de": "Port:",                    "ru": "Порт:"},
-        "SSL connection:"    :{"de": "SSL Verbindung:",          "ru": "SSL соединиение:"},
-        "User:"              :{"de": "Anwender:",                "ru": "Пользователь:"},
-        "Password:"          :{"de": "Kennwort:",                "ru": "Пароль:"},
-        "Defaults"           :{"de": "Voreinstellung",           "ru": "Значения по умолчанию"},
-        "From:"              :{"de": "Von:",                     "ru": "От:"},
-        "To:"                :{"de": "Nach:",                    "ru": "Кому:"},
-        "Subject:"           :{"de": "Thema:",                   "ru": "Тема:"},
-        "Test"               :{"de": "Test",                     "ru": "Тест"},
-        "User defined"       :{"de": "Anwender definiert",       "ru": "Пользовательские"},
+        "Connection settings": {"de": "Verbindungseinstellungen", "ru": "Настройки соединения"},
+        "Transport:"         : {"de": "Transport:",               "ru": "Протокол:"},
+        "Service:"           : {"de": "Service:",                 "ru": "Сервисе:"},
+        "Host:"              : {"de": "Host:",                    "ru": "Хост:"},
+        "Port:"              : {"de": "Port:",                    "ru": "Порт:"},
+        "SSL connection:"    : {"de": "SSL Verbindung:",          "ru": "SSL соединиение:"},
+        "User:"              : {"de": "Anwender:",                "ru": "Пользователь:"},
+        "Password:"          : {"de": "Kennwort:",                "ru": "Пароль:"},
+        "Defaults"           : {"de": "Voreinstellung",           "ru": "Значения по умолчанию"},
+        "From:"              : {"de": "Von:",                     "ru": "От:"},
+        "To:"                : {"de": "Nach:",                    "ru": "Кому:"},
+        "Subject:"           : {"de": "Thema:",                   "ru": "Тема:"},
+        "Test"               : {"de": "Test",                     "ru": "Тест"},
+        "User defined"       : {"de": "Anwender definiert",       "ru": "Пользовательские"},
+        "Error: "            : {"de": "Fehler: ",                 "ru": "Ошибка: "},
+        "This is test email!": {"de": "Das ist TEST Email",       "ru": "Тестовое письмо"},
         "E-mail adapter settings": {
             "en": "E-mail adapter settings",
             "de": "E-mail Adapter Einstellungen",
@@ -56,23 +53,23 @@
     };
 
     function encrypt(key, value) {
-        var result="";
-        for(var i = 0; i < value.length; ++i) {
+        var result = '';
+        for(var i = 0; i < value.length; i++) {
             result += String.fromCharCode(key[i % key.length].charCodeAt(0) ^ value.charCodeAt(i));
         }
         return result;
     }
 
     function decrypt(key, value) {
-        var result = "";
-        for(var i = 0; i < value.length; ++i) {
+        var result = '';
+        for(var i = 0; i < value.length; i++) {
             result += String.fromCharCode(key[i % key.length].charCodeAt(0) ^ value.charCodeAt(i));
         }
         return result;
     }
 
     function showHideSettings()  {
-        if ($('#transportOptions_service').val() == '') {
+        if (!$('#transportOptions_service').val()) {
             $('#_email_host').show();
             $('#_email_port').show();
             $('#_email_secure').show();
@@ -94,7 +91,7 @@
 
     function setValue(id, value) {
         // example: select elements with id=key and class=value and insert value
-        if ($('#' + id + '.value').attr('type') == 'checkbox') {
+        if ($('#' + id + '.value').attr('type') === 'checkbox') {
             $('#' + id + '.value').prop('checked', value).change(function() {
                 onChange();
             });
@@ -112,18 +109,18 @@
 
         if (subparam && param) {
             for (var key in settings[param][subparam]) {
-                if (typeof settings[param][subparam][key] != 'object') {
-                    if (key == "pass") {
-                        settings[param][subparam][key] = decrypt("Zgfr56gFe87jJOM", settings[param][subparam][key]);
-                    };
+                if (typeof settings[param][subparam][key] !== 'object') {
+                    if (key === 'pass') {
+                        settings[param][subparam][key] = decrypt('Zgfr56gFe87jJOM', settings[param][subparam][key]);
+                    }
                     setValue(param + '_' + subparam + '_' + key, settings[param][subparam][key]);
                 } else {
-                    alert("4th level is not supported");
+                    alert('4th level is not supported');
                 }
             }
         } else if (param) {
             for (var key in settings[param]) {
-                if (typeof settings[param][key] != 'object') {
+                if (typeof settings[param][key] !== 'object') {
                     setValue(param + '_' + key, settings[param][key]);
                 } else {
                     loadHelper(settings, param, key);
@@ -147,20 +144,39 @@
         init ();
         onChange(false);
         showHideSettings();
+        getIsAdapterAlive(function (_isAlive) {
+            isAlive = (_isAlive || common.enabled);
+        });
     }
 
     function test() {
-        var newValue = JSON.stringify(getSettings());
-        if (!common.enabled) {
-            showMessage(_("Enable first the adapter to test email."));
+        if (!isAlive) {
+            showMessage(_('Enable first the adapter to test email.'));
             return;
         }
-        if (changed) {
-            showMessage("First save the adapter");
-            return;
-        }
-        sendTo('email.' + instance, 'send', 'This is test email!');
-        showMessage(_('Check the log or your email'));
+
+        sendTo('email.' + instance, 'send', {
+            subject:    $('#defaults_subject').val(),
+            to:         $('#defaults_to').val(),
+            from:       $('#defaults_from').val(),
+            text:       _('This is test email!'),
+            options: {
+                host:       $('#transportOptions_service').val() ? undefined : $('#transportOptions_host').val(),
+                port:       $('#transportOptions_service').val() ? undefined : $('#transportOptions_port').val(),
+                secure:     $('#transportOptions_service').val() ? undefined : $('#transportOptions_secure').prop('checked'),
+                auth: {
+                    user:   $('#transportOptions_auth_user').val(),
+                    pass:   $('#transportOptions_auth_pass').val()
+                },
+                service:    $('#transportOptions_service').val()
+            }
+        }, function (result) {
+            if (result.error) {
+                showMessage(_('Error: ') + result.error);
+            } else {
+                showMessage(_('Check the log or your email'));
+            }
+        });
     }
 
     function saveHelper(obj, id, value) {
@@ -171,8 +187,8 @@
             if (!obj[ids[0]]) obj[ids[0]] = {};
             obj[ids[0]][ids[1]] = value;
         } else if (ids.length === 3) {
-            if (ids[2] == "pass") {
-                value = encrypt("Zgfr56gFe87jJOM", value);
+            if (ids[2] === 'pass') {
+                value = encrypt('Zgfr56gFe87jJOM', value);
             }
 
             if (!obj[ids[0]]) obj[ids[0]] = {};
@@ -188,7 +204,7 @@
             var $this = $(this);
             var id = $this.attr('id');
 
-            if ($this.attr('type') == 'checkbox') {
+            if ($this.attr('type') === 'checkbox') {
                 obj = saveHelper(obj, id, $this.prop('checked'))
             } else {
                 obj = saveHelper(obj, id, $this.val())
@@ -224,45 +240,52 @@
         <tr>
             <td class="translate">Service:</td>
             <td><select id="transportOptions_service" class="value">
-                <option value="1und1">            1und1</option>
-                <option value="AOL">              AOL</option>
-                <option value="DynectEmail">      DynectEmail</option>
-                <option value="FastMail">         FastMail</option>
-                <option value="Gmail">            Gmail</option>
-                <option value="Godaddy">          Godaddy</option>
-                <option value="GodaddyAsia">      GodaddyAsia</option>
-                <option value="GodaddyEurope">    GodaddyEurope</option>
-                <option value="hot.ee">           hot.ee</option>
-                <option value="Hotmail">          Hotmail</option>
-                <option value="iCloud">           iCloud</option>
-                <option value="mail.ee">          mail.ee</option>
-                <option value="Mail.ru">          Mail.ru</option>
-                <option value="Mailgun">          Mailgun</option>
-                <option value="Mailjet">          Mailjet</option>
-                <option value="Mandrill">         Mandrill</option>
-                <option value="Postmark">         Postmark</option>
-                <option value="QQ">               QQ</option>
-                <option value="QQex">             QQex</option>
-                <option value="SendCloud">        SendCloud</option>
-                <option value="SendGrid">         SendGrid</option>
-                <option value="SES">              SES</option>
-                <option value="web.de">           Web.de</option>
-                <option value="Yahoo">            Yahoo</option>
-                <option value="Yandex">           Yandex</option>
-                <option value="Zoho">             Zoho</option>
+                <option value="1und1">1und1</option>
+                <option value="AOL">AOL</option>
+                <option value="DebugMail.io">DebugMail.io</option>
+                <option value="DynectEmail">DynectEmail</option>
+                <option value="FastMail">FastMail</option>
+                <option value="GandiMail">GandiMail</option>
+                <option value="Gmail">Gmail</option>
+                <option value="Godaddy">Godaddy</option>
+                <option value="GodaddyAsia">GodaddyAsia</option>
+                <option value="GodaddyEurope">GodaddyEurope</option>
+                <option value="hot.ee">hot.ee</option>
+                <option value="Hotmail">Hotmail</option>
+                <option value="iCloud">iCloud</option>
+                <option value="mail.ee">mail.ee</option>
+                <option value="Mail.ru">Mail.ru</option>
+                <option value="Mailgun">Mailgun</option>
+                <option value="Mailjet">Mailjet</option>
+                <option value="Mandrill">Mandrill</option>
+                <option value="Naver">Naver</option>
+                <option value="OpenMailBox">OpenMailBox</option>
+                <option value="Postmark">Postmark</option>
+                <option value="QQ">QQ</option>
+                <option value="QQex">QQex</option>
+                <option value="SendCloud">SendCloud</option>
+                <option value="SendGrid">SendGrid</option>
+                <option value="SES">SES</option>
+                <option value="SES-US-EAST-1">SES-US-EAST-1</option>
+                <option value="SES-US-WEST-2">SES-US-WEST-2</option>
+                <option value="SES-EU-WEST-1">SES-EU-WEST-1</option>
+                <option value="Sparkpost">Sparkpost</option>
+                <option value="Yahoo">Yahoo</option>
+                <option value="Yandex">Yandex</option>
+                <option value="Zoho">Zoho</option>
                 <option value="" class="translate">User defined</option>
             </select></td>
-            <td class="translate"></td>
+            <td></td>
         </tr>
         <tr id="_email_host" style="display: none">
             <td class="translate">Host:</td>
             <td><input id="transportOptions_host" type="text" size="50" class="value"/></td>
-            <td class="translate"></td>
+            <td></td>
         </tr>
         <tr id="_email_port" style="display: none">
             <td class="translate">Port:</td>
             <td><input id="transportOptions_port" type="text" size="5" class="value"/></td>
-            <td class="translate"></td>
+            <td></td>
         </tr>
         <tr id="_email_secure" style="display: none">
             <td class="translate">SSL connection:</td>
@@ -273,33 +296,39 @@
         <tr>
             <td class="translate">User:</td>
             <td><input id="transportOptions_auth_user" type="text" size="30" class="value"/></td>
-            <td class="translate"></td>
+            <td></td>
         </tr>
         <tr>
             <td class="translate">Password:</td>
             <td><input id="transportOptions_auth_pass" type="password" size="30" class="value"/></td>
-            <td class="translate"></td>
+            <td></td>
         </tr>
         <tr>
-            <td colspan='3'><br><h4 class="translate">Defaults</h4></td>
+            <td colspan="3"><br><h4 class="translate">Defaults</h4></td>
         </tr>
         <tr>
             <td class="translate">From:</td>
             <td><input id="defaults_from" type="text" size="30" class="value"/></td>
-            <td class="translate"></td>
+            <td></td>
         </tr>
         <tr>
             <td class="translate">To:</td>
             <td><input id="defaults_to" type="text" size="30" class="value"/></td>
-            <td class="translate"></td>
+            <td></td>
         </tr>
         <tr>
             <td class="translate">Subject:</td>
             <td><input id="defaults_subject" type="text" size="50" class="value"/></td>
-            <td class="translate"></td>
+            <td></td>
+        </tr>
+        <tr><td colspan="3">&nbsp;</td></tr>
+        <tr>
+            <td></td>
+            <td><button id="test" class="translate">Test</button></td>
+            <td></td>
         </tr>
     </table>
-    <button id="test" class="translate">Test</button>
+
 
 </div>
 </html>

@@ -1,32 +1,17 @@
 ![Logo](admin/email.png)
 ioBroker email Adapter
 ==============
+[![NPM version](http://img.shields.io/npm/v/iobroker.email.svg)](https://www.npmjs.com/package/iobroker.email)
+[![Downloads](https://img.shields.io/npm/dm/iobroker.email.svg)](https://www.npmjs.com/package/iobroker.email)
 
-Send emails from ioBroker. 
+[![NPM](https://nodei.co/npm/iobroker.email.png?downloads=true)](https://nodei.co/npm/iobroker.email/)
 
-## Changelog
-### 0.1.2 (2015-04-30)
-(bluefox) fix settings if "user defined" was selected
+Send emails from ioBroker.
 
-### 0.1.1 (2015-04-28)
-(bluefox) update configuration page and decode errors
+The whole job makes [nodemailer](https://github.com/nodemailer/nodemailer) and ioBroker just use it.
 
-### 0.1.0 (2015-01-02)
-(bluefox) prepare npm
-
-### 0.0.4 (2014-11-2)
-(bluefox) support of new naming concept 
-
-### 0.0.3 (2014-10-09)
-(Bluefox) support of daemon mode
-(Bluefox) add Gruntfile.js
-
-## Install
-
-```node iobroker.js add email```
-
-## Configuration
-
+To use Gmail you may need to configure "Allow Less Secure Apps" in your Gmail account unless you are using 2FA in which
+case you would have to create an Application Specific password. You also may need to unlock your account with "Allow access to your Google account" to use SMTP.
 
 ## Usage
 
@@ -75,8 +60,10 @@ To send email from other adapter use **adapter.sendTo** function.
 ## Supported services
 - 1und1
 - AOL
+- DebugMail.io
 - DynectEmail
 - FastMail
+- GandiMail
 - Gmail
 - Godaddy
 - GodaddyAsia
@@ -89,25 +76,51 @@ To send email from other adapter use **adapter.sendTo** function.
 - Mailgun
 - Mailjet
 - Mandrill
+- Naver
+- OpenMailBox
 - Postmark
 - QQ
 - QQex
 - SendCloud
 - SendGrid
 - SES
+- SES-US-EAST-1
+- SES-US-WEST-2
+- SES-EU-WEST-1
+- Sparkpost
 - Yahoo
 - Yandex
 - Zoho
 - User specific (Server, port and security defined manually)
 
+For other services see documentation of **Nodemailer**: [https://github.com/nodemailer/nodemailer](https://github.com/nodemailer/nodemailer)
 
-For other services see documentation of **Nodemailer**: https://github.com/andris9/Nodemailer
+## Changelog
+### 0.2.0 (2016-08-29)
+* (bluefox) filter out double messages
+* (bluefox) use new nodemailer packet
+
+### 0.1.2 (2015-04-30)
+* (bluefox) fix settings if "user defined" was selected
+
+### 0.1.1 (2015-04-28)
+* (bluefox) update configuration page and decode errors
+
+### 0.1.0 (2015-01-02)
+* (bluefox) prepare npm
+
+### 0.0.4 (2014-11-2)
+(bluefox) support of new naming concept 
+
+### 0.0.3 (2014-10-09)
+* (bluefox) support of daemon mode
+* (bluefox) add Gruntfile.js
 
 ## License
 
 The MIT License (MIT)
 
-Copyright (c) 2014 bluefox
+Copyright (c) 2014-2016 bluefox
 
 Permission is hereby granted, free of charge, to any person obtaining a copy
 of this software and associated documentation files (the "Software"), to deal
