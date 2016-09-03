@@ -93,9 +93,12 @@ To send email from other adapter use **adapter.sendTo** function.
 - Zoho
 - User specific (Server, port and security defined manually)
 
-For other services see documentation of **Nodemailer**: [https://github.com/nodemailer/nodemailer](https://github.com/nodemailer/nodemailer)
+For other services see documentation of **Nodemailer**: `[https://github.com/nodemailer/nodemailer](https://github.com/nodemailer/nodemailer)`
 
 ## Changelog
+### 0.2.1 (2016-09-03)
+* (bluefox) fix sending emails after first one
+
 ### 0.2.0 (2016-08-29)
 * (bluefox) filter out double messages
 * (bluefox) use new nodemailer packet

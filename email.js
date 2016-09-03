@@ -15,7 +15,7 @@ var adapter = utils.adapter('email');
 
 adapter.on('message', function (obj) {
     //noinspection JSUnresolvedVariable
-    if (obj && obj.command === 'send') processMessage(obj.message);
+    if (obj && obj.command === 'send') processMessage(obj);
     processMessages();
 });
 
