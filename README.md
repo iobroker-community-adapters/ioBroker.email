@@ -96,6 +96,9 @@ To send email from other adapter use **adapter.sendTo** function.
 For other services see documentation of **Nodemailer**: `[https://github.com/nodemailer/nodemailer](https://github.com/nodemailer/nodemailer)`
 
 ## Changelog
+### 1.0.0 (2016-10-12)
+* (bluefox) support of blockly
+
 ### 0.2.1 (2016-09-03)
 * (bluefox) fix sending emails after first one
 
