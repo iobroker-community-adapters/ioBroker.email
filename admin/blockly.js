@@ -12,6 +12,13 @@ Blockly.Words['email_subject']       = {'en': 'subject (optional)',          'de
 Blockly.Words['email_from']          = {'en': 'from (optional)',             'de': 'Von (optional)',                     'ru': 'от (не обяз.)'};
 Blockly.Words['email_is_html']       = {'en': 'Send as HTML',                'de': 'Sende als HTML',                     'ru': 'Формат HTML'};
 
+Blockly.Words['email_log']           = {'en': 'log level',                   'de': 'Loglevel',                           'ru': 'Протокол'};
+Blockly.Words['email_log_none']      = {'en': 'none',                        'de': 'keins',                              'ru': 'нет'};
+Blockly.Words['email_log_info']      = {'en': 'info',                        'de': 'info',                               'ru': 'инфо'};
+Blockly.Words['email_log_debug']     = {'en': 'debug',                       'de': 'debug',                              'ru': 'debug'};
+Blockly.Words['email_log_warn']      = {'en': 'warning',                     'de': 'warning',                            'ru': 'warning'};
+Blockly.Words['email_log_error']     = {'en': 'error',                       'de': 'error',                              'ru': 'ошибка'};
+
 Blockly.Words['email_file']          = {'en': 'file name (optional)',        'de': 'Dateiname (optional)',               'ru': 'имя файла (не обяз.)'};
 
 Blockly.Words['email_anyInstance']   = {'en': 'all instances',               'de': 'Alle Instanzen',                     'ru': 'На все драйвера'};
@@ -88,13 +95,13 @@ Blockly.Blocks['email'] = {
         if (input.connection) input.connection._optional = true;
 
         this.appendDummyInput('LOG')
-            .appendField(Blockly.Words['telegram_log'][systemLang])
+            .appendField(Blockly.Words['email_log'][systemLang])
             .appendField(new Blockly.FieldDropdown([
-                [Blockly.Words['telegram_log_none'][systemLang],  ''],
-                [Blockly.Words['telegram_log_info'][systemLang],  'log'],
-                [Blockly.Words['telegram_log_debug'][systemLang], 'debug'],
-                [Blockly.Words['telegram_log_warn'][systemLang],  'warn'],
-                [Blockly.Words['telegram_log_error'][systemLang], 'error']
+                [Blockly.Words['email_log_none'][systemLang],  ''],
+                [Blockly.Words['email_log_info'][systemLang],  'log'],
+                [Blockly.Words['email_log_debug'][systemLang], 'debug'],
+                [Blockly.Words['email_log_warn'][systemLang],  'warn'],
+                [Blockly.Words['email_log_error'][systemLang], 'error']
             ]), 'LOG');
 
         this.setInputsInline(false);
