@@ -77,6 +77,7 @@ To send email from other adapter use **adapter.sendTo** function.
 - Mailjet
 - Mandrill
 - Naver
+- Office365
 - OpenMailBox
 - Postmark
 - QQ
@@ -96,6 +97,9 @@ To send email from other adapter use **adapter.sendTo** function.
 For other services see documentation of **Nodemailer**: `[https://github.com/nodemailer/nodemailer](https://github.com/nodemailer/nodemailer)`
 
 ## Changelog
+### 1.0.1 (2016-12-20)
+* (bluefox) add Office365
+
 ### 1.0.0 (2016-10-12)
 * (bluefox) support of blockly
 

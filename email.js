@@ -129,6 +129,19 @@ function sendEmail(transport, options, message, callback) {
             //options.tls = {ciphers: 'SSLv3'};
             //noinspection JSUnresolvedVariable
             delete options.service;
+        } else if (options.service === 'Office365') {
+            //noinspection JSUnresolvedVariable
+            options.secureConnection = false;
+            //noinspection JSUnresolvedVariable
+            options.tls = {ciphers: 'SSLv3'};
+            //noinspection JSUnresolvedVariable
+            options.domains = ['web.de'];
+            //noinspection JSUnresolvedVariable
+            options.host = 'smtp.office365.com';
+            //noinspection JSUnresolvedVariable
+            options.port = '587';
+            //noinspection JSUnresolvedVariable
+            delete options.service;
         }
 
         //noinspection JSUnresolvedFunction, JSUnresolvedVariable
