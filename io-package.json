@@ -1,8 +1,13 @@
 {
     "common": {
         "name":                     "email",
-        "version":                  "1.0.1",
+        "version":                  "1.0.2",
         "news": {
+            "1.0.2": {
+                "en": "fix translations",
+                "de": "Übersetzungen verbessert",
+                "ru": "fix translations"
+            },
             "1.0.1": {
                 "en": "add Office365",
                 "de": "Office365 Unterstützung",

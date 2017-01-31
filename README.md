@@ -15,7 +15,7 @@ case you would have to create an Application Specific password. You also may nee
 
 ## Usage
 
-To send email from ScriptEngine just write: 
+To send email from ScriptEngine just write:
 
 ```javascript
 // send email to all instances of email adapter
@@ -97,6 +97,9 @@ To send email from other adapter use **adapter.sendTo** function.
 For other services see documentation of **Nodemailer**: `[https://github.com/nodemailer/nodemailer](https://github.com/nodemailer/nodemailer)`
 
 ## Changelog
+### 1.0.2 (2017-01-31)
+* (instalator) fix translations
+
 ### 1.0.1 (2016-12-20)
 * (bluefox) add Office365
 
@@ -120,7 +123,7 @@ For other services see documentation of **Nodemailer**: `[https://github.com/nod
 * (bluefox) prepare npm
 
 ### 0.0.4 (2014-11-2)
-(bluefox) support of new naming concept 
+(bluefox) support of new naming concept
 
 ### 0.0.3 (2014-10-09)
 * (bluefox) support of daemon mode
@@ -130,7 +133,7 @@ For other services see documentation of **Nodemailer**: `[https://github.com/nod
 
 The MIT License (MIT)
 
-Copyright (c) 2014-2016 bluefox
+Copyright (c) 2014-2017 bluefox
 
 Permission is hereby granted, free of charge, to any person obtaining a copy
 of this software and associated documentation files (the "Software"), to deal
