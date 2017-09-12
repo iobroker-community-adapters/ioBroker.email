@@ -20,6 +20,20 @@ adapter.on('message', function (obj) {
 });
 
 adapter.on('ready', function () {
+    // it must be like this
+    /*
+    adapter.getForeignObject('system.config', function (err, obj) {
+        if (obj && obj.native && obj.native.secret) {
+            //noinspection JSUnresolvedVariable
+            adapter.config.transportOptions.auth.pass = decrypt(obj.native.secret, adapter.config.transportOptions.auth.pass);
+        } else {
+            //noinspection JSUnresolvedVariable
+            adapter.config.transportOptions.auth.pass = decrypt('Zgfr56gFe87jJOM', adapter.config.transportOptions.auth.pass);
+        }
+        main();
+    });
+    */
+
     //noinspection JSUnresolvedVariable
     adapter.config.transportOptions.auth.pass = decrypt('Zgfr56gFe87jJOM', adapter.config.transportOptions.auth.pass);
     main();
