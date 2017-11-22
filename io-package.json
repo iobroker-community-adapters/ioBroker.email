@@ -33,7 +33,7 @@
         "desc":                     {
             "en": "This adapter allows to send emails from ioBroker",
             "de": "Dient zum Versenden von eMails über ioBroker",
-            "ru": "This adapter allows to send emails from ioBroker"
+            "ru": "Этот адаптер позволяет отправлять электронные письма из ioBroker"
         },
         "authors": [
             "bluefox <dogafox@gmail.com>"
