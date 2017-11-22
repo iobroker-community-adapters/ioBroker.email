@@ -30,7 +30,11 @@
             }
         },
         "title": "Email Adapter",
-        "desc": "This adapter allows to send emails from ioBroker",
+        "desc":                     {
+            "en": "This adapter allows to send emails from ioBroker",
+            "de": "Dient zum Versenden von eMails über ioBroker",
+            "ru": "This adapter allows to send emails from ioBroker"
+        },
         "authors": [
             "bluefox <dogafox@gmail.com>"
         ],
