@@ -11,7 +11,7 @@
 var nodemailer;
 var utils =   require(__dirname + '/lib/utils'); // Get common adapter utils
 //noinspection JSUnresolvedFunction
-var adapter = utils.adapter('email');
+var adapter = utils.Adapter('email');
 
 adapter.on('message', function (obj) {
     //noinspection JSUnresolvedVariable
