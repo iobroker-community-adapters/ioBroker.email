@@ -124,6 +124,7 @@
             }
             var transportOptionsService = $('#transportOptions_service').val();
 
+            $('#test').addClass('disabled');
             sendTo('email.' + instance, 'send', {
                 subject:    $('#defaults_subject').val(),
                 to:         $('#defaults_to').val(),
@@ -140,6 +141,7 @@
                     service:    transportOptionsService
                 }
             }, function (result) {
+                $('#test').removeClass('disabled');
                 if (result.error) {
                     showMessage(_('Error: ') + result.error);
                 } else {

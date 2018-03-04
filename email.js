@@ -2,13 +2,13 @@
  *
  *      ioBroker email Adapter
  *
- *      (c) 2014-2016 bluefox <dogafox@gmail.com>
+ *      (c) 2014-2018 bluefox <dogafox@gmail.com>
  *
  *      MIT License
  *
  */
+'use strict';
 
-var nodemailer;
 var utils =   require(__dirname + '/lib/utils'); // Get common adapter utils
 //noinspection JSUnresolvedFunction
 var adapter = utils.Adapter('email');
