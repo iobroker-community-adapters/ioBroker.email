@@ -1,5 +1,5 @@
 <html>
-
+<head>
 <link rel="stylesheet" type="text/css" href="../../lib/css/themes/jquery-ui/redmond/jquery-ui.min.css"/>
 <script type="text/javascript" src="../../lib/js/jquery-1.11.1.min.js"></script>
 <script type="text/javascript" src="../../socket.io/socket.io.js"></script>
@@ -8,49 +8,11 @@
 <link rel="stylesheet" type="text/css" href="../../css/adapter.css"/>
 <script type="text/javascript" src="../../js/translate.js"></script>
 <script type="text/javascript" src="../../js/adapter-settings.js"></script>
+<script type="text/javascript" src="words.js"></script>
 
 <script type="text/javascript">
     var onChange = null;
     var isAlive  = false;
-
-    systemDictionary = {
-        "Connection settings": {"de": "Verbindungseinstellungen", "ru": "Настройки соединения"},
-        "Transport:"         : {"de": "Transport:",               "ru": "Протокол:"},
-        "Service:"           : {"de": "Service:",                 "ru": "Сервис:"},
-        "Host:"              : {"de": "Host:",                    "ru": "Хост:"},
-        "Port:"              : {"de": "Port:",                    "ru": "Порт:"},
-        "SSL connection:"    : {"de": "SSL Verbindung:",          "ru": "SSL соединиение:"},
-        "User:"              : {"de": "Anwender:",                "ru": "Пользователь:"},
-        "Password:"          : {"de": "Kennwort:",                "ru": "Пароль:"},
-        "Defaults"           : {"de": "Voreinstellung",           "ru": "Значения по умолчанию"},
-        "From:"              : {"de": "Von:",                     "ru": "От:"},
-        "To:"                : {"de": "Nach:",                    "ru": "Кому:"},
-        "Subject:"           : {"de": "Thema:",                   "ru": "Тема:"},
-        "Test"               : {"de": "Test",                     "ru": "Тест"},
-        "User defined"       : {"de": "Anwender definiert",       "ru": "Пользовательские"},
-        "Error: "            : {"de": "Fehler: ",                 "ru": "Ошибка: "},
-        "This is test email!": {"de": "Das ist TEST Email",       "ru": "Тестовое письмо"},
-        "E-mail adapter settings": {
-            "en": "E-mail adapter settings",
-            "de": "E-mail Adapter Einstellungen",
-            "ru": "Настройки драйвера E-mail"
-        },
-        "Is secure connection": {
-            "en": "Is secure connection",
-            "de": "Verschlüsselte Verbindung",
-            "ru": "SSL соединение"
-        },
-        "Check the log or your email": {
-            "en": "Check the log or your email",
-            "de": "Prüfe Mailbox or ioBroker log",
-            "ru": "Проверьте ваш почтовый ящик или логи ioBroker"
-        },
-        "Enable first the adapter to test email.": {
-            "en": "Enable first the adapter to test email.",
-            "de": "Aktiviere Adapter um Test-Email versenden zu können.",
-            "ru": "Что бы протестировать драйвер, его надо сначало активировать."
-        }
-    };
 
     function encrypt(key, value) {
         var result = '';
@@ -91,12 +53,13 @@
 
     function setValue(id, value) {
         // example: select elements with id=key and class=value and insert value
-        if ($('#' + id + '.value').attr('type') === 'checkbox') {
-            $('#' + id + '.value').prop('checked', value).change(function() {
+        var $value = $('#' + id + '.value');
+        if ($value.attr('type') === 'checkbox') {
+            $value.prop('checked', value).change(function() {
                 onChange();
             });
         } else {
-            $('#' + id + '.value').val(value).change(function() {
+            $value.val(value).change(function() {
                 onChange();
             }).keyup(function() {
                 onChange();
@@ -109,6 +72,7 @@
 
         if (subparam && param) {
             for (var key in settings[param][subparam]) {
+                if (!settings[param][subparam].hasOwnProperty(key)) continue;
                 if (typeof settings[param][subparam][key] !== 'object') {
                     if (key === 'pass') {
                         settings[param][subparam][key] = decrypt('Zgfr56gFe87jJOM', settings[param][subparam][key]);
@@ -120,6 +84,7 @@
             }
         } else if (param) {
             for (var key in settings[param]) {
+                if (!settings[param].hasOwnProperty(key)) continue;
                 if (typeof settings[param][key] !== 'object') {
                     setValue(param + '_' + key, settings[param][key]);
                 } else {
@@ -128,7 +93,8 @@
             }
         } else {
             for (var key in settings) {
-                if (typeof settings[key] != 'object') {
+                if (!settings.hasOwnProperty(key)) continue;
+                if (typeof settings[key] !== 'object') {
                     setValue(key, settings[key]);
                 } else {
                     loadHelper(settings, key);
@@ -154,6 +120,7 @@
             showMessage(_('Enable first the adapter to test email.'));
             return;
         }
+        var transportOptionsService = $('#transportOptions_service').val();
 
         sendTo('email.' + instance, 'send', {
             subject:    $('#defaults_subject').val(),
@@ -161,14 +128,14 @@
             from:       $('#defaults_from').val(),
             text:       _('This is test email!'),
             options: {
-                host:       $('#transportOptions_service').val() ? undefined : $('#transportOptions_host').val(),
-                port:       $('#transportOptions_service').val() ? undefined : $('#transportOptions_port').val(),
-                secure:     $('#transportOptions_service').val() ? undefined : $('#transportOptions_secure').prop('checked'),
+                host:       transportOptionsService ? undefined : $('#transportOptions_host').val(),
+                port:       transportOptionsService ? undefined : $('#transportOptions_port').val(),
+                secure:     transportOptionsService ? undefined : $('#transportOptions_secure').prop('checked'),
                 auth: {
                     user:   $('#transportOptions_auth_user').val(),
                     pass:   $('#transportOptions_auth_pass').val()
                 },
-                service:    $('#transportOptions_service').val()
+                service:    transportOptionsService
             }
         }, function (result) {
             if (result.error) {
@@ -217,8 +184,8 @@
         callback(getSettings());
     }
 </script>
-
-<!-- you have to put your config page in a div with id adapter-container -->
+</head>
+<body>
 <div id="adapter-container">
 
     <table><tr>
@@ -231,14 +198,14 @@
             <td colspan='3'><h4 class="translate">Connection settings</h4></td>
         </tr>
         <tr>
-            <td class="translate">Transport:</td>
+            <td><label class="translate" for="transport">Transport:</label></td>
             <td><select id="transport" class="value">
                 <option value="SMTP">SMTP</option>
             </select></td>
             <td class="translate"></td>
         </tr>
         <tr>
-            <td class="translate">Service:</td>
+            <td><label class="translate" for="transportOptions_service">Service:</label></td>
             <td><select id="transportOptions_service" class="value">
                 <option value="1und1">1und1</option>
                 <option value="AOL">AOL</option>
@@ -280,28 +247,28 @@
             <td></td>
         </tr>
         <tr id="_email_host" style="display: none">
-            <td class="translate">Host:</td>
+            <td><label class="translate" for="transportOptions_host">Host:</label></td>
             <td><input id="transportOptions_host" type="text" size="50" class="value"/></td>
             <td></td>
         </tr>
         <tr id="_email_port" style="display: none">
-            <td class="translate">Port:</td>
+            <td><label class="translate" for="transportOptions_port">Port:</label></td>
             <td><input id="transportOptions_port" type="text" size="5" class="value"/></td>
             <td></td>
         </tr>
         <tr id="_email_secure" style="display: none">
-            <td class="translate">SSL connection:</td>
+            <td><label class="translate" for="transportOptions_secure">SSL connection:</label></td>
             <td><input type="checkbox" id="transportOptions_secure" class="value"/></td>
             <td class="translate">Is secure connection</td>
         </tr>
 
         <tr>
-            <td class="translate">User:</td>
+            <td><label class="translate" for="transportOptions_auth_user">User:</label></td>
             <td><input id="transportOptions_auth_user" type="text" size="30" class="value"/></td>
             <td></td>
         </tr>
         <tr>
-            <td class="translate">Password:</td>
+            <td><label class="translate" for="transportOptions_auth_pass">Password:</label></td>
             <td><input id="transportOptions_auth_pass" type="password" size="30" class="value"/></td>
             <td></td>
         </tr>
@@ -309,17 +276,17 @@
             <td colspan="3"><br><h4 class="translate">Defaults</h4></td>
         </tr>
         <tr>
-            <td class="translate">From:</td>
+            <td><label class="translate" for="defaults_from">From:</label></td>
             <td><input id="defaults_from" type="text" size="30" class="value"/></td>
             <td></td>
         </tr>
         <tr>
-            <td class="translate">To:</td>
+            <td><label class="translate" for="defaults_to">To:</label></td>
             <td><input id="defaults_to" type="text" size="30" class="value"/></td>
             <td></td>
         </tr>
         <tr>
-            <td class="translate">Subject:</td>
+            <td><label class="translate" for="defaults_subject">Subject:</label></td>
             <td><input id="defaults_subject" type="text" size="50" class="value"/></td>
             <td></td>
         </tr>
@@ -333,4 +300,5 @@
 
 
 </div>
+</body>
 </html>

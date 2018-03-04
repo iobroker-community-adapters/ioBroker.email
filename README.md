@@ -1,5 +1,5 @@
 ![Logo](admin/email.png)
-ioBroker email Adapter
+# ioBroker email
 ==============
 [![NPM version](http://img.shields.io/npm/v/iobroker.email.svg)](https://www.npmjs.com/package/iobroker.email)
 [![Downloads](https://img.shields.io/npm/dm/iobroker.email.svg)](https://www.npmjs.com/package/iobroker.email)
@@ -97,6 +97,10 @@ To send email from other adapter use **adapter.sendTo** function.
 For other services see documentation of **Nodemailer**: `[https://github.com/nodemailer/nodemailer](https://github.com/nodemailer/nodemailer)`
 
 ## Changelog
+### 1.0.3 (2018-03-04)
+* (bluefox) fix blockly
+* (bluefox) Admin3 ready
+
 ### 1.0.2 (2017-01-31)
 * (instalator) fix translations
 
@@ -133,7 +137,7 @@ For other services see documentation of **Nodemailer**: `[https://github.com/nod
 
 The MIT License (MIT)
 
-Copyright (c) 2014-2017 bluefox
+Copyright (c) 2014-2018 bluefox
 
 Permission is hereby granted, free of charge, to any person obtaining a copy
 of this software and associated documentation files (the "Software"), to deal

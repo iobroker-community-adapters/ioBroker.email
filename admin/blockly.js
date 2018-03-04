@@ -144,7 +144,7 @@ Blockly.JavaScript['email'] = function(block) {
     for (var f = 0; f < files.length; f++) {
         if (files[f]) {
             if (!attachments) attachments = '   attachments:[\n';
-            attachments += '      {path: ' + files[f] + ', cid: "file' + (f + 1) + '"}\n';
+            attachments += '      {path: ' + files[f] + ', cid: "file' + (f + 1) + '"},\n';
         }
     }
     if (attachments) attachments += '    ],\n';

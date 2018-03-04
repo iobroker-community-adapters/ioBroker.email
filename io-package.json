@@ -1,8 +1,19 @@
 {
     "common": {
         "name": "email",
-        "version": "1.0.2",
+        "version": "1.0.3",
         "news": {
+            "1.0.3": {
+                "en": "Admin3 ready\nBlockly was fixed",
+                "de": "Admin3 bereit\nBlockly wurde korrigiert",
+                "ru": "Admin3 готов\nBlockly исправлен",
+                "pt": "Admin3 pronto\nBloqueado foi consertado",
+                "nl": "Admin3 klaar\nBlockly was opgelost",
+                "fr": "Admin3 prêt\nBlockly a été réparé",
+                "it": "Admin3 pronto\nBlockly è stato risolto",
+                "es": "Admin3 listo\nBlockly fue arreglado",
+                "pl": "Admin3 gotowy\nBlokowanie zostało naprawione"
+            },
             "1.0.2": {
                 "en": "fix translations",
                 "de": "Übersetzungen verbessert",
@@ -29,11 +40,28 @@
                 "ru": "Отфильтровывать двойные сообщения\nНовая версия модуля nodemailer"
             }
         },
-        "title": "Email Adapter",
+        "title": "Send emails",
+        "titleLang": {
+            "en": "Send emails",
+            "de": "E-Mails senden",
+            "ru": "Отправить письма",
+            "pt": "Mande emails",
+            "nl": "Stuur emails",
+            "fr": "Envoyer des emails",
+            "it": "Inviare emails",
+            "es": "Enviar correos electrónicos",
+            "pl": "Wysyłać emaile"
+        },
         "desc":                     {
             "en": "This adapter allows to send emails from ioBroker",
             "de": "Dient zum Versenden von eMails über ioBroker",
-            "ru": "Этот адаптер позволяет отправлять электронные письма из ioBroker"
+            "ru": "Этот адаптер позволяет отправлять электронные письма из ioBroker",
+            "pt": "Este adaptador permite enviar e-mails de ioBroker",
+            "nl": "Met deze adapter kunnen e-mails van ioBroker worden verzonden",
+            "fr": "Cet adaptateur permet d'envoyer des emails de ioBroker",
+            "it": "Questo adattatore consente di inviare e-mail da ioBroker",
+            "es": "Este adaptador permite enviar correos electrónicos desde ioBroker",
+            "pl": "Ten adapter umożliwia wysyłanie wiadomości e-mail z oprogramowania ioBroker"
         },
         "authors": [
             "bluefox <dogafox@gmail.com>"
@@ -52,6 +80,7 @@
         "wakeup": true,
         "enabled": true,
         "icon": "email.png",
+        "materialize": true,
         "keywords": [
             "notification",
             "email",

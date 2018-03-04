@@ -1,7 +1,7 @@
 {
   "name": "iobroker.email",
   "description": "Send e-mails from ioBroker",
-  "version": "1.0.2",
+  "version": "1.0.3",
   "author": "bluefox <dogafox@gmail.com>",
   "contributors": [
     "bluefox <dogafox@gmail.com>"
@@ -20,18 +20,15 @@
   "keywords": [
     "ioBroker",
     "email",
-    "home automation"
+    "home automation",
+    "IoT"
   ],
   "dependencies": {
-    "nodemailer": "^2.7.0"
+    "nodemailer": "^4.6.0"
   },
   "devDependencies": {
-    "grunt": "^1.0.1",
-    "grunt-replace": "^1.0.1",
-    "grunt-contrib-jshint": "^1.1.0",
-    "grunt-jscs": "^3.0.1",
-    "grunt-http": "^2.2.0",
-    "mocha": "^4.1.0",
+    "gulp": "^3.9.1",
+    "mocha": "^5.0.1",
     "chai": "^4.1.2"
   },
   "bugs": {
