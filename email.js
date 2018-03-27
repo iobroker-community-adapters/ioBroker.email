@@ -156,7 +156,6 @@ function sendEmail(transport, options, message, callback) {
             options.port = '587';
             //noinspection JSUnresolvedVariable
             delete options.service;
-        }
         } else if (options.service === 'ith') {
             //noinspection JSUnresolvedVariable
             options.secureConnection = false;
