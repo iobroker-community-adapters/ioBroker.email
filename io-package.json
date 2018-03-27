@@ -1,8 +1,19 @@
 {
     "common": {
         "name": "email",
-        "version": "1.0.3",
+        "version": "1.0.4",
         "news": {
+            "1.0.4": {
+                "en": "ith Support",
+                "de": "ith Unterstützung",
+                "ru": "ith Поддержка",
+                "pt": "ith Apoio, suporte",
+                "nl": "ith Ondersteuning",
+                "fr": "ith Soutien",
+                "it": "ith Supporto",
+                "es": "ith Apoyo",
+                "pl": "ith Wsparcie"
+            },
             "1.0.3": {
                 "en": "Admin3 ready\nBlockly was fixed",
                 "de": "Admin3 bereit\nBlockly wurde korrigiert",

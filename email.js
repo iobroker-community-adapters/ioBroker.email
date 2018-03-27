@@ -157,7 +157,20 @@ function sendEmail(transport, options, message, callback) {
             //noinspection JSUnresolvedVariable
             delete options.service;
         }
-
+        } else if (options.service === 'ith') {
+            //noinspection JSUnresolvedVariable
+            options.secureConnection = false;
+            //noinspection JSUnresolvedVariable
+            options.tls = {ciphers: 'SSLv3', rejectUnauthorized: false };
+            //noinspection JSUnresolvedVariable
+            options.requireTLS = true;
+            //noinspection JSUnresolvedVariable
+            options.host = 'mail.ithnet.com';
+            //noinspection JSUnresolvedVariable
+            options.port = '587';
+            //noinspection JSUnresolvedVariable
+            delete options.service;
+        }
         //noinspection JSUnresolvedFunction, JSUnresolvedVariable
         transport = require('nodemailer').createTransport(options);
     }

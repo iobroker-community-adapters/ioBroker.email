@@ -71,6 +71,7 @@ To send email from other adapter use **adapter.sendTo** function.
 - hot.ee
 - Hotmail
 - iCloud
+- ith
 - mail.ee
 - Mail.ru
 - Mailgun
@@ -97,6 +98,9 @@ To send email from other adapter use **adapter.sendTo** function.
 For other services see documentation of **Nodemailer**: `[https://github.com/nodemailer/nodemailer](https://github.com/nodemailer/nodemailer)`
 
 ## Changelog
+### 1.0.4 (2018-03-26)
+* (skraw.iobroker) Add ith
+
 ### 1.0.3 (2018-03-04)
 * (bluefox) fix blockly
 * (bluefox) Admin3 ready
