@@ -1,0 +1,23 @@
+{
+    "Check the log or your email": "Check the log or your email",
+    "Connection settings": "Connection settings",
+    "Default settings": "Default settings",
+    "Defaults": "Defaults",
+    "E-mail adapter settings": "E-mail adapter settings",
+    "Enable first the adapter to test email.": "Enable first the adapter to test email.",
+    "Error: ": "Error ",
+    "From:": "From",
+    "Host:": "Host",
+    "Is secure connection": "Is secure connection",
+    "Password:": "Password",
+    "Port:": "Port",
+    "SSL connection:": "SSL connection",
+    "Service:": "Service",
+    "Subject:": "Subject",
+    "Test": "Test",
+    "This is test email!": "This is test email!",
+    "To:": "To",
+    "Transport:": "Transport",
+    "User defined": "User defined",
+    "User:": "User"
+}

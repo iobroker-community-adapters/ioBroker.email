@@ -1,0 +1,23 @@
+{
+    "Check the log or your email": "Verifique o log ou o seu email",
+    "Connection settings": "Configurações de conexão",
+    "Default settings": "Configurações padrão",
+    "Defaults": "Padrões",
+    "E-mail adapter settings": "Configurações do adaptador de e-mail",
+    "Enable first the adapter to test email.": "Ative primeiro o adaptador para testar o e-mail.",
+    "Error: ": "Erro",
+    "From:": "A partir de",
+    "Host:": "Hospedeiro",
+    "Is secure connection": "É a conexão segura",
+    "Password:": "Senha",
+    "Port:": "Porta",
+    "SSL connection:": "Conexão SSL",
+    "Service:": "Serviço",
+    "Subject:": "Sujeito",
+    "Test": "Teste",
+    "This is test email!": "Este é um e-mail de teste!",
+    "To:": "Para",
+    "Transport:": "Transporte",
+    "User defined": "Usuário definido",
+    "User:": "Do utilizador"
+}
