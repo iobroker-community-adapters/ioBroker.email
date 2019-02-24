@@ -1,0 +1,23 @@
+{
+    "Check the log or your email": "Prüfe Mailbox or ioBroker log",
+    "Connection settings": "Verbindungseinstellungen",
+    "Default settings": "Standardeinstellungen",
+    "Defaults": "Voreinstellung",
+    "E-mail adapter settings": "E-mail Adapter Einstellungen",
+    "Enable first the adapter to test email.": "Aktiviere Adapter um Test-Email versenden zu können.",
+    "Error: ": "Fehler ",
+    "From:": "Von",
+    "Host:": "Host",
+    "Is secure connection": "Verschlüsselte Verbindung",
+    "Password:": "Kennwort",
+    "Port:": "Port",
+    "SSL connection:": "SSL Verbindung",
+    "Service:": "Service",
+    "Subject:": "Thema",
+    "Test": "Test",
+    "This is test email!": "Das ist TEST Email",
+    "To:": "Nach",
+    "Transport:": "Transport",
+    "User defined": "Anwender definiert",
+    "User:": "Anwender"
+}

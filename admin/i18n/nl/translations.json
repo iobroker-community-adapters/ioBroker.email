@@ -1,0 +1,23 @@
+{
+    "Check the log or your email": "Controleer het logboek of uw e-mail",
+    "Connection settings": "Verbindingsinstellingen",
+    "Default settings": "Standaard instellingen",
+    "Defaults": "defaults",
+    "E-mail adapter settings": "Instellingen voor e-mailadapters",
+    "Enable first the adapter to test email.": "Schakel eerst de adapter in om e-mail te testen.",
+    "Error: ": "Fout",
+    "From:": "Van",
+    "Host:": "gastheer",
+    "Is secure connection": "Is beveiligde verbinding",
+    "Password:": "Wachtwoord",
+    "Port:": "Haven",
+    "SSL connection:": "SSL-verbinding",
+    "Service:": "Service",
+    "Subject:": "Onderwerpen",
+    "Test": "Test",
+    "This is test email!": "Dit is testmail!",
+    "To:": "Naar",
+    "Transport:": "Vervoer",
+    "User defined": "Gebruiker gedefinieerde",
+    "User:": "Gebruiker"
+}

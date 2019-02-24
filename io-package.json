@@ -12,7 +12,8 @@
                 "fr": "ith Soutien",
                 "it": "ith Supporto",
                 "es": "ith Apoyo",
-                "pl": "ith Wsparcie"
+                "pl": "ith Wsparcie",
+                "zh-cn": "ith支持"
             },
             "1.0.3": {
                 "en": "Admin3 ready\nBlockly was fixed",
@@ -23,32 +24,68 @@
                 "fr": "Admin3 prêt\nBlockly a été réparé",
                 "it": "Admin3 pronto\nBlockly è stato risolto",
                 "es": "Admin3 listo\nBlockly fue arreglado",
-                "pl": "Admin3 gotowy\nBlokowanie zostało naprawione"
+                "pl": "Admin3 gotowy\nBlokowanie zostało naprawione",
+                "zh-cn": "Admin3准备好了\n"
             },
             "1.0.2": {
                 "en": "fix translations",
                 "de": "Übersetzungen verbessert",
-                "ru": "fix translations"
+                "ru": "fix translations",
+                "pt": "consertar traduções",
+                "nl": "repareer vertalingen",
+                "fr": "corriger les traductions",
+                "it": "correggere le traduzioni",
+                "es": "arreglar traducciones",
+                "pl": "napraw tłumaczenie",
+                "zh-cn": "修复翻译"
             },
             "1.0.1": {
                 "en": "add Office365",
                 "de": "Office365 Unterstützung",
-                "ru": "Поддержка Office365"
+                "ru": "Поддержка Office365",
+                "pt": "adicionar Office365",
+                "nl": "voeg Office365 toe",
+                "fr": "ajouter Office365",
+                "it": "aggiungi Office365",
+                "es": "añadir Office365",
+                "pl": "dodaj Office365",
+                "zh-cn": "添加Office365"
             },
             "1.0.0": {
                 "en": "support of blockly",
                 "de": "Blockly-Unterstützung",
-                "ru": "Поддержка blockly"
+                "ru": "Поддержка blockly",
+                "pt": "suporte de blockly",
+                "nl": "ondersteuning van blockly",
+                "fr": "soutien de bloc",
+                "it": "supporto di blockly",
+                "es": "apoyo de blockly",
+                "pl": "wsparcie blokowe",
+                "zh-cn": "阻止"
             },
             "0.2.1": {
                 "en": "fix sending emails after first one",
                 "de": "Zweit email ging nicht. Fixed.",
-                "ru": "Исправлена отсылка второго и следуюших писем"
+                "ru": "Исправлена отсылка второго и следуюших писем",
+                "pt": "consertar o envio de e-mails após o primeiro",
+                "nl": "repareer het verzenden van e-mails na de eerste",
+                "fr": "correction de l'envoi d'emails après le premier",
+                "it": "correggere l'invio di e-mail dopo il primo",
+                "es": "corregir el envío de correos electrónicos después de la primera",
+                "pl": "poprawiaj wysyłanie e-maili po pierwszym",
+                "zh-cn": "修复第一个后发送电子邮件"
             },
             "0.2.0": {
                 "en": "filter out double messages\nuse new nodemailer packet",
                 "de": "Ausfiltern doppelte Meldungen\nNeue Version von nodemailer Paket",
-                "ru": "Отфильтровывать двойные сообщения\nНовая версия модуля nodemailer"
+                "ru": "Отфильтровывать двойные сообщения\nНовая версия модуля nodemailer",
+                "pt": "filtrar mensagens duplas\n",
+                "nl": "filter dubbele berichten\n",
+                "fr": "filtrer les doubles messages\n",
+                "it": "filtrare i messaggi doppi\n",
+                "es": "filtrar mensajes dobles\n",
+                "pl": "odfiltrować podwójne wiadomości\n",
+                "zh-cn": "过滤掉双重消息\n"
             }
         },
         "title": "Send emails",
@@ -61,9 +98,10 @@
             "fr": "Envoyer des emails",
             "it": "Inviare emails",
             "es": "Enviar correos electrónicos",
-            "pl": "Wysyłać emaile"
+            "pl": "Wysyłać emaile",
+            "zh-cn": "发电子邮件"
         },
-        "desc":                     {
+        "desc": {
             "en": "This adapter allows to send emails from ioBroker",
             "de": "Dient zum Versenden von eMails über ioBroker",
             "ru": "Этот адаптер позволяет отправлять электронные письма из ioBroker",
@@ -72,7 +110,8 @@
             "fr": "Cet adaptateur permet d'envoyer des emails de ioBroker",
             "it": "Questo adattatore consente di inviare e-mail da ioBroker",
             "es": "Este adaptador permite enviar correos electrónicos desde ioBroker",
-            "pl": "Ten adapter umożliwia wysyłanie wiadomości e-mail z oprogramowania ioBroker"
+            "pl": "Ten adapter umożliwia wysyłanie wiadomości e-mail z oprogramowania ioBroker",
+            "zh-cn": "此适配器允许从ioBroker发送电子邮件"
         },
         "authors": [
             "bluefox <dogafox@gmail.com>"
