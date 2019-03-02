@@ -1,3 +1,5 @@
+# Moved to https://github.com/iobroker-community-adapters/ioBroker.email
+
 ![Logo](admin/email.png)
 # ioBroker email
 ==============
