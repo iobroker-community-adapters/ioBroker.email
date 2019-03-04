@@ -126,7 +126,7 @@
         "loglevel": "info",
         "messagebox": true,
         "subscribe": "messagebox",
-        "readme": "https://github.com/ioBroker/ioBroker.email/blob/master/README.md",
+        "readme": "https://github.com/iobroker-community-adapters/ioBroker.email/blob/master/README.md",
         "wakeup": true,
         "enabled": true,
         "icon": "email.png",
@@ -136,7 +136,7 @@
             "email",
             "message"
         ],
-        "extIcon": "https://raw.githubusercontent.com/ioBroker/ioBroker.email/master/admin/email.png",
+        "extIcon": "https://raw.githubusercontent.com/iobroker-community-adapters/ioBroker.email/master/admin/email.png",
         "type": "messaging",
         "blockly": true
     },
