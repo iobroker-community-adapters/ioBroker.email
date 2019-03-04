@@ -24,14 +24,14 @@
     "IoT"
   ],
   "dependencies": {
-    "nodemailer": "^4.6.0"
+    "nodemailer": "^4.6.0",
+    "@iobroker/adapter-core": "^1.0.3"
   },
   "devDependencies": {
     "gulp": "^4.0.0",
     "axios": "^0.18.0",
     "mocha": "^6.0.2",
-    "chai": "^4.1.2",
-    "@iobroker/adapter-core": "^1.0.3"
+    "chai": "^4.1.2"
   },
   "bugs": {
     "url": "https://github.com/iobroker-community-adapters/ioBroker.email/issues"
