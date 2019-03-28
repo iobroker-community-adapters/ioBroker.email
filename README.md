@@ -1,8 +1,6 @@
-# Moved to https://github.com/iobroker-community-adapters/ioBroker.email
-
 ![Logo](admin/email.png)
 # ioBroker email
-==============
+
 ![Number of Installations](http://iobroker.live/badges/email-installed.svg) ![Number of Installations](http://iobroker.live/badges/email-stable.svg) [![NPM version](http://img.shields.io/npm/v/iobroker.email.svg)](https://www.npmjs.com/package/iobroker.email)
 [![Downloads](https://img.shields.io/npm/dm/iobroker.email.svg)](https://www.npmjs.com/package/iobroker.email)
 
@@ -21,7 +19,7 @@ case you would have to create an Application Specific password. You also may nee
 
 To send email from ScriptEngine just write:
 
-```javascript
+```
 // send email to all instances of email adapter
 sendTo("email", "Email body");
 
@@ -55,7 +53,6 @@ sendTo("email", {
         {path: "path/to/file/image1.jpg", cid: "image1"}
     ]
 });
-
 ```
 
 To send email from other adapter use **adapter.sendTo** function.
@@ -145,7 +142,7 @@ For other services see documentation of **Nodemailer**: `[https://github.com/nod
 
 The MIT License (MIT)
 
-Copyright (c) 2014-2018 bluefox
+Copyright (c) 2014-2019 bluefox
 
 Permission is hereby granted, free of charge, to any person obtaining a copy
 of this software and associated documentation files (the "Software"), to deal
