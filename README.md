@@ -10,7 +10,7 @@ Send emails from ioBroker.
 
 The whole job makes [nodemailer](https://github.com/nodemailer/nodemailer) and ioBroker just use it.
 
-** This Adapter requires nodejs 6.x or higher!! **
+**This Adapter requires nodejs 6.x or higher!!**
 
 To use Gmail you may need to configure "Allow Less Secure Apps" in your Gmail account unless you are using 2FA in which
 case you would have to create an Application Specific password. You also may need to unlock your account with "Allow access to your Google account" to use SMTP.
