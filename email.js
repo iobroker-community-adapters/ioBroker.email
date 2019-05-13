@@ -100,6 +100,7 @@ function processMessage(obj) {
 
 function processMessages() {
     //noinspection JSUnresolvedFunction
+    if (!adapter.getMessage) return; 
     adapter.getMessage(function (err, obj) {
         if (obj) {
             processMessage(obj);
