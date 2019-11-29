@@ -196,7 +196,7 @@ function sendEmail(transport, options, message, callback) {
     transport.sendMail(message, (error, info) => {
         if (error) {
             adapter.log.error('Error ' + error.response || error.message || error.code || JSON.stringify(error));
-            typeof callback !== 'function' && callback(error.response || error.message || error.code || JSON.stringify(error));
+            typeof callback == 'function' && callback(error.response || error.message || error.code || JSON.stringify(error));
         } else {
             //noinspection JSUnresolvedVariable
             adapter.log.info('sent to ' + message.to);
