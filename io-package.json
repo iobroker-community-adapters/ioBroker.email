@@ -1,8 +1,12 @@
 {
     "common": {
         "name": "email",
-        "version": "1.0.5",
+        "version": "1.0.6",
         "news": {
+            "1.0.6": {
+                "en": "fix exception on email errors, fix search&replace typo",
+                "de": "Abbruch beim Melden von eMail-Fehlern behoben, Suchen&Ersetzen-Tippfehler behoben"
+           },
             "1.0.5": {
                 "en": "js-controller 2.0 compatibility, dependency updates",
                 "de": "Kompatibilität mit js-controller 2.0, Abhängigkeitsaktualisierungen",

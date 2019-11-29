@@ -14,7 +14,7 @@ const utils = require('@iobroker/adapter-core'); // Get common adapter utils
 const adapter = utils.Adapter('email');
 
 adapter.on('message', obj => {
-    //noinspection JSUnresolvedconst iable
+    //noinspection JSUnresolvedVariable
     obj && obj.command === 'send' && processMessage(obj);
     processMessages();
 });
@@ -24,17 +24,17 @@ adapter.on('ready', () => {
     /*
     adapter.getForeignObject('system.config', function (err, obj) {
         if (obj && obj.native && obj.native.secret) {
-            //noinspection JSUnresolvedconst iable
+            //noinspection JSUnresolvedVariable
             adapter.config.transportOptions.auth.pass = decrypt(obj.native.secret, adapter.config.transportOptions.auth.pass);
         } else {
-            //noinspection JSUnresolvedconst iable
+            //noinspection JSUnresolvedVariable
             adapter.config.transportOptions.auth.pass = decrypt('Zgfr56gFe87jJOM', adapter.config.transportOptions.auth.pass);
         }
         main();
     });
     */
 
-    //noinspection JSUnresolvedconst iable
+    //noinspection JSUnresolvedVariable
     adapter.config.transportOptions.auth.pass = decrypt('Zgfr56gFe87jJOM', adapter.config.transportOptions.auth.pass);
     main();
 });
@@ -60,7 +60,7 @@ function stop() {
     }
 
     // Stop only if subscribe mode
-    //noinspection JSUnresolvedconst iable
+    //noinspection JSUnresolvedVariable
     if (adapter.common && adapter.common.mode === 'subscribe') {
         stopTimer = setTimeout(function () {
             stopTimer = null;
@@ -74,7 +74,7 @@ function processMessage(obj) {
 
     // filter out double messages
     const  json = JSON.stringify(obj.message);
-    if (lastMessageTime && lastMessageText === JSON.stringify(obj.message) && new Date().getTime() - lastMessageTime < 1000) {
+    if (lastMessageTime && lastMessageText === json && new Date().getTime() - lastMessageTime < 1000) {
         adapter.log.debug('Filter out double message [first was for ' + (new Date().getTime() - lastMessageTime) + 'ms]: ' + json);
         return;
     }
@@ -125,69 +125,69 @@ function sendEmail(transport, options, message, callback) {
     options = options || adapter.config.transportOptions;
 
     if (!transport) {
-        //noinspection JSUnresolvedconst iable
+        //noinspection JSUnresolvedVariable
         if (!options.host || !options.port) {
-            //noinspection JSUnresolvedconst iable
+            //noinspection JSUnresolvedVariable
             if (options.host    !== undefined) delete options.host;
-            //noinspection JSUnresolvedconst iable
+            //noinspection JSUnresolvedVariable
             if (options.port    !== undefined) delete options.port;
-            //noinspection JSUnresolvedconst iable
+            //noinspection JSUnresolvedVariable
             if (options.secure  !== undefined) delete options.secure;
         } else {
-            //noinspection JSUnresolvedconst iable
+            //noinspection JSUnresolvedVariable
             if (options.service !== undefined) delete options.service;
         }
-        //noinspection JSUnresolvedconst iable
+        //noinspection JSUnresolvedVariable
         if (options.service === 'web.de') {
-            //noinspection JSUnresolvedconst iable
+            //noinspection JSUnresolvedVariable
             options.domains = ['web.de'];
-            //noinspection JSUnresolvedconst iable
+            //noinspection JSUnresolvedVariable
             options.host = 'smtp.web.de';
-            //noinspection JSUnresolvedconst iable
+            //noinspection JSUnresolvedVariable
             options.port = '587';
             //options.tls = {ciphers: 'SSLv3'};
-            //noinspection JSUnresolvedconst iable
+            //noinspection JSUnresolvedVariable
             delete options.service;
         } else if (options.service === 'Office365') {
-            //noinspection JSUnresolvedconst iable
+            //noinspection JSUnresolvedVariable
             options.secureConnection = false;
-            //noinspection JSUnresolvedconst iable
+            //noinspection JSUnresolvedVariable
             options.tls = {ciphers: 'SSLv3'};
-            //noinspection JSUnresolvedconst iable
+            //noinspection JSUnresolvedVariable
             options.domains = ['web.de'];
-            //noinspection JSUnresolvedconst iable
+            //noinspection JSUnresolvedVariable
             options.host = 'smtp.office365.com';
-            //noinspection JSUnresolvedconst iable
+            //noinspection JSUnresolvedVariable
             options.port = '587';
-            //noinspection JSUnresolvedconst iable
+            //noinspection JSUnresolvedVariable
             delete options.service;
         } else if (options.service === 'ith') {
-            //noinspection JSUnresolvedconst iable
+            //noinspection JSUnresolvedVariable
             options.secureConnection = false;
-            //noinspection JSUnresolvedconst iable
+            //noinspection JSUnresolvedVariable
             options.tls = {ciphers: 'SSLv3', rejectUnauthorized: false };
-            //noinspection JSUnresolvedconst iable
+            //noinspection JSUnresolvedVariable
             options.requireTLS = true;
-            //noinspection JSUnresolvedconst iable
+            //noinspection JSUnresolvedVariable
             options.host = 'mail.ithnet.com';
-            //noinspection JSUnresolvedconst iable
+            //noinspection JSUnresolvedVariable
             options.port = '587';
-            //noinspection JSUnresolvedconst iable
+            //noinspection JSUnresolvedVariable
             delete options.service;
         }
-        //noinspection JSUnresolvedFunction, JSUnresolvedconst iable
+        //noinspection JSUnresolvedFunction, JSUnresolvedVariable
         transport = require('nodemailer').createTransport(options);
     }
 
     if (typeof message !== 'object') message = {text: message};
 
-    //noinspection JSUnresolvedconst iable
+    //noinspection JSUnresolvedVariable
     message.from =    message.from    || adapter.config.defaults.from;
-    //noinspection JSUnresolvedconst iable
+    //noinspection JSUnresolvedVariable
     message.to =      message.to      || adapter.config.defaults.to;
-    //noinspection JSUnresolvedconst iable
+    //noinspection JSUnresolvedVariable
     message.subject = message.subject || adapter.config.defaults.subject;
-    //noinspection JSUnresolvedconst iable
+    //noinspection JSUnresolvedVariable
     message.text =    message.text    || adapter.config.defaults.text;
 
     adapter.log.info('Send email: ' + JSON.stringify(message));
@@ -198,10 +198,10 @@ function sendEmail(transport, options, message, callback) {
             adapter.log.error('Error ' + error.response || error.message || error.code || JSON.stringify(error));
             typeof callback !== 'function' && callback(error.response || error.message || error.code || JSON.stringify(error));
         } else {
-            //noinspection JSUnresolvedconst iable
+            //noinspection JSUnresolvedVariable
             adapter.log.info('sent to ' + message.to);
             adapter.log.debug('Response: ' + info.response);
-            typeof callback !== 'function' && callback(null);
+            typeof callback == 'function' && callback(null);
         }
         stop();
     });
