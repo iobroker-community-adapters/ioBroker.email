@@ -10,99 +10,96 @@
 'use strict';
 
 const utils = require('@iobroker/adapter-core'); // Get common adapter utils
-//noinspection JSUnresolvedFunction
-const adapter = utils.Adapter('email');
+const tools = require(utils.controllerDir + '/lib/tools.js');
+const adapterName = require('./package.json').name.split('.').pop();
+let adapter;
 
-adapter.on('message', obj => {
-    //noinspection JSUnresolvedconst iable
-    obj && obj.command === 'send' && processMessage(obj);    
-});
-
-adapter.on('ready', () => {
-    // it must be like this
-    /*
-    adapter.getForeignObject('system.config', function (err, obj) {
-        if (obj && obj.native && obj.native.secret) {
-            //noinspection JSUnresolvedconst iable
-            adapter.config.transportOptions.auth.pass = decrypt(obj.native.secret, adapter.config.transportOptions.auth.pass);
-        } else {
-            //noinspection JSUnresolvedconst iable
-            adapter.config.transportOptions.auth.pass = decrypt('Zgfr56gFe87jJOM', adapter.config.transportOptions.auth.pass);
-        }
-        main();
+function startAdapter(options) {
+    options = options || {};
+    Object.assign(options, {
+        name: adapterName, // adapter name
     });
-    */
 
-    //noinspection JSUnresolvedconst iable
-    adapter.config.transportOptions.auth.pass = decrypt('Zgfr56gFe87jJOM', adapter.config.transportOptions.auth.pass);
-    main();
-});
+    adapter = new utils.Adapter(options);
 
-let  emailTransport;
-let  stopTimer       =  null;
-let  lastMessageTime = 0;
-let  lastMessageText = '';
+    adapter.on('unload', cb => {
+        if (adapter.__stopTimer) {
+            clearTimeout(adapter.__stopTimer);
+            adapter.__stopTimer = null;
+        }
+        cb && cb();
+    });
 
-function decrypt(key, value) {
-    let result = '';
-    for (let  i = 0; i < value.length; ++i) {
-        result += String.fromCharCode(key[i % key.length].charCodeAt(0) ^ value.charCodeAt(i));
-    }
-    return result;
+    adapter.on('message', obj =>
+        obj && obj.command === 'send' && processMessage(adapter, obj));
+
+    adapter.on('ready', () => {
+        // it must be like this
+        adapter.config.transportOptions.auth.pass = tools.decrypt('Zgfr56gFe87jJOM', adapter.config.transportOptions.auth.pass);
+        main(adapter);
+    });
+
+    adapter.__emailTransport  = null;
+    adapter.__stopTimer       = null;
+    adapter.__lastMessageTime = 0;
+    adapter.__lastMessageText = '';
+
+    return adapter;
 }
 
 // Terminate adapter after 30 seconds idle
-function stop() {
-    if (stopTimer) {
-        clearTimeout(stopTimer);
-        stopTimer = null;
+function stop(adapter) {
+    if (adapter.__stopTimer) {
+        clearTimeout(adapter.__stopTimer);
+        adapter.__stopTimer = null;
     }
 
     // Stop only if subscribe mode
     //noinspection JSUnresolvedconst iable
     if (adapter.common && adapter.common.mode === 'subscribe') {
-        stopTimer = setTimeout(function () {
-            stopTimer = null;
+        adapter.__stopTimer = setTimeout(() => {
+            adapter.__stopTimer = null;
             adapter.stop();
         }, 30000);
     }
 }
 
-function processMessage(obj) {
-    if (!obj || !obj.message) return;
-
-    // filter out double messages
-    const  json = JSON.stringify(obj.message);
-    if (lastMessageTime && lastMessageText === JSON.stringify(obj.message) && new Date().getTime() - lastMessageTime < 1000) {
-        adapter.log.debug('Filter out double message [first was for ' + (new Date().getTime() - lastMessageTime) + 'ms]: ' + json);
+function processMessage(adapter, obj) {
+    if (!obj || !obj.message) {
         return;
     }
-    lastMessageTime = new Date().getTime();
-    lastMessageText = json;
 
-    if (stopTimer) {
-        clearTimeout(stopTimer);
-        stopTimer = null;
+    // filter out double messages
+    const json = JSON.stringify(obj.message);
+    if (adapter.__lastMessageTime && adapter.__lastMessageText === JSON.stringify(obj.message) && Date.now() - adapter.__lastMessageTime < 1000) {
+        return adapter.log.debug('Filter out double message [first was for ' + (Date.now() - adapter.__lastMessageTime) + 'ms]: ' + json);
+    }
+
+    adapter.__lastMessageTime = Date.now();
+    adapter.__lastMessageText = json;
+
+    if (adapter.__stopTimer) {
+        clearTimeout(adapter.__stopTimer);
+        adapter.__stopTimer = null;
     }
 
     if (obj.message.options) {
         const  options = JSON.parse(JSON.stringify(obj.message.options));
         delete obj.message.options;
-        sendEmail(null, options, obj.message, function (error) {
-            if (obj.callback) adapter.sendTo(obj.from, 'send', {error: error}, obj.callback);
-        });
+        sendEmail(adapter, null, options, obj.message, error =>
+            obj.callback && adapter.sendTo(obj.from, 'send', {error}, obj.callback));
     } else {
-        emailTransport = sendEmail(emailTransport, adapter.config.transportOptions, obj.message);
+        adapter.__emailTransport = sendEmail(adapter, adapter.__emailTransport, adapter.config.transportOptions, obj.message);
     }
 
-    stop();
+    stop(adapter);
 }
 
-function main() {
-    stop();
+function main(adapter) {
+    stop(adapter);
 }
 
-function sendEmail(transport, options, message, callback) {
+function sendEmail(adapter, transport, options, message, callback) {
     message = message || {};
 
     options = options || adapter.config.transportOptions;
@@ -162,7 +159,9 @@ function sendEmail(transport, options, message, callback) {
         transport = require('nodemailer').createTransport(options);
     }
 
-    if (typeof message !== 'object') message = {text: message};
+    if (typeof message !== 'object') {
+        message = {text: message};
+    }
 
     //noinspection JSUnresolvedconst iable
     message.from =    message.from    || adapter.config.defaults.from;
@@ -190,4 +189,12 @@ function sendEmail(transport, options, message, callback) {
     });
 
     return transport;
+}
+
+// If started as allInOne mode => return function to create instance
+if (module && module.parent) {
+    module.exports = startAdapter;
+} else {
+    // or start the instance directly
+    startAdapter();
 }

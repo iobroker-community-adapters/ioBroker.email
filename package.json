@@ -1,7 +1,7 @@
 {
   "name": "iobroker.email",
   "description": "Send e-mails from ioBroker",
-  "version": "1.0.5",
+  "version": "1.0.6",
   "author": "bluefox <dogafox@gmail.com>",
   "contributors": [
     "bluefox <dogafox@gmail.com>"
@@ -24,20 +24,20 @@
     "IoT"
   ],
   "dependencies": {
-    "nodemailer": "^6.3.0",
+    "nodemailer": "^6.4.2",
     "@iobroker/adapter-core": "^1.0.3"
   },
   "devDependencies": {
     "gulp": "^4.0.2",
     "axios": "^0.19.0",
-    "mocha": "^6.2.0",
+    "mocha": "^6.2.2",
     "chai": "^4.2.0",
     "@iobroker/testing": "^1.2.5"
   },
   "bugs": {
     "url": "https://github.com/iobroker-community-adapters/ioBroker.email/issues"
   },
-  "main": "email.js",
+  "main": "main.js",
   "scripts": {
     "test": "npm run test:package && npm run test:unit",
     "test:package": "mocha test/package --exit",

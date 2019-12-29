@@ -1,8 +1,20 @@
 {
     "common": {
         "name": "email",
-        "version": "1.0.5",
+        "version": "1.0.6",
         "news": {
+            "1.0.6": {
+                "en": "Compact mode supported",
+                "de": "Kompaktmodus unterstützt",
+                "ru": "Компактный режим поддерживается",
+                "pt": "Modo compacto suportado",
+                "nl": "Compacte modus ondersteund",
+                "fr": "Mode compact pris en charge",
+                "it": "Modalità compatta supportata",
+                "es": "Modo compacto compatible",
+                "pl": "Obsługiwany tryb kompaktowy",
+                "zh-cn": "支持紧凑模式"
+            },
             "1.0.5": {
                 "en": "js-controller 2.0 compatibility, dependency updates",
                 "de": "Kompatibilität mit js-controller 2.0, Abhängigkeitsaktualisierungen",
@@ -141,6 +153,7 @@
         "readme": "https://github.com/iobroker-community-adapters/ioBroker.email/blob/master/README.md",
         "wakeup": true,
         "enabled": true,
+        "compact": true,
         "icon": "email.png",
         "materialize": true,
         "keywords": [
