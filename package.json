@@ -4,7 +4,8 @@
   "version": "1.0.6",
   "author": "bluefox <dogafox@gmail.com>",
   "contributors": [
-    "bluefox <dogafox@gmail.com>"
+    "bluefox <dogafox@gmail.com>",
+    "Sneak-L8"
   ],
   "homepage": "https://github.com/iobroker-community-adapters/ioBroker.email",
   "repository": {
