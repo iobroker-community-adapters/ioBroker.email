@@ -15,8 +15,7 @@ const adapter = utils.Adapter('email');
 
 adapter.on('message', obj => {
     //noinspection JSUnresolvedconst iable
-    obj && obj.command === 'send' && processMessage(obj);
-    processMessages();
+    obj && obj.command === 'send' && processMessage(obj);    
 });
 
 adapter.on('ready', () => {
@@ -99,23 +98,7 @@ function processMessage(obj) {
     stop();
 }
 
-function processMessages() {
-    //noinspection JSUnresolvedFunction
-    if (typeof adapter.getMessage !== 'function') {
-        return;
-    }
-
-    adapter.getMessage((err, obj) => {
-        if (obj) {
-            processMessage(obj);
-            processMessages();
-        }
-    });
-}
-
 function main() {
-    // Adapter is started only if some one writes into "system.adapter.email.X.messagebox" new value
-    processMessages();
     stop();
 }
 
