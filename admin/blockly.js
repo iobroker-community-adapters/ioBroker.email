@@ -1,8 +1,19 @@
 'use strict';
 
-goog.provide('Blockly.JavaScript.Sendto');
+if (typeof goog === 'undefined') {
+    goog.provide('Blockly.JavaScript.Sendto');
 
-goog.require('Blockly.JavaScript');
+    goog.require('Blockly.JavaScript');
+}
+
+Blockly.Translate = Blockly.Translate || function (word, lang) {
+    lang = lang || systemLang;
+    if (Blockly.Words && Blockly.Words[word]) {
+        return Blockly.Words[word][lang] || Blockly.Words[word].en;
+    } else {
+        return word;
+    }
+};
 
 // --- SendTo email --------------------------------------------------
 Blockly.Words['email']               = {"en": "email",                                           "de": "email",                                           "ru": "email",                                           "pt": "e-mail",                                          "nl": "e-mail",                                          "fr": "e-mail",                                          "it": "email",                                           "es": "correo electrónico",                              "pl": "e-mail",                                          "zh-cn": "电子邮件"};
@@ -24,7 +35,6 @@ Blockly.Words['email_file']          = {"en": "file name (optional)",           
 Blockly.Words['email_anyInstance']   = {"en": "all instances",                                   "de": "Alle Instanzen",                                  "ru": "На все драйвера",                                 "pt": "todas as instâncias",                             "nl": "alle exemplaren",                                 "fr": "toutes les instances",                            "it": "tutte le istanze",                                "es": "todas las instancias",                            "pl": "wszystkie wystąpienia",                           "zh-cn": "所有实例"};
 Blockly.Words['email_tooltip']       = {"en": "Send an email",                                   "de": "Sende ein E-Mail",                                "ru": "Послать email",                                   "pt": "Envie um e-mail",                                 "nl": "Stuur een e-mail",                                "fr": "Envoyer un e-mail",                               "it": "Inviare una mail",                                "es": "Enviar un correo electrónico",                    "pl": "Wyślij e-mail",                                   "zh-cn": "发送电子邮件"};
 Blockly.Words['email_help']          = {"en": "https://github.com/ioBroker/ioBroker.email/blob/master/README.md", "de": "https://github.com/ioBroker/ioBroker.email/blob/master/README.md", "ru": "https://github.com/ioBroker/ioBroker.email/blob/master/README.md", "pt": "https://github.com/ioBroker/ioBroker.email/blob/master/README.md", "nl": "https://github.com/ioBroker/ioBroker.email/blob/master/README.md", "fr": "https://github.com/ioBroker/ioBroker.email/blob/master/README.md", "it": "https://github.com/ioBroker/ioBroker.email/blob/master/README.md", "es": "https://github.com/ioBroker/ioBroker.email/blob/master/README.md", "pl": "https://github.com/ioBroker/ioBroker.email/blob/master/README.md", "zh-cn": "https://github.com/ioBroker/ioBroker.email/blob/master/README.md"};
-
 
 Blockly.Sendto.blocks['email'] =
     '<block type="email">'
@@ -61,48 +71,48 @@ Blockly.Blocks['email'] = {
     init: function() {
 
         this.appendDummyInput("INSTANCE")
-            .appendField(Blockly.Words['email'][systemLang])
-            .appendField(new Blockly.FieldDropdown([[Blockly.Words['email_anyInstance'][systemLang], ""], ["email.0", ".0"], ["email.1", ".1"], ["email.2", ".2"], ["email.3", ".3"], ["email.4", ".4"]]), "INSTANCE");
+            .appendField(Blockly.Translate('email'))
+            .appendField(new Blockly.FieldDropdown([[Blockly.Translate('email_anyInstance'), ""], ["email.0", ".0"], ["email.1", ".1"], ["email.2", ".2"], ["email.3", ".3"], ["email.4", ".4"]]), "INSTANCE");
 
         this.appendValueInput("TO")
-            .appendField(Blockly.Words['email_to'][systemLang]);
+            .appendField(Blockly.Translate('email_to'));
 
         this.appendDummyInput("IS_HTML")
-            .appendField(Blockly.Words['email_is_html'][systemLang])
+            .appendField(Blockly.Translate('email_is_html'))
             .appendField(new Blockly.FieldCheckbox('FALSE'), 'IS_HTML');
 
         this.appendValueInput('TEXT')
             .setCheck('String')
-            .appendField(Blockly.Words['email_text'][systemLang]);
+            .appendField(Blockly.Translate('email_text'));
 
         var input = this.appendValueInput("SUBJECT")
             .setCheck('String')
-            .appendField(Blockly.Words['email_subject'][systemLang]);
+            .appendField(Blockly.Translate('email_subject'));
         if (input.connection) input.connection._optional = true;
 
         input = this.appendValueInput("FROM")
             .setCheck('String')
-            .appendField(Blockly.Words['email_from'][systemLang]);
+            .appendField(Blockly.Translate('email_from'));
         if (input.connection) input.connection._optional = true;
 
         input = this.appendValueInput("FILE_1")
             .setCheck('String')
-            .appendField(Blockly.Words['email_file'][systemLang]);
+            .appendField(Blockly.Translate('email_file'));
         if (input.connection) input.connection._optional = true;
 
         input = this.appendValueInput("FILE_2")
             .setCheck('String')
-            .appendField(Blockly.Words['email_file'][systemLang]);
+            .appendField(Blockly.Translate('email_file'));
         if (input.connection) input.connection._optional = true;
 
         this.appendDummyInput('LOG')
-            .appendField(Blockly.Words['email_log'][systemLang])
+            .appendField(Blockly.Translate('email_log'))
             .appendField(new Blockly.FieldDropdown([
-                [Blockly.Words['email_log_none'][systemLang],  ''],
-                [Blockly.Words['email_log_info'][systemLang],  'log'],
-                [Blockly.Words['email_log_debug'][systemLang], 'debug'],
-                [Blockly.Words['email_log_warn'][systemLang],  'warn'],
-                [Blockly.Words['email_log_error'][systemLang], 'error']
+                [Blockly.Translate('email_log_none'),  ''],
+                [Blockly.Translate('email_log_info'),  'log'],
+                [Blockly.Translate('email_log_debug'), 'debug'],
+                [Blockly.Translate('email_log_warn'),  'warn'],
+                [Blockly.Translate('email_log_error'), 'error']
             ]), 'LOG');
 
         this.setInputsInline(false);
@@ -110,8 +120,8 @@ Blockly.Blocks['email'] = {
         this.setNextStatement(true, null);
 
         this.setColour(Blockly.Sendto.HUE);
-        this.setTooltip(Blockly.Words['email_tooltip'][systemLang]);
-        this.setHelpUrl(Blockly.Words['email_help'][systemLang]);
+        this.setTooltip(Blockly.Translate('email_tooltip'));
+        this.setHelpUrl(Blockly.Translate('email_help'));
     }
 };
 
