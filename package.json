@@ -21,7 +21,7 @@
   ],
   "dependencies": {
     "nodemailer": "^6.4.2",
-    "@iobroker/adapter-core": "^1.0.3"
+    "@iobroker/adapter-core": "^2.4.0"
   },
   "devDependencies": {
     "gulp": "^4.0.2",
