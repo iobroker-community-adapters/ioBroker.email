@@ -20,7 +20,7 @@
     "IoT"
   ],
   "dependencies": {
-    "nodemailer": "^6.4.2",
+    "nodemailer": "^6.4.6",
     "@iobroker/adapter-core": "^1.0.3"
   },
   "devDependencies": {
