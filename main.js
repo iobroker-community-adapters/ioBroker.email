@@ -49,14 +49,14 @@ function startAdapter(options) {
 
 // Terminate adapter after 30 seconds idle
 function stop(adapter) {
-    if (adapter.__stopTimer) {
+    if (adapter && adapter.__stopTimer) {
         clearTimeout(adapter.__stopTimer);
         adapter.__stopTimer = null;
     }
 
     // Stop only if subscribe mode
     //noinspection JSUnresolvedVariable
-    if (adapter.common && adapter.common.mode === 'subscribe') {
+    if (adapter && adapter.common && adapter.common.mode === 'subscribe') {
         adapter.__stopTimer = setTimeout(() => {
             adapter.__stopTimer = null;
             adapter.stop();
