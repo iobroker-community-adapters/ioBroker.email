@@ -3,18 +3,6 @@
         "name": "email",
         "version": "1.0.8",
         "news": {
-            "1.0.8": {
-                "en": "Call message callback always with error or without",
-                "de": "Rückruf der Rückrufnachricht immer mit oder ohne Fehler",
-                "ru": "Обратный вызов сообщения всегда с ошибкой или без",
-                "pt": "Callback de mensagem de chamada sempre com erro ou sem",
-                "nl": "Oproep terugbellen altijd met fout of zonder",
-                "fr": "Rappel de message d'appel toujours avec erreur ou sans",
-                "it": "Richiama messaggio di chiamata sempre con errore o senza",
-                "es": "Devolución de llamada de mensaje de llamada siempre con error o sin",
-                "pl": "Zadzwoń do wiadomości zwrotnej zawsze z błędem lub bez",
-                "zh-cn": "始终有错误或没有错误的呼叫消息回调"
-            },
             "1.0.7": {
                 "en": "Make sure adapter is not crashing on stop in some edge cases\nAdd Sentry for crash reporting with js-controller >=3.x",
                 "de": "Stellen Sie sicher, dass der Adapter in einigen Randfällen beim Anhalten nicht abstürzt\nFügen Sie Sentry für die Absturzberichterstattung mit js-controller> = 3.x hinzu",
