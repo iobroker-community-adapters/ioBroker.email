@@ -89,7 +89,8 @@ function processMessage(adapter, obj) {
         sendEmail(adapter, null, options, obj.message, error =>
             obj.callback && adapter.sendTo(obj.from, 'send', {error}, obj.callback));
     } else {
-        adapter.__emailTransport = sendEmail(adapter, adapter.__emailTransport, adapter.config.transportOptions, obj.message);
+        adapter.__emailTransport = sendEmail(adapter, adapter.__emailTransport, adapter.config.transportOptions, obj.message, error =>
+            obj.callback && adapter.sendTo(obj.from, 'send', {error}, obj.callback));
     }
 
     stop(adapter);
