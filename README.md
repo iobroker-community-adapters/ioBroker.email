@@ -105,7 +105,7 @@ For other services see documentation of **Nodemailer**: `[https://github.com/nod
 
 ## Changelog
 
-### __WORK IN PROGRESS__
+### 1.0.10 (2021-07-06)
 * (Apollon77) Optimize for js-controller 3.3
 
 ### 1.0.9 (2021-02-22)

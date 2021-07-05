@@ -1,8 +1,20 @@
 {
     "common": {
         "name": "email",
-        "version": "1.0.9",
+        "version": "1.0.10",
         "news": {
+            "1.0.10": {
+                "en": "Optimize for js-controller 3.3",
+                "de": "Optimieren Sie für js-Controller 3.3",
+                "ru": "Оптимизировать под js-controller 3.3",
+                "pt": "Otimize para js-controller 3.3",
+                "nl": "Optimaliseren voor js-controller 3.3",
+                "fr": "Optimiser pour js-controller 3.3",
+                "it": "Ottimizza per js-controller 3.3",
+                "es": "Optimizar para js-controller 3.3",
+                "pl": "Optymalizacja dla kontrolera js 3.3",
+                "zh-cn": "针对 js-controller 3.3 优化"
+            },
             "1.0.9": {
                 "en": "Call message callback always with error or without",
                 "de": "Rückruf der Rückrufnachricht immer mit oder ohne Fehler",
