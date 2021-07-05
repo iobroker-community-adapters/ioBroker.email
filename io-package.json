@@ -188,6 +188,9 @@
         "extIcon": "https://raw.githubusercontent.com/iobroker-community-adapters/ioBroker.email/master/admin/email.png",
         "type": "messaging",
         "blockly": true,
+        "connectionType": "cloud",
+        "dataSource": "none",
+        "tier": 1,
         "plugins": {
             "sentry": {
                 "dsn": "https://953f66fd5d204c5182b18fe0ab485169@sentry.iobroker.net/52"
