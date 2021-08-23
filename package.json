@@ -27,7 +27,7 @@
     "@alcalzone/release-script": "^2.2.1",
     "gulp": "^4.0.2",
     "axios": "^0.21.1",
-    "mocha": "^9.0.3",
+    "mocha": "^9.1.0",
     "chai": "^4.3.4",
     "@iobroker/testing": "^2.4.4"
   },
