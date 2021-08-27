@@ -1,10 +1,10 @@
 {
-    "Check the log or your email": "Prüfe das Log oder deine Emails",
+    "Check the log or your email": "Log oder Emails prüfen",
     "Connection settings": "Verbindungseinstellungen",
     "Default settings": "Standardeinstellungen",
     "Defaults": "Voreinstellung",
     "E-mail adapter settings": "E-mail Adapter Einstellungen",
-    "Enable first the adapter to test email.": "Aktiviere Adapter um Test-Email versenden zu können.",
+    "Enable first the adapter to test email.": "Adapter aktivieren, um Test-Email versenden zu können.",
     "Error: ": "Fehler ",
     "From:": "Von",
     "Host:": "Host",
@@ -15,9 +15,9 @@
     "Service:": "Service",
     "Subject:": "Thema",
     "Test": "Test",
-    "This is test email!": "Das ist TEST Email",
+    "This is test email!": "Das ist eine Test-Email!",
     "To:": "Nach",
     "Transport:": "Transport",
-    "User defined": "Anwender definiert",
-    "User:": "Anwender"
+    "User defined": "Benutzerdefiniert",
+    "User:": "Benutzer"
 }
