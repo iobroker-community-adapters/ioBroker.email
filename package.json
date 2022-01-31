@@ -29,7 +29,7 @@
     "axios": "^0.25.0",
     "mocha": "^9.1.4",
     "chai": "^4.3.4",
-    "@iobroker/testing": "^2.5.2"
+    "@iobroker/testing": "^2.5.3"
   },
   "bugs": {
     "url": "https://github.com/iobroker-community-adapters/ioBroker.email/issues"
