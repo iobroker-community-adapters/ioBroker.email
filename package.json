@@ -21,7 +21,7 @@
   ],
   "dependencies": {
     "nodemailer": "^6.7.3",
-    "@iobroker/adapter-core": "^2.5.1"
+    "@iobroker/adapter-core": "^2.6.0"
   },
   "devDependencies": {
     "@alcalzone/release-script": "^2.2.1",

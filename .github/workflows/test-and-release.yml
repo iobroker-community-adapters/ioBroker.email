@@ -28,9 +28,9 @@ jobs:
         node-version: [12.x]
 
     steps:
-      - uses: actions/checkout@v2.3.4
+      - uses: actions/checkout@v3
       - name: Use Node.js ${{ matrix.node-version }}
-        uses: actions/setup-node@v2.2.0
+        uses: actions/setup-node@v3.1.0
         with:
           node-version: ${{ matrix.node-version }}
 
@@ -60,9 +60,9 @@ jobs:
         os: [ubuntu-latest, windows-latest, macos-latest]
 
     steps:
-      - uses: actions/checkout@v2.3.4
+      - uses: actions/checkout@v3
       - name: Use Node.js ${{ matrix.node-version }}
-        uses: actions/setup-node@v2.2.0
+        uses: actions/setup-node@v3.1.0
         with:
           node-version: ${{ matrix.node-version }}
 
@@ -94,10 +94,10 @@ jobs:
 
     steps:
       - name: Checkout code
-        uses: actions/checkout@v2.3.4
+        uses: actions/checkout@v3
 
       - name: Use Node.js ${{ matrix.node-version }}
-        uses: actions/setup-node@v2.2.0
+        uses: actions/setup-node@v3.1.0
         with:
           node-version: ${{ matrix.node-version }}
 
