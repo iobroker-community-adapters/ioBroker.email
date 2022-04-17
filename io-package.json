@@ -207,7 +207,12 @@
             "sentry": {
                 "dsn": "https://953f66fd5d204c5182b18fe0ab485169@sentry.iobroker.net/52"
             }
-        }
+        },
+        "dependencies": [
+            {
+                "js-controller": ">=2.0.0"
+            }
+        ]
     },
     "native": {
         "transport": "SMTP",

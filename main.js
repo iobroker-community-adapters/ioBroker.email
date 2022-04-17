@@ -126,7 +126,21 @@ function sendEmail(adapter, transport, options, message, callback) {
             options.host = 'smtp.web.de';
             //noinspection JSUnresolvedVariable
             options.port = '587';
-            //options.tls = {ciphers: 'SSLv3'};
+            //noinspection JSUnresolvedVariable
+            options.tls = {ciphers: 'SSLv3', rejectUnauthorized: false };
+            //noinspection JSUnresolvedVariable
+            options.requireTLS = true;
+            //noinspection JSUnresolvedVariable
+            delete options.service;
+        } else if (options.service === '1und1' || options.service === 'ionos') {
+            //noinspection JSUnresolvedVariable
+            options.host = 'smtp.ionos.de';
+            //noinspection JSUnresolvedVariable
+            options.port = '587';
+            //noinspection JSUnresolvedVariable
+            options.tls = {ciphers: 'SSLv3', rejectUnauthorized: false };
+            //noinspection JSUnresolvedVariable
+            options.requireTLS = true;
             //noinspection JSUnresolvedVariable
             delete options.service;
         } else if (options.service === 'Office365') {
@@ -134,8 +148,6 @@ function sendEmail(adapter, transport, options, message, callback) {
             options.secureConnection = false;
             //noinspection JSUnresolvedVariable
             options.tls = {ciphers: 'SSLv3'};
-            //noinspection JSUnresolvedVariable
-            options.domains = ['web.de'];
             //noinspection JSUnresolvedVariable
             options.host = 'smtp.office365.com';
             //noinspection JSUnresolvedVariable
