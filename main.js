@@ -127,7 +127,7 @@ function sendEmail(adapter, transport, options, message, callback) {
             //noinspection JSUnresolvedVariable
             options.port = '587';
             //noinspection JSUnresolvedVariable
-            options.tls = {ciphers: 'SSLv3', rejectUnauthorized: false };
+            //options.tls = {ciphers: 'SSLv3', rejectUnauthorized: false };
             //noinspection JSUnresolvedVariable
             options.requireTLS = true;
             //noinspection JSUnresolvedVariable
@@ -138,16 +138,18 @@ function sendEmail(adapter, transport, options, message, callback) {
             //noinspection JSUnresolvedVariable
             options.port = '587';
             //noinspection JSUnresolvedVariable
-            options.tls = {ciphers: 'SSLv3', rejectUnauthorized: false };
+            //options.tls = {ciphers: 'SSLv3', rejectUnauthorized: false };
             //noinspection JSUnresolvedVariable
             options.requireTLS = true;
             //noinspection JSUnresolvedVariable
             delete options.service;
         } else if (options.service === 'Office365') {
             //noinspection JSUnresolvedVariable
-            options.secureConnection = false;
+            //options.secureConnection = false;
             //noinspection JSUnresolvedVariable
-            options.tls = {ciphers: 'SSLv3'};
+            //options.tls = {ciphers: 'SSLv3'};
+            //noinspection JSUnresolvedVariable
+            options.requireTLS = true;
             //noinspection JSUnresolvedVariable
             options.host = 'smtp.office365.com';
             //noinspection JSUnresolvedVariable
@@ -156,7 +158,7 @@ function sendEmail(adapter, transport, options, message, callback) {
             delete options.service;
         } else if (options.service === 'ith') {
             //noinspection JSUnresolvedVariable
-            options.secureConnection = false;
+            //options.secureConnection = false;
             //noinspection JSUnresolvedVariable
             options.tls = {ciphers: 'SSLv3', rejectUnauthorized: false };
             //noinspection JSUnresolvedVariable
