@@ -64,7 +64,7 @@ To send email from other adapter use **adapter.sendTo** function.
 
 
 ## Supported services
-- 1und1
+- 1und1 / ionos
 - AOL
 - DebugMail.io
 - DynectEmail
@@ -104,6 +104,10 @@ To send email from other adapter use **adapter.sendTo** function.
 For other services see documentation of **Nodemailer**: `[https://github.com/nodemailer/nodemailer](https://github.com/nodemailer/nodemailer)`
 
 ## Changelog
+
+### __WORK IN PROGRESS__
+* (Apollon77) Adjust default settings for web.de and 1und1 and add ionos
+* (Apollon77) Add "Always use STARTTLS" option for custom SMTP settings
 
 ### 1.0.10 (2021-07-06)
 * (Apollon77) Optimize for js-controller 3.3

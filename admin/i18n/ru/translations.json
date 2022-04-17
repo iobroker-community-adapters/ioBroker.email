@@ -1,4 +1,5 @@
 {
+    "Always use STARTTLS:": "Всегда используйте STARTTLS:",
     "Check the log or your email": "Проверьте ваш почтовый ящик или логи ioBroker",
     "Connection settings": "Настройки соединения",
     "Default settings": "Настройки по умолчанию",
@@ -11,6 +12,7 @@
     "Is secure connection": "SSL соединение",
     "Password:": "Пароль",
     "Port:": "Порт",
+    "Requires to use STARTTLS": "Требуется использовать STARTTLS",
     "SSL connection:": "SSL соединиение",
     "Service:": "Сервис",
     "Subject:": "Тема",

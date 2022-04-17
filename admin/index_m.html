@@ -134,6 +134,7 @@
                     host:       transportOptionsService ? undefined : $('#transportOptions_host').val(),
                     port:       transportOptionsService ? undefined : $('#transportOptions_port').val(),
                     secure:     transportOptionsService ? undefined : $('#transportOptions_secure').prop('checked'),
+                    requireTLS: transportOptionsService ? undefined : $('#transportOptions_requireTLS').prop('checked'),
                     auth: {
                         user:   $('#transportOptions_auth_user').val(),
                         pass:   $('#transportOptions_auth_pass').val()
@@ -274,6 +275,12 @@
                     <div class="col s12 m4">
                         <input type="checkbox" id="transportOptions_secure" class="value"/>
                         <label for="transportOptions_secure"><span class="translate">SSL connection:</span>(<span class="translate">Is secure connection</span>)</label>
+                    </div>
+                </div>
+                <div class="row" id="_email_requireTLS" style="display: none">
+                    <div class="col s12 m4">
+                        <input type="checkbox" id="transportOptions_requireTLS" class="value"/>
+                        <label for="transportOptions_requireTLS"><span class="translate">Always use STARTTLS:</span>(<span class="translate">Requires to use STARTTLS</span>)</label>
                     </div>
                 </div>
                 <div class="row">

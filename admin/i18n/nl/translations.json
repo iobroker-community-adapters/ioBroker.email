@@ -1,4 +1,5 @@
 {
+    "Always use STARTTLS:": "Gebruik altijd STARTTLS:",
     "Check the log or your email": "Controleer het logboek of uw e-mail",
     "Connection settings": "Verbindingsinstellingen",
     "Default settings": "Standaard instellingen",
@@ -11,6 +12,7 @@
     "Is secure connection": "Is beveiligde verbinding",
     "Password:": "Wachtwoord",
     "Port:": "Haven",
+    "Requires to use STARTTLS": "Vereist om STARTTLS te gebruiken",
     "SSL connection:": "SSL-verbinding",
     "Service:": "Service",
     "Subject:": "Onderwerpen",

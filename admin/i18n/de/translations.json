@@ -1,4 +1,5 @@
 {
+    "Always use STARTTLS:": "Verwenden Sie immer STARTTLS:",
     "Check the log or your email": "Log oder Emails prüfen",
     "Connection settings": "Verbindungseinstellungen",
     "Default settings": "Standardeinstellungen",
@@ -11,6 +12,7 @@
     "Is secure connection": "Verschlüsselte Verbindung",
     "Password:": "Kennwort",
     "Port:": "Port",
+    "Requires to use STARTTLS": "Erfordert die Verwendung von STARTTLS",
     "SSL connection:": "SSL Verbindung",
     "Service:": "Service",
     "Subject:": "Thema",
