@@ -1,233 +1,173 @@
 {
-    "common": {
-        "name": "email",
-        "version": "1.0.10",
-        "news": {
-            "1.0.10": {
-                "en": "Optimize for js-controller 3.3",
-                "de": "Optimieren Sie für js-Controller 3.3",
-                "ru": "Оптимизировать под js-controller 3.3",
-                "pt": "Otimize para js-controller 3.3",
-                "nl": "Optimaliseren voor js-controller 3.3",
-                "fr": "Optimiser pour js-controller 3.3",
-                "it": "Ottimizza per js-controller 3.3",
-                "es": "Optimizar para js-controller 3.3",
-                "pl": "Optymalizacja dla kontrolera js 3.3",
-                "zh-cn": "针对 js-controller 3.3 优化"
-            },
-            "1.0.9": {
-                "en": "Call message callback always with error or without",
-                "de": "Rückruf der Rückrufnachricht immer mit oder ohne Fehler",
-                "ru": "Обратный вызов сообщения всегда с ошибкой или без",
-                "pt": "Callback de mensagem de chamada sempre com erro ou sem",
-                "nl": "Oproep terugbellen altijd met fout of zonder",
-                "fr": "Rappel de message d'appel toujours avec erreur ou sans",
-                "it": "Richiama messaggio di chiamata sempre con errore o senza",
-                "es": "Devolución de llamada de mensaje de llamada siempre con error o sin",
-                "pl": "Zadzwoń do wiadomości zwrotnej zawsze z błędem lub bez",
-                "zh-cn": "始终有错误或没有错误的呼叫消息回调"
-            },
-            "1.0.7": {
-                "en": "Make sure adapter is not crashing on stop in some edge cases\nAdd Sentry for crash reporting with js-controller >=3.x",
-                "de": "Stellen Sie sicher, dass der Adapter in einigen Randfällen beim Anhalten nicht abstürzt\nFügen Sie Sentry für die Absturzberichterstattung mit js-controller> = 3.x hinzu",
-                "ru": "Убедитесь, что адаптер не дает сбой при остановке в некоторых крайних случаях\nДобавьте Sentry для отчетов о сбоях с помощью js-controller> = 3.x",
-                "pt": "Verifique se o adaptador não está travando em alguns casos extremos\nAdicione o Sentry para relatórios de falhas com js-controller> = 3.x",
-                "nl": "Zorg ervoor dat de adapter in sommige randgevallen niet crasht bij het stoppen\nVoeg Sentry toe voor crashrapportage met js-controller> = 3.x",
-                "fr": "Assurez-vous que l'adaptateur ne plante pas à l'arrêt dans certains cas de bord\nAjouter Sentry pour les rapports de plantage avec js-controller> = 3.x",
-                "it": "Assicurarsi che l'adattatore non si blocchi in modo anomalo in alcuni casi limite\nAggiungi Sentry per la segnalazione di arresti anomali con js-controller> = 3.x",
-                "es": "Asegúrese de que el adaptador no se bloquee al detenerse en algunos casos extremos\nAgregue Sentry para informes de fallas con js-controller> = 3.x",
-                "pl": "Upewnij się, że adapter nie ulega awarii w przypadku zatrzymania w niektórych przypadkach krawędzi\nDodaj Sentry do raportowania awarii za pomocą js-controller> = 3.x",
-                "zh-cn": "确保适配器在某些情况下不会在停止时崩溃\n添加Sentry以使用js-controller> = 3.x进行崩溃报告"
-            },
-            "1.0.6": {
-                "en": "Compact mode supported",
-                "de": "Kompaktmodus unterstützt",
-                "ru": "Компактный режим поддерживается",
-                "pt": "Modo compacto suportado",
-                "nl": "Compacte modus ondersteund",
-                "fr": "Mode compact pris en charge",
-                "it": "Modalità compatta supportata",
-                "es": "Modo compacto compatible",
-                "pl": "Obsługiwany tryb kompaktowy",
-                "zh-cn": "支持紧凑模式"
-            },
-            "1.0.5": {
-                "en": "js-controller 2.0 compatibility, dependency updates",
-                "de": "Kompatibilität mit js-controller 2.0, Abhängigkeitsaktualisierungen",
-                "ru": "Совместимость с js-controller 2.0, обновления зависимостей",
-                "pt": "Compatibilidade com js-controller 2.0, atualizações de dependência",
-                "nl": "js-controller 2.0 compatibiliteit, afhankelijkheid updates",
-                "fr": "Compatibilité js-controller 2.0, mises à jour de dépendance",
-                "it": "Compatibilità js-controller 2.0, aggiornamenti delle dipendenze",
-                "es": "Compatibilidad con js-controller 2.0, actualizaciones de dependencia",
-                "pl": "Zgodność z js-kontrolerem 2.0, aktualizacje zależności",
-                "zh-cn": "js-controller 2.0兼容性，依赖性更新"
-            },
-            "1.0.4": {
-                "en": "ith Support",
-                "de": "ith Unterstützung",
-                "ru": "ith Поддержка",
-                "pt": "ith Apoio, suporte",
-                "nl": "ith Ondersteuning",
-                "fr": "ith Soutien",
-                "it": "ith Supporto",
-                "es": "ith Apoyo",
-                "pl": "ith Wsparcie",
-                "zh-cn": "ith支持"
-            },
-            "1.0.3": {
-                "en": "Admin3 ready\nBlockly was fixed",
-                "de": "Admin3 bereit\nBlockly wurde korrigiert",
-                "ru": "Admin3 готов\nBlockly исправлен",
-                "pt": "Admin3 pronto\nBloqueado foi consertado",
-                "nl": "Admin3 klaar\nBlockly was opgelost",
-                "fr": "Admin3 prêt\nBlockly a été réparé",
-                "it": "Admin3 pronto\nBlockly è stato risolto",
-                "es": "Admin3 listo\nBlockly fue arreglado",
-                "pl": "Admin3 gotowy\nBlokowanie zostało naprawione",
-                "zh-cn": "Admin3准备好了\n"
-            },
-            "1.0.2": {
-                "en": "fix translations",
-                "de": "Übersetzungen verbessert",
-                "ru": "fix translations",
-                "pt": "consertar traduções",
-                "nl": "repareer vertalingen",
-                "fr": "corriger les traductions",
-                "it": "correggere le traduzioni",
-                "es": "arreglar traducciones",
-                "pl": "napraw tłumaczenie",
-                "zh-cn": "修复翻译"
-            },
-            "1.0.1": {
-                "en": "add Office365",
-                "de": "Office365 Unterstützung",
-                "ru": "Поддержка Office365",
-                "pt": "adicionar Office365",
-                "nl": "voeg Office365 toe",
-                "fr": "ajouter Office365",
-                "it": "aggiungi Office365",
-                "es": "añadir Office365",
-                "pl": "dodaj Office365",
-                "zh-cn": "添加Office365"
-            },
-            "1.0.0": {
-                "en": "support of blockly",
-                "de": "Blockly-Unterstützung",
-                "ru": "Поддержка blockly",
-                "pt": "suporte de blockly",
-                "nl": "ondersteuning van blockly",
-                "fr": "soutien de bloc",
-                "it": "supporto di blockly",
-                "es": "apoyo de blockly",
-                "pl": "wsparcie blokowe",
-                "zh-cn": "阻止"
-            },
-            "0.2.1": {
-                "en": "fix sending emails after first one",
-                "de": "Zweit email ging nicht. Fixed.",
-                "ru": "Исправлена отсылка второго и следуюших писем",
-                "pt": "consertar o envio de e-mails após o primeiro",
-                "nl": "repareer het verzenden van e-mails na de eerste",
-                "fr": "correction de l'envoi d'emails après le premier",
-                "it": "correggere l'invio di e-mail dopo il primo",
-                "es": "corregir el envío de correos electrónicos después de la primera",
-                "pl": "poprawiaj wysyłanie e-maili po pierwszym",
-                "zh-cn": "修复第一个后发送电子邮件"
-            },
-            "0.2.0": {
-                "en": "filter out double messages\nuse new nodemailer packet",
-                "de": "Ausfiltern doppelte Meldungen\nNeue Version von nodemailer Paket",
-                "ru": "Отфильтровывать двойные сообщения\nНовая версия модуля nodemailer",
-                "pt": "filtrar mensagens duplas\n",
-                "nl": "filter dubbele berichten\n",
-                "fr": "filtrer les doubles messages\n",
-                "it": "filtrare i messaggi doppi\n",
-                "es": "filtrar mensajes dobles\n",
-                "pl": "odfiltrować podwójne wiadomości\n",
-                "zh-cn": "过滤掉双重消息\n"
-            }
-        },
-        "title": "Send emails",
-        "titleLang": {
-            "en": "Send emails",
-            "de": "E-Mails senden",
-            "ru": "Отправить письма",
-            "pt": "Mande emails",
-            "nl": "Stuur emails",
-            "fr": "Envoyer des emails",
-            "it": "Inviare emails",
-            "es": "Enviar correos electrónicos",
-            "pl": "Wysyłać emaile",
-            "zh-cn": "发电子邮件"
-        },
-        "desc": {
-            "en": "This adapter allows to send emails from ioBroker",
-            "de": "Dient zum Versenden von eMails über ioBroker",
-            "ru": "Этот адаптер позволяет отправлять электронные письма из ioBroker",
-            "pt": "Este adaptador permite enviar e-mails de ioBroker",
-            "nl": "Met deze adapter kunnen e-mails van ioBroker worden verzonden",
-            "fr": "Cet adaptateur permet d'envoyer des emails de ioBroker",
-            "it": "Questo adattatore consente di inviare e-mail da ioBroker",
-            "es": "Este adaptador permite enviar correos electrónicos desde ioBroker",
-            "pl": "Ten adapter umożliwia wysyłanie wiadomości e-mail z oprogramowania ioBroker",
-            "zh-cn": "此适配器允许从ioBroker发送电子邮件"
-        },
-        "authors": [
-            "bluefox <dogafox@gmail.com>"
-        ],
-        "license": "MIT",
-        "platform": "Javascript/Node.js",
-        "mode": "daemon",
-        "availableModes": [
-            "daemon",
-            "subscribe"
-        ],
-        "loglevel": "info",
-        "messagebox": true,
-        "subscribe": "messagebox",
-        "readme": "https://github.com/iobroker-community-adapters/ioBroker.email/blob/master/README.md",
-        "wakeup": true,
-        "enabled": true,
-        "compact": true,
-        "icon": "email.png",
-        "materialize": true,
-        "keywords": [
-            "notification",
-            "email",
-            "message"
-        ],
-        "extIcon": "https://raw.githubusercontent.com/iobroker-community-adapters/ioBroker.email/master/admin/email.png",
-        "type": "messaging",
-        "blockly": true,
-        "connectionType": "cloud",
-        "dataSource": "none",
-        "tier": 1,
-        "plugins": {
-            "sentry": {
-                "dsn": "https://953f66fd5d204c5182b18fe0ab485169@sentry.iobroker.net/52"
-            }
-        },
-        "dependencies": [
-            {
-                "js-controller": ">=2.0.0"
-            }
-        ]
+  "common": {
+    "name": "email",
+    "version": "1.1.0",
+    "news": {
+      "1.1.0": {
+        "en": "Adjust default settings for web.de and 1und1 and add ionos\nAdd \"Always use STARTTLS\" option for custom SMTP settings",
+        "de": "Voreinstellungen für web.de und 1und1 anpassen und ionos hinzufügen\nFügen Sie die Option „Immer STARTTLS verwenden“ für benutzerdefinierte SMTP-Einstellungen hinzu",
+        "ru": "Измените настройки по умолчанию для web.de и 1und1 и добавьте ionos.\nДобавить опцию «Всегда использовать STARTTLS» для пользовательских настроек SMTP.",
+        "pt": "Ajuste as configurações padrão para web.de e 1und1 e adicione ionos\nAdicione a opção \"Sempre usar STARTTLS\" para configurações personalizadas de SMTP",
+        "nl": "Pas de standaardinstellingen voor web.de en 1und1 aan en voeg ionos toe\nVoeg de optie \"Altijd STARTTLS gebruiken\" toe voor aangepaste SMTP-instellingen",
+        "fr": "Ajustez les paramètres par défaut pour web.de et 1und1 et ajoutez ionos\nAjouter l'option \"Toujours utiliser STARTTLS\" pour les paramètres SMTP personnalisés",
+        "it": "Regola le impostazioni predefinite per web.de e 1und1 e aggiungi ionos\nAggiungi l'opzione \"Usa sempre STARTTLS\" per le impostazioni SMTP personalizzate",
+        "es": "Ajuste la configuración predeterminada para web.de y 1und1 y agregue ionos\nAgregue la opción \"Usar siempre STARTTLS\" para configuraciones SMTP personalizadas",
+        "pl": "Dostosuj domyślne ustawienia dla web.de i 1und1 oraz dodaj ionos\nDodaj opcję „Zawsze używaj STARTTLS” dla niestandardowych ustawień SMTP",
+        "zh-cn": "调整 web.de 和 1und1 的默认设置并添加 ionos\n为自定义 SMTP 设置添加“始终使用 STARTTLS”选项"
+      },
+      "1.0.10": {
+        "en": "Optimize for js-controller 3.3",
+        "de": "Optimieren Sie für js-Controller 3.3",
+        "ru": "Оптимизировать под js-controller 3.3",
+        "pt": "Otimize para js-controller 3.3",
+        "nl": "Optimaliseren voor js-controller 3.3",
+        "fr": "Optimiser pour js-controller 3.3",
+        "it": "Ottimizza per js-controller 3.3",
+        "es": "Optimizar para js-controller 3.3",
+        "pl": "Optymalizacja dla kontrolera js 3.3",
+        "zh-cn": "针对 js-controller 3.3 优化"
+      },
+      "1.0.9": {
+        "en": "Call message callback always with error or without",
+        "de": "Rückruf der Rückrufnachricht immer mit oder ohne Fehler",
+        "ru": "Обратный вызов сообщения всегда с ошибкой или без",
+        "pt": "Callback de mensagem de chamada sempre com erro ou sem",
+        "nl": "Oproep terugbellen altijd met fout of zonder",
+        "fr": "Rappel de message d'appel toujours avec erreur ou sans",
+        "it": "Richiama messaggio di chiamata sempre con errore o senza",
+        "es": "Devolución de llamada de mensaje de llamada siempre con error o sin",
+        "pl": "Zadzwoń do wiadomości zwrotnej zawsze z błędem lub bez",
+        "zh-cn": "始终有错误或没有错误的呼叫消息回调"
+      },
+      "1.0.7": {
+        "en": "Make sure adapter is not crashing on stop in some edge cases\nAdd Sentry for crash reporting with js-controller >=3.x",
+        "de": "Stellen Sie sicher, dass der Adapter in einigen Randfällen beim Anhalten nicht abstürzt\nFügen Sie Sentry für die Absturzberichterstattung mit js-controller> = 3.x hinzu",
+        "ru": "Убедитесь, что адаптер не дает сбой при остановке в некоторых крайних случаях\nДобавьте Sentry для отчетов о сбоях с помощью js-controller> = 3.x",
+        "pt": "Verifique se o adaptador não está travando em alguns casos extremos\nAdicione o Sentry para relatórios de falhas com js-controller> = 3.x",
+        "nl": "Zorg ervoor dat de adapter in sommige randgevallen niet crasht bij het stoppen\nVoeg Sentry toe voor crashrapportage met js-controller> = 3.x",
+        "fr": "Assurez-vous que l'adaptateur ne plante pas à l'arrêt dans certains cas de bord\nAjouter Sentry pour les rapports de plantage avec js-controller> = 3.x",
+        "it": "Assicurarsi che l'adattatore non si blocchi in modo anomalo in alcuni casi limite\nAggiungi Sentry per la segnalazione di arresti anomali con js-controller> = 3.x",
+        "es": "Asegúrese de que el adaptador no se bloquee al detenerse en algunos casos extremos\nAgregue Sentry para informes de fallas con js-controller> = 3.x",
+        "pl": "Upewnij się, że adapter nie ulega awarii w przypadku zatrzymania w niektórych przypadkach krawędzi\nDodaj Sentry do raportowania awarii za pomocą js-controller> = 3.x",
+        "zh-cn": "确保适配器在某些情况下不会在停止时崩溃\n添加Sentry以使用js-controller> = 3.x进行崩溃报告"
+      },
+      "1.0.6": {
+        "en": "Compact mode supported",
+        "de": "Kompaktmodus unterstützt",
+        "ru": "Компактный режим поддерживается",
+        "pt": "Modo compacto suportado",
+        "nl": "Compacte modus ondersteund",
+        "fr": "Mode compact pris en charge",
+        "it": "Modalità compatta supportata",
+        "es": "Modo compacto compatible",
+        "pl": "Obsługiwany tryb kompaktowy",
+        "zh-cn": "支持紧凑模式"
+      },
+      "1.0.5": {
+        "en": "js-controller 2.0 compatibility, dependency updates",
+        "de": "Kompatibilität mit js-controller 2.0, Abhängigkeitsaktualisierungen",
+        "ru": "Совместимость с js-controller 2.0, обновления зависимостей",
+        "pt": "Compatibilidade com js-controller 2.0, atualizações de dependência",
+        "nl": "js-controller 2.0 compatibiliteit, afhankelijkheid updates",
+        "fr": "Compatibilité js-controller 2.0, mises à jour de dépendance",
+        "it": "Compatibilità js-controller 2.0, aggiornamenti delle dipendenze",
+        "es": "Compatibilidad con js-controller 2.0, actualizaciones de dependencia",
+        "pl": "Zgodność z js-kontrolerem 2.0, aktualizacje zależności",
+        "zh-cn": "js-controller 2.0兼容性，依赖性更新"
+      },
+      "1.0.4": {
+        "en": "ith Support",
+        "de": "ith Unterstützung",
+        "ru": "ith Поддержка",
+        "pt": "ith Apoio, suporte",
+        "nl": "ith Ondersteuning",
+        "fr": "ith Soutien",
+        "it": "ith Supporto",
+        "es": "ith Apoyo",
+        "pl": "ith Wsparcie",
+        "zh-cn": "ith支持"
+      }
     },
-    "native": {
-        "transport": "SMTP",
-        "transportOptions": {
-            "service": "Gmail",
-            "auth": {
-                "user": "wyx@googlemail.com",
-                "pass": "xxxxxx"
-            }
-        },
-        "defaults": {
-            "from": "test <test@test.com>",
-            "to": "abcdef@googlemail.com",
-            "subject": "ioBroker"
-        }
+    "title": "Send emails",
+    "titleLang": {
+      "en": "Send emails",
+      "de": "E-Mails senden",
+      "ru": "Отправить письма",
+      "pt": "Mande emails",
+      "nl": "Stuur emails",
+      "fr": "Envoyer des emails",
+      "it": "Inviare emails",
+      "es": "Enviar correos electrónicos",
+      "pl": "Wysyłać emaile",
+      "zh-cn": "发电子邮件"
     },
-    "objects": []
+    "desc": {
+      "en": "This adapter allows to send emails from ioBroker",
+      "de": "Dient zum Versenden von eMails über ioBroker",
+      "ru": "Этот адаптер позволяет отправлять электронные письма из ioBroker",
+      "pt": "Este adaptador permite enviar e-mails de ioBroker",
+      "nl": "Met deze adapter kunnen e-mails van ioBroker worden verzonden",
+      "fr": "Cet adaptateur permet d'envoyer des emails de ioBroker",
+      "it": "Questo adattatore consente di inviare e-mail da ioBroker",
+      "es": "Este adaptador permite enviar correos electrónicos desde ioBroker",
+      "pl": "Ten adapter umożliwia wysyłanie wiadomości e-mail z oprogramowania ioBroker",
+      "zh-cn": "此适配器允许从ioBroker发送电子邮件"
+    },
+    "authors": [
+      "bluefox <dogafox@gmail.com>"
+    ],
+    "license": "MIT",
+    "platform": "Javascript/Node.js",
+    "mode": "daemon",
+    "availableModes": [
+      "daemon",
+      "subscribe"
+    ],
+    "loglevel": "info",
+    "messagebox": true,
+    "subscribe": "messagebox",
+    "readme": "https://github.com/iobroker-community-adapters/ioBroker.email/blob/master/README.md",
+    "wakeup": true,
+    "enabled": true,
+    "compact": true,
+    "icon": "email.png",
+    "materialize": true,
+    "keywords": [
+      "notification",
+      "email",
+      "message"
+    ],
+    "extIcon": "https://raw.githubusercontent.com/iobroker-community-adapters/ioBroker.email/master/admin/email.png",
+    "type": "messaging",
+    "blockly": true,
+    "connectionType": "cloud",
+    "dataSource": "none",
+    "tier": 1,
+    "plugins": {
+      "sentry": {
+        "dsn": "https://953f66fd5d204c5182b18fe0ab485169@sentry.iobroker.net/52"
+      }
+    },
+    "dependencies": [
+      {
+        "js-controller": ">=2.0.0"
+      }
+    ]
+  },
+  "native": {
+    "transport": "SMTP",
+    "transportOptions": {
+      "service": "Gmail",
+      "auth": {
+        "user": "wyx@googlemail.com",
+        "pass": "xxxxxx"
+      }
+    },
+    "defaults": {
+      "from": "test <test@test.com>",
+      "to": "abcdef@googlemail.com",
+      "subject": "ioBroker"
+    }
+  },
+  "objects": []
 }
