@@ -114,9 +114,14 @@ function sendEmail(adapter, transport, options, message, callback) {
             if (options.port    !== undefined) delete options.port;
             //noinspection JSUnresolvedVariable
             if (options.secure  !== undefined) delete options.secure;
+            //noinspection JSUnresolvedVariable
+            if (options.requireTLS  !== undefined) delete options.requireTLS;
         } else {
             //noinspection JSUnresolvedVariable
             if (options.service !== undefined) delete options.service;
+            if (!options.secure) {
+                options.ignoreTLS = true;
+            }
         }
         //noinspection JSUnresolvedVariable
         if (options.service === 'web.de') {

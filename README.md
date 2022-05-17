@@ -102,6 +102,10 @@ To send email from other adapter use **adapter.sendTo** function.
 For other services see documentation of **Nodemailer**: `[https://github.com/nodemailer/nodemailer](https://github.com/nodemailer/nodemailer)`
 
 ## Changelog
+
+### __WORK IN PROGRESS__
+* (Apollon77) Allow to use connections to port 25 unencrypted
+
 ### 1.1.0 (2022-05-11)
 * (Apollon77) Adjust default settings for web.de and 1und1 and add ionos
 * (Apollon77) Add "Always use STARTTLS" option for custom SMTP settings
