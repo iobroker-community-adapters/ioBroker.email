@@ -1,8 +1,20 @@
 {
   "common": {
     "name": "email",
-    "version": "1.1.0",
+    "version": "1.1.1",
     "news": {
+      "1.1.1": {
+        "en": "Allow to use connections to port 25 unencrypted",
+        "de": "Verbindungen zu Port 25 unverschlüsselt verwenden",
+        "ru": "Разрешить использовать подключения к порту 25 в незашифрованном виде",
+        "pt": "Permitir usar conexões para a porta 25 não criptografada",
+        "nl": "Sta toe om verbindingen naar poort 25 onversleuteld te gebruiken",
+        "fr": "Autoriser l'utilisation des connexions au port 25 non chiffrées",
+        "it": "Consenti di utilizzare le connessioni alla porta 25 non crittografate",
+        "es": "Permitir usar conexiones al puerto 25 sin cifrar",
+        "pl": "Zezwalaj na używanie połączeń do portu 25 nieszyfrowanych",
+        "zh-cn": "允许使用未加密的端口 25 的连接"
+      },
       "1.1.0": {
         "en": "Adjust default settings for web.de and 1und1 and add ionos\nAdd \"Always use STARTTLS\" option for custom SMTP settings",
         "de": "Voreinstellungen für web.de und 1und1 anpassen und ionos hinzufügen\nFügen Sie die Option „Immer STARTTLS verwenden“ für benutzerdefinierte SMTP-Einstellungen hinzu",
@@ -74,18 +86,6 @@
         "es": "Compatibilidad con js-controller 2.0, actualizaciones de dependencia",
         "pl": "Zgodność z js-kontrolerem 2.0, aktualizacje zależności",
         "zh-cn": "js-controller 2.0兼容性，依赖性更新"
-      },
-      "1.0.4": {
-        "en": "ith Support",
-        "de": "ith Unterstützung",
-        "ru": "ith Поддержка",
-        "pt": "ith Apoio, suporte",
-        "nl": "ith Ondersteuning",
-        "fr": "ith Soutien",
-        "it": "ith Supporto",
-        "es": "ith Apoyo",
-        "pl": "ith Wsparcie",
-        "zh-cn": "ith支持"
       }
     },
     "title": "Send emails",
