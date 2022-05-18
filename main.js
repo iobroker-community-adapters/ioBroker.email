@@ -174,6 +174,19 @@ function sendEmail(adapter, transport, options, message, callback) {
             options.port = '587';
             //noinspection JSUnresolvedVariable
             delete options.service;
+        } else if (options.service === 'mail.ee') {
+            //noinspection JSUnresolvedVariable
+            //options.secureConnection = false;
+            //noinspection JSUnresolvedVariable
+            options.tls = {ciphers: 'SSLv3', rejectUnauthorized: false };
+            //noinspection JSUnresolvedVariable
+            options.requireTLS = true;
+            //noinspection JSUnresolvedVariable
+            options.host = 'mail.ee';
+            //noinspection JSUnresolvedVariable
+            options.port = '587';
+            //noinspection JSUnresolvedVariable
+            delete options.service;
         }
         //noinspection JSUnresolvedFunction, JSUnresolvedVariable
         transport = require('nodemailer').createTransport(options);
