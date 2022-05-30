@@ -38,14 +38,17 @@
                 $('#_email_host').show();
                 $('#_email_port').show();
                 $('#_email_secure').show();
+                $('#_email_requireTLS').show();
             } else {
                 $('#_email_host').hide();
                 $('#_email_port').hide();
                 $('#_email_secure').hide();
+                $('#_email_requireTLS').hide();
 
                 $('#transportOptions_host').val('');
                 $('#transportOptions_port').val('');
                 $('#transportOptions_secure').prop('checked', false);
+                $('#transportOptions_requireTLS').prop('checked', false);
             }
         }
 

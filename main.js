@@ -119,7 +119,10 @@ function sendEmail(adapter, transport, options, message, callback) {
         } else {
             //noinspection JSUnresolvedVariable
             if (options.service !== undefined) delete options.service;
-            if (!options.secure) {
+            if (options.requireTLS === undefined) {
+                options.requireTLS = false;
+            }
+            if (!options.secure && !options.requireTLS) {
                 options.ignoreTLS = true;
             }
         }
