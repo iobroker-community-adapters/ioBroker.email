@@ -1,8 +1,20 @@
 {
   "common": {
     "name": "email",
-    "version": "1.1.2",
+    "version": "1.1.3",
     "news": {
+      "1.1.3": {
+        "en": "Make sure the STARTTLS configuration field is displayed",
+        "de": "Stellen Sie sicher, dass das Konfigurationsfeld STARTTLS angezeigt wird",
+        "ru": "Убедитесь, что отображается поле конфигурации STARTTLS",
+        "pt": "Certifique-se de que o campo de configuração STARTTLS seja exibido",
+        "nl": "Zorg ervoor dat het STARTTLS-configuratieveld wordt weergegeven",
+        "fr": "Assurez-vous que le champ de configuration STARTTLS est affiché",
+        "it": "Assicurati che il campo di configurazione STARTTLS sia visualizzato",
+        "es": "Asegúrese de que se muestre el campo de configuración de STARTTLS",
+        "pl": "Upewnij się, że wyświetlane jest pole konfiguracji STARTTLS",
+        "zh-cn": "确保显示 STARTTLS 配置字段"
+      },
       "1.1.2": {
         "en": "Fix mail.ee settings",
         "de": "Mail.ee-Einstellungen korrigieren",
@@ -74,18 +86,6 @@
         "es": "Asegúrese de que el adaptador no se bloquee al detenerse en algunos casos extremos\nAgregue Sentry para informes de fallas con js-controller> = 3.x",
         "pl": "Upewnij się, że adapter nie ulega awarii w przypadku zatrzymania w niektórych przypadkach krawędzi\nDodaj Sentry do raportowania awarii za pomocą js-controller> = 3.x",
         "zh-cn": "确保适配器在某些情况下不会在停止时崩溃\n添加Sentry以使用js-controller> = 3.x进行崩溃报告"
-      },
-      "1.0.6": {
-        "en": "Compact mode supported",
-        "de": "Kompaktmodus unterstützt",
-        "ru": "Компактный режим поддерживается",
-        "pt": "Modo compacto suportado",
-        "nl": "Compacte modus ondersteund",
-        "fr": "Mode compact pris en charge",
-        "it": "Modalità compatta supportata",
-        "es": "Modo compacto compatible",
-        "pl": "Obsługiwany tryb kompaktowy",
-        "zh-cn": "支持紧凑模式"
       }
     },
     "title": "Send emails",
