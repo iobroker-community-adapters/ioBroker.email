@@ -102,6 +102,10 @@ To send email from other adapter use **adapter.sendTo** function.
 For other services see documentation of **Nodemailer**: `[https://github.com/nodemailer/nodemailer](https://github.com/nodemailer/nodemailer)`
 
 ## Changelog
+
+### __WORK IN PROGRESS__
+* (Apollon77) Prepare compatibility with future js-controller versions
+
 ### 1.1.3 (2022-05-30)
 * (Apollon77) Make sure the STARTTLS configuration field is displayed
 

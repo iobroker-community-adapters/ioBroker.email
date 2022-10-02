@@ -10,7 +10,6 @@
 'use strict';
 
 const utils = require('@iobroker/adapter-core'); // Get common adapter utils
-const tools = require(utils.controllerDir + '/lib/tools.js');
 const adapterName = require('./package.json').name.split('.').pop();
 let adapter;
 
@@ -35,7 +34,7 @@ function startAdapter(options) {
 
     adapter.on('ready', () => {
         // it must be like this
-        adapter.config.transportOptions.auth.pass = tools.decrypt('Zgfr56gFe87jJOM', adapter.config.transportOptions.auth.pass);
+        adapter.config.transportOptions.auth.pass = adapter.decrypt('Zgfr56gFe87jJOM', adapter.config.transportOptions.auth.pass);
         main(adapter);
     });
 
