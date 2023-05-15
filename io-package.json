@@ -125,6 +125,10 @@
     ],
     "loglevel": "info",
     "messagebox": true,
+    "supportedMessages": {
+      "custom": true,
+      "notifications": true
+    },
     "subscribe": "messagebox",
     "readme": "https://github.com/iobroker-community-adapters/ioBroker.email/blob/master/README.md",
     "wakeup": true,
