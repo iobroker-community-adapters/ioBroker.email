@@ -1,8 +1,21 @@
 {
   "common": {
     "name": "email",
-    "version": "1.1.4",
+    "version": "1.2.0",
     "news": {
+      "1.2.0": {
+        "en": "support [Notification Manager](https://github.com/foxriver76/ioBroker.notification-manager)",
+        "de": "unterstützung [Notification Manager](https://github.com/foxriver76/ioBroker.notification-manager)",
+        "ru": "поддержка [Нетификация менеджер](https://github.com/foxriver76/ioBroker.notification-manager)",
+        "pt": "support [Notification Manager](https://github.com/foxriver76/ioBroker.notification-manager)",
+        "nl": "quality over Quantity (QoQ) Releases Vertaling:",
+        "fr": "(https://github.com/foxriver76/ioBroker.notification-manager)",
+        "it": "(https://github.com/foxriver76/ioBroker.notification-manager)",
+        "es": "support [Notification Manager](https://github.com/foxriver76/ioBroker.notification-manager)",
+        "pl": "profil na stronie (ang.)",
+        "uk": "підтримка [Повідомлення менеджера](https://github.com/foxriver76/ioBroker.notification-manager)",
+        "zh-cn": "(http://github.com/foxriver76/ioBroker.com-manager)"
+      },
       "1.1.4": {
         "en": "Prepare compatibility with future js-controller versions",
         "de": "Kompatibilität mit zukünftigen js-Controller-Versionen vorbereiten",
@@ -74,18 +87,6 @@
         "es": "Optimizar para js-controller 3.3",
         "pl": "Optymalizacja dla kontrolera js 3.3",
         "zh-cn": "针对 js-controller 3.3 优化"
-      },
-      "1.0.9": {
-        "en": "Call message callback always with error or without",
-        "de": "Rückruf der Rückrufnachricht immer mit oder ohne Fehler",
-        "ru": "Обратный вызов сообщения всегда с ошибкой или без",
-        "pt": "Callback de mensagem de chamada sempre com erro ou sem",
-        "nl": "Oproep terugbellen altijd met fout of zonder",
-        "fr": "Rappel de message d'appel toujours avec erreur ou sans",
-        "it": "Richiama messaggio di chiamata sempre con errore o senza",
-        "es": "Devolución de llamada de mensaje de llamada siempre con error o sin",
-        "pl": "Zadzwoń do wiadomości zwrotnej zawsze z błędem lub bez",
-        "zh-cn": "始终有错误或没有错误的呼叫消息回调"
       }
     },
     "title": "Send emails",
