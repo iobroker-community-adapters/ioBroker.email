@@ -29,8 +29,13 @@ function startAdapter(options) {
         cb && cb();
     });
 
-    adapter.on('message', obj =>
-        obj && obj.command === 'send' && processMessage(adapter, obj));
+    adapter.on('message', obj => {
+        if (obj && obj.command === 'send') {
+            processMessage(adapter, obj)
+        } else if (obj.command === 'sendNotification') {
+            processNotification(adapter, obj);
+        }
+    });
 
     adapter.on('ready', () => {
         // it must be like this
@@ -62,6 +67,55 @@ function stop(adapter) {
         }, 30000);
     }
 }
+
+/**
+ * Process a `sendNotification` request
+ *
+ * @param {ioBroker.Adapter} adapter
+ * @param {ioBroker.Message} obj
+ */
+function processNotification(adapter, obj) {
+    adapter.log.info(`New notification received from ${obj.from}`);
+
+    const mail = buildMessageFromNotification(obj.message)
+    sendEmail(adapter, null, null, mail, error => {
+        obj.callback && adapter.sendTo(obj.from, 'sendNotification', { sent: !error}, obj.callback);
+    });
+}
+
+/**
+ * Build up a mail object from the notification message
+ *
+ * @param {Record<string, any>} message
+ * @returns {{ subject: string, text: string }}
+ */
+function buildMessageFromNotification(message) {
+    const subject = message.category.name;
+    const { instances } = message.category;
+
+    const readableInstances = Object.entries(instances).map(([instance, entry]) => `${instance.substring('system.adapter.'.length)}: ${getNewestDate(entry.messages)}`);
+
+    const text = `${message.category.description}
+
+${message.host}:   
+${readableInstances.join('\n')}
+    `;
+
+    return { subject, text };
+}
+
+/**
+ * Extract the newest date out of a notification messages array as local date
+ *
+ * @param {{ ts: number, message: string }[]} messages
+ * @return string
+ */
+function getNewestDate(messages) {
+    const newestTs = messages.sort((a, b) => a.ts < b.ts ? 1 : -1)[0].ts
+
+    return new Date(newestTs).toLocaleString()
+}
+
 
 function processMessage(adapter, obj) {
     if (!obj || !obj.message) {
