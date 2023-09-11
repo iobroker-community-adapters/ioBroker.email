@@ -19,6 +19,9 @@
     "home automation",
     "IoT"
   ],
+  "engines": {
+    "node": ">=12.0.0"
+  },
   "dependencies": {
     "nodemailer": "^6.8.0",
     "@iobroker/adapter-core": "^2.6.8"
