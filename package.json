@@ -20,7 +20,7 @@
     "IoT"
   ],
   "engines": {
-    "node": ">=12.0.0"
+    "node": ">=16"
   },
   "dependencies": {
     "nodemailer": "^6.8.0",
