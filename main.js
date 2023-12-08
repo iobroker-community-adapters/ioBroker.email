@@ -105,7 +105,7 @@ ${readableInstances.join('\n')}
 }
 
 /**
- * Extract the newest date out of a notification messages array as local date
+ * Extract the newest message out of a notification messages together with the localized date
  *
  * @param {{ ts: number, message: string }[]} messages
  * @return string
