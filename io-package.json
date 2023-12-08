@@ -1,8 +1,21 @@
 {
   "common": {
     "name": "email",
-    "version": "1.2.0",
+    "version": "1.2.1",
     "news": {
+      "1.2.1": {
+        "en": "send the actual message too via notification-manager",
+        "de": "die eigentliche nachricht auch über benachrichtigungsmanager senden",
+        "ru": "отправить фактическое сообщение также через менеджер уведомлений",
+        "pt": "enviar a mensagem real também através de notificação-manager",
+        "nl": "stuur de boodschap ook door via de manager",
+        "fr": "envoyer le message réel aussi via notification-manager",
+        "it": "inviare il messaggio effettivo anche tramite notifica-manager",
+        "es": "enviar el mensaje real también a través del administrador de notificación",
+        "pl": "wysłać rzeczywistą wiadomość poprzez powiadomienie-managera",
+        "uk": "надсилання фактичного повідомлення через повідомлення-менеджер",
+        "zh-cn": "通过通知-manager发送实际信息"
+      },
       "1.2.0": {
         "en": "support [Notification Manager](https://github.com/foxriver76/ioBroker.notification-manager)",
         "de": "unterstützung [Notification Manager](https://github.com/foxriver76/ioBroker.notification-manager)",
@@ -75,18 +88,6 @@
         "es": "Ajuste la configuración predeterminada para web.de y 1und1 y agregue ionos\nAgregue la opción \"Usar siempre STARTTLS\" para configuraciones SMTP personalizadas",
         "pl": "Dostosuj domyślne ustawienia dla web.de i 1und1 oraz dodaj ionos\nDodaj opcję „Zawsze używaj STARTTLS” dla niestandardowych ustawień SMTP",
         "zh-cn": "调整 web.de 和 1und1 的默认设置并添加 ionos\n为自定义 SMTP 设置添加“始终使用 STARTTLS”选项"
-      },
-      "1.0.10": {
-        "en": "Optimize for js-controller 3.3",
-        "de": "Optimieren Sie für js-Controller 3.3",
-        "ru": "Оптимизировать под js-controller 3.3",
-        "pt": "Otimize para js-controller 3.3",
-        "nl": "Optimaliseren voor js-controller 3.3",
-        "fr": "Optimiser pour js-controller 3.3",
-        "it": "Ottimizza per js-controller 3.3",
-        "es": "Optimizar para js-controller 3.3",
-        "pl": "Optymalizacja dla kontrolera js 3.3",
-        "zh-cn": "针对 js-controller 3.3 优化"
       }
     },
     "title": "Send emails",
