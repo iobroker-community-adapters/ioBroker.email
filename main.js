@@ -93,7 +93,7 @@ function buildMessageFromNotification(message) {
     const subject = message.category.name;
     const { instances } = message.category;
 
-    const readableInstances = Object.entries(instances).map(([instance, entry]) => `${instance.substring('system.adapter.'.length)}: ${getNewestDate(entry.messages)}`);
+    const readableInstances = Object.entries(instances).map(([instance, entry]) => `${instance.substring('system.adapter.'.length)}: ${getNewestMessage(entry.messages)}`);
 
     const text = `${message.category.description}
 
@@ -105,15 +105,15 @@ ${readableInstances.join('\n')}
 }
 
 /**
- * Extract the newest date out of a notification messages array as local date
+ * Extract the newest message out of a notification messages together with the localized date
  *
  * @param {{ ts: number, message: string }[]} messages
  * @return string
  */
-function getNewestDate(messages) {
-    const newestTs = messages.sort((a, b) => a.ts < b.ts ? 1 : -1)[0].ts
+function getNewestMessage(messages) {
+    const newestMessage = messages.sort((a, b) => a.ts < b.ts ? 1 : -1)[0]
 
-    return new Date(newestTs).toLocaleString()
+    return `${new Date(newestMessage.ts).toLocaleString()} ${newestMessage.message}`
 }
 
 
