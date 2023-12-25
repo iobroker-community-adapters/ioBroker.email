@@ -93,7 +93,13 @@ function buildMessageFromNotification(message) {
     const subject = message.category.name;
     const { instances } = message.category;
 
-    const readableInstances = Object.entries(instances).map(([instance, entry]) => `${instance.substring('system.adapter.'.length)}: ${getNewestMessage(entry.messages)}`);
+    const readableInstances = Object.entries(instances).map(([instance, entry]) => {
+        if (instance.startsWith('system.host.')) {
+            return `${instance.substring('system.host.'.length)}: ${getNewestMessage(entry.messages)}`
+        }
+
+        return `${instance.substring('system.adapter.'.length)}: ${getNewestMessage(entry.messages)}`
+    });
 
     const text = `${message.category.description}
 

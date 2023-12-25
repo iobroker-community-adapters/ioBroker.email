@@ -106,6 +106,9 @@ For other services see documentation of **Nodemailer**: `[https://github.com/nod
   Placeholder for the next version (at the beginning of the line):
   ### **WORK IN PROGRESS**
 -->
+### **WORK IN PROGRESS**
+* (foxriver76) trim host messages from notification-manager correctly
+
 ### 1.2.1 (2023-12-08)
  * (foxriver76) send the actual message too via notification-manager
 
