@@ -1,8 +1,21 @@
 {
   "common": {
     "name": "email",
-    "version": "1.2.1",
+    "version": "1.2.2",
     "news": {
+      "1.2.2": {
+        "en": "trim host messages from notification-manager correctly",
+        "de": "host-nachrichten von benachrichtigungsmanager korrekt einblenden",
+        "ru": "трим хост-сообщения от уведомления-менеджера правильно",
+        "pt": "aparar mensagens de host do gerenciador de notificações corretamente",
+        "nl": "strim gastheer berichten van de manager correct",
+        "fr": "les messages d'hôte de notification-manager correctement",
+        "it": "trim messaggi host da notifica-manager correttamente",
+        "es": "trim mensajes de host desde el administrador de notificación correctamente",
+        "pl": "trema hostel",
+        "uk": "обрізка повідомлень хост від повідомлення-менеджера правильно",
+        "zh-cn": "通知-manager的三边寄电"
+      },
       "1.2.1": {
         "en": "send the actual message too via notification-manager",
         "de": "die eigentliche nachricht auch über benachrichtigungsmanager senden",
@@ -76,18 +89,6 @@
         "es": "Permitir usar conexiones al puerto 25 sin cifrar",
         "pl": "Zezwalaj na używanie połączeń do portu 25 nieszyfrowanych",
         "zh-cn": "允许使用未加密的端口 25 的连接"
-      },
-      "1.1.0": {
-        "en": "Adjust default settings for web.de and 1und1 and add ionos\nAdd \"Always use STARTTLS\" option for custom SMTP settings",
-        "de": "Voreinstellungen für web.de und 1und1 anpassen und ionos hinzufügen\nFügen Sie die Option „Immer STARTTLS verwenden“ für benutzerdefinierte SMTP-Einstellungen hinzu",
-        "ru": "Измените настройки по умолчанию для web.de и 1und1 и добавьте ionos.\nДобавить опцию «Всегда использовать STARTTLS» для пользовательских настроек SMTP.",
-        "pt": "Ajuste as configurações padrão para web.de e 1und1 e adicione ionos\nAdicione a opção \"Sempre usar STARTTLS\" para configurações personalizadas de SMTP",
-        "nl": "Pas de standaardinstellingen voor web.de en 1und1 aan en voeg ionos toe\nVoeg de optie \"Altijd STARTTLS gebruiken\" toe voor aangepaste SMTP-instellingen",
-        "fr": "Ajustez les paramètres par défaut pour web.de et 1und1 et ajoutez ionos\nAjouter l'option \"Toujours utiliser STARTTLS\" pour les paramètres SMTP personnalisés",
-        "it": "Regola le impostazioni predefinite per web.de e 1und1 e aggiungi ionos\nAggiungi l'opzione \"Usa sempre STARTTLS\" per le impostazioni SMTP personalizzate",
-        "es": "Ajuste la configuración predeterminada para web.de y 1und1 y agregue ionos\nAgregue la opción \"Usar siempre STARTTLS\" para configuraciones SMTP personalizadas",
-        "pl": "Dostosuj domyślne ustawienia dla web.de i 1und1 oraz dodaj ionos\nDodaj opcję „Zawsze używaj STARTTLS” dla niestandardowych ustawień SMTP",
-        "zh-cn": "调整 web.de 和 1und1 的默认设置并添加 ionos\n为自定义 SMTP 设置添加“始终使用 STARTTLS”选项"
       }
     },
     "title": "Send emails",
