@@ -23,7 +23,7 @@
     "node": ">=16"
   },
   "dependencies": {
-    "nodemailer": "^6.8.0",
+    "nodemailer": "^6.9.11",
     "@iobroker/adapter-core": "^2.6.8"
   },
   "devDependencies": {
