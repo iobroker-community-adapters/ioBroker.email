@@ -1,8 +1,21 @@
 {
   "common": {
     "name": "email",
-    "version": "1.2.2",
+    "version": "1.3.0",
     "news": {
+      "1.3.0": {
+        "en": "Adapter requires node.js >= 18 and js-controller >= 5 now\nDependencies have been updated",
+        "de": "Adapter benötigt node.js >= 18 und js-controller >= 5 jetzt\nAbhängigkeiten wurden aktualisiert",
+        "ru": "Адаптер требует node.js >= 18 и js-контроллер >= 5 сейчас\nЗависимость обновлена",
+        "pt": "Adapter requer node.js >= 18 e js-controller >= 5 agora\nAs dependências foram atualizadas",
+        "nl": "Voor adaptor zijn node.js < 18 en js-controller > Nu 5\nAfhankelijkheden zijn bijgewerkt",
+        "fr": "L'adaptateur nécessite node.js >= 18 et js-controller >= 5 maintenant\nLes dépendances ont été actualisées",
+        "it": "Adattatore richiede node.js >= 18 e js-controller >= 5 ora\nLe dipendenze sono state aggiornate",
+        "es": "Adaptador requiere node.js √≥= 18 y js-controller 5 ahora\nSe han actualizado las dependencias",
+        "pl": "Adapter wymaga node.js > = 18 i kontroler js- > = 5 teraz\nZaktualizowano zależności",
+        "uk": "Адаптер вимагає node.js >= 18 і js-controller >= 5 тепер\nЗалежність було оновлено",
+        "zh-cn": "适配器需要节点.js QQ18和js控制器 QQ 现在5号\n依赖关系已更新"
+      },
       "1.2.2": {
         "en": "trim host messages from notification-manager correctly",
         "de": "host-nachrichten von benachrichtigungsmanager korrekt einblenden",
@@ -77,18 +90,6 @@
         "es": "Arreglar la configuración de mail.ee",
         "pl": "Napraw ustawienia mail.ee",
         "zh-cn": "修复 mail.ee 设置"
-      },
-      "1.1.1": {
-        "en": "Allow to use connections to port 25 unencrypted",
-        "de": "Verbindungen zu Port 25 unverschlüsselt verwenden",
-        "ru": "Разрешить использовать подключения к порту 25 в незашифрованном виде",
-        "pt": "Permitir usar conexões para a porta 25 não criptografada",
-        "nl": "Sta toe om verbindingen naar poort 25 onversleuteld te gebruiken",
-        "fr": "Autoriser l'utilisation des connexions au port 25 non chiffrées",
-        "it": "Consenti di utilizzare le connessioni alla porta 25 non crittografate",
-        "es": "Permitir usar conexiones al puerto 25 sin cifrar",
-        "pl": "Zezwalaj na używanie połączeń do portu 25 nieszyfrowanych",
-        "zh-cn": "允许使用未加密的端口 25 的连接"
       }
     },
     "titleLang": {
