@@ -91,7 +91,6 @@
         "zh-cn": "允许使用未加密的端口 25 的连接"
       }
     },
-    "title": "Send emails",
     "titleLang": {
       "en": "Send emails",
       "de": "E-Mails senden",
@@ -119,7 +118,10 @@
     "authors": [
       "bluefox <dogafox@gmail.com>"
     ],
-    "license": "MIT",
+    "licenseInformation": {
+      "license": "MIT",
+      "type": "free"
+    },
     "platform": "Javascript/Node.js",
     "mode": "daemon",
     "availableModes": [
@@ -150,16 +152,21 @@
     "connectionType": "cloud",
     "dataSource": "none",
     "tier": 1,
+    "dependencies": [
+      {
+        "js-controller": ">=5.0.19"
+      }
+    ],
+    "globalDependencies": [
+      {
+        "admin": ">=6.13.16"
+      }
+    ],
     "plugins": {
       "sentry": {
         "dsn": "https://953f66fd5d204c5182b18fe0ab485169@sentry.iobroker.net/52"
       }
-    },
-    "dependencies": [
-      {
-        "js-controller": ">=2.0.0"
-      }
-    ]
+    }
   },
   "native": {
     "transport": "SMTP",
