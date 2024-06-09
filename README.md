@@ -22,38 +22,42 @@ case you would have to create an Application Specific password. You also may nee
 
 To send email from ScriptEngine just write:
 
-```
+```js
 // send email to all instances of email adapter
-sendTo("email", "Email body");
+sendTo('email', 'Email body');
 
 // send email to specific instance of email adapter
-sendTo("email.1", "Email body");
+sendTo("email.1", 'Email body');
 
 // To specify subject or other options
-sendTo("email", {
-    from:    "iobroker@mydomain.com",
-    to:      "aabbcc@gmail.com, xxyyzz@gmail.com", // comma separated multiple recipients.
-    subject: "Message from ioBroker",
-    text:    "This is test email to you!"
+sendTo('email', {
+    from:    'iobroker@mydomain.com',
+    to:      'aabbcc@gmail.com, xxyyzz@gmail.com', // comma separated multiple recipients.
+    subject: 'Message from ioBroker',
+    text:    'This is test email to you!',
 });
 
 // To send attachments
-sendTo("email", {
+sendTo('email', {
     attachments: [
-       // use file on disk as attachment
-       {path: "/pathToImage/picture1.jpg"},
-       {   // use URL as an attachment
+        {
+            path: '/pathToImage/picture1.jpg', // use file on disk as attachment
+        },
+        {
             filename: 'license.txt',
-            path: 'https://raw.github.com/andris9/Nodemailer/master/LICENSE'
-       }
+            path: 'https://raw.github.com/andris9/Nodemailer/master/LICENSE', // use URL as an attachment
+        },
     ]
 });
 
 // To send in html format
-sendTo("email", {
-    html: "<p>Embedded image: <img src='cid:image1'/></p>",
+sendTo('email', {
+    html: '<p>Embedded image: <img src='cid:image1'/></p>',
     attachments:[
-        {path: "path/to/file/image1.jpg", cid: "image1"}
+        {
+            path: 'path/to/file/image1.jpg',
+            cid: 'image1',
+        },
     ]
 });
 ```
@@ -106,6 +110,9 @@ For other services see documentation of **Nodemailer**: `[https://github.com/nod
   Placeholder for the next version (at the beginning of the line):
   ### **WORK IN PROGRESS**
 -->
+### **WORK IN PROGRESS**
+* (klein0r) Updated Blockly definitions
+
 ### 1.3.0 (2024-04-29)
 * (mcm1957) Adapter requires node.js >= 18 and js-controller >= 5 now
 * (mcm1957) Dependencies have been updated

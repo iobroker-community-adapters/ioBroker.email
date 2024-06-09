@@ -7,3 +7,7 @@ appveyor.yml
 admin/i18n
 iob_npm.done
 package-lock.json
+
+
+# ioBroker dev-server
+.dev-server/

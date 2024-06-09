@@ -37,47 +37,57 @@ Blockly.Words['email_tooltip']       = {"en": "Send an email",                  
 Blockly.Words['email_help']          = {"en": "https://github.com/ioBroker/ioBroker.email/blob/master/README.md", "de": "https://github.com/ioBroker/ioBroker.email/blob/master/README.md", "ru": "https://github.com/ioBroker/ioBroker.email/blob/master/README.md", "pt": "https://github.com/ioBroker/ioBroker.email/blob/master/README.md", "nl": "https://github.com/ioBroker/ioBroker.email/blob/master/README.md", "fr": "https://github.com/ioBroker/ioBroker.email/blob/master/README.md", "it": "https://github.com/ioBroker/ioBroker.email/blob/master/README.md", "es": "https://github.com/ioBroker/ioBroker.email/blob/master/README.md", "pl": "https://github.com/ioBroker/ioBroker.email/blob/master/README.md", "zh-cn": "https://github.com/ioBroker/ioBroker.email/blob/master/README.md"};
 
 Blockly.Sendto.blocks['email'] =
-    '<block type="email">'
-    + '     <value name="INSTANCE">'
-    + '     </value>'
-    + '     <value name="TO">'
-    + '         <shadow type="text">'
-    + '             <field name="TO_TEXT">text</field>'
-    + '         </shadow>'
-    + '     </value>'
-    + '     <value name="IS_HTML">'
-    + '     </value>'
-    + '     <value name="TEXT">'
-    + '         <shadow type="text">'
-    + '             <field name="TEXT_TEXT">text</field>'
-    + '         </shadow>'
-    + '     </value>'
-    + '     <value name="SUBJECT">'
-    + '         <shadow type="text">'
-    + '             <field name="SUBJECT_TEXT">text</field>'
-    + '         </shadow>'
-    + '     </value>'
-    + '     <value name="FROM">'
-    + '     </value>'
-    + '     <value name="FILE_1">'
-    + '     </value>'
-    + '     <value name="FILE_2">'
-    + '     </value>'
-    + '     <value name="LOG">'
-    + '     </value>'
-    + '</block>';
+    '<block type="email">' +
+    '  <field name="INSTANCE"></field>' +
+    '  <field name="IS_HTML">FALSE</field>' +
+    '  <field name="LOG"></field>' +
+    '  <value name="TO">' +
+    '    <shadow type="text">' +
+    '      <field name="TEXT">user@domain.tld</field>' +
+    '    </shadow>' +
+    '  </value>' +
+    '  <value name="TEXT">' +
+    '    <shadow type="text">' +
+    '      <field name="TEXT"></field>' +
+    '    </shadow>' +
+    '  </value>' +
+    '  <value name="SUBJECT">' +
+    '    <shadow type="text">' +
+    '      <field name="TEXT"></field>' +
+    '    </shadow>' +
+    '  </value>' +
+    '</block>';
 
 Blockly.Blocks['email'] = {
     init: function() {
+        const options = [[Blockly.Translate('email_anyInstance'), '']];
+        if (typeof main !== 'undefined' && main.instances) {
+            for (let i = 0; i < main.instances.length; i++) {
+                const m = main.instances[i].match(/^system.adapter.email.(\d+)$/);
+                if (m) {
+                    const k = parseInt(m[1], 10);
+                    options.push(['email.' + k, '.' + k]);
+                }
+            }
+            if (options.length === 0) {
+                for (let u = 0; u <= 4; u++) {
+                    options.push(['email.' + u, '.' + u]);
+                }
+            }
+        } else {
+            for (let n = 0; n <= 4; n++) {
+                options.push(['email.' + n, '.' + n]);
+            }
+        }
 
-        this.appendDummyInput("INSTANCE")
+        this.appendDummyInput('INSTANCE')
             .appendField(Blockly.Translate('email'))
-            .appendField(new Blockly.FieldDropdown([[Blockly.Translate('email_anyInstance'), ""], ["email.0", ".0"], ["email.1", ".1"], ["email.2", ".2"], ["email.3", ".3"], ["email.4", ".4"]]), "INSTANCE");
+            .appendField(new Blockly.FieldDropdown(options), 'INSTANCE');
 
-        this.appendValueInput("TO")
+        this.appendValueInput('TO')
             .appendField(Blockly.Translate('email_to'));
 
-        this.appendDummyInput("IS_HTML")
+        this.appendDummyInput('IS_HTML')
             .appendField(Blockly.Translate('email_is_html'))
             .appendField(new Blockly.FieldCheckbox('FALSE'), 'IS_HTML');
 
@@ -85,34 +95,42 @@ Blockly.Blocks['email'] = {
             .setCheck('String')
             .appendField(Blockly.Translate('email_text'));
 
-        var input = this.appendValueInput("SUBJECT")
+        const inputSubject = this.appendValueInput('SUBJECT')
             .setCheck('String')
             .appendField(Blockly.Translate('email_subject'));
-        if (input.connection) input.connection._optional = true;
+        if (inputSubject.connection) {
+            inputSubject.connection._optional = true;
+        }
 
-        input = this.appendValueInput("FROM")
+        const inputFrom = this.appendValueInput('FROM')
             .setCheck('String')
             .appendField(Blockly.Translate('email_from'));
-        if (input.connection) input.connection._optional = true;
+        if (inputFrom.connection) {
+            inputFrom.connection._optional = true;
+        }
 
-        input = this.appendValueInput("FILE_1")
+        const inputFile1 = this.appendValueInput('FILE_1')
             .setCheck('String')
             .appendField(Blockly.Translate('email_file'));
-        if (input.connection) input.connection._optional = true;
+        if (inputFile1.connection) {
+            inputFile1.connection._optional = true;
+        }
 
-        input = this.appendValueInput("FILE_2")
+        const inputFile2 = this.appendValueInput('FILE_2')
             .setCheck('String')
             .appendField(Blockly.Translate('email_file'));
-        if (input.connection) input.connection._optional = true;
+        if (inputFile2.connection) {
+            inputFile2.connection._optional = true;
+        }
 
         this.appendDummyInput('LOG')
             .appendField(Blockly.Translate('email_log'))
             .appendField(new Blockly.FieldDropdown([
                 [Blockly.Translate('email_log_none'),  ''],
-                [Blockly.Translate('email_log_info'),  'log'],
                 [Blockly.Translate('email_log_debug'), 'debug'],
+                [Blockly.Translate('email_log_info'),  'log'],
                 [Blockly.Translate('email_log_warn'),  'warn'],
-                [Blockly.Translate('email_log_error'), 'error']
+                [Blockly.Translate('email_log_error'), 'error'],
             ]), 'LOG');
 
         this.setInputsInline(false);
@@ -122,56 +140,62 @@ Blockly.Blocks['email'] = {
         this.setColour(Blockly.Sendto.HUE);
         this.setTooltip(Blockly.Translate('email_tooltip'));
         this.setHelpUrl(Blockly.Translate('email_help'));
-    }
+    },
 };
 
 Blockly.JavaScript['email'] = function(block) {
-    var dropdown_instance = block.getFieldValue('INSTANCE');
-    var logLevel = block.getFieldValue('LOG');
-    var message  = Blockly.JavaScript.valueToCode(block, 'TEXT', Blockly.JavaScript.ORDER_ATOMIC);
-    var isHtml = block.getFieldValue('IS_HTML');
+    const dropdown_instance = block.getFieldValue('INSTANCE');
+    const logLevel = block.getFieldValue('LOG');
+    const message  = Blockly.JavaScript.valueToCode(block, 'TEXT', Blockly.JavaScript.ORDER_ATOMIC);
+    const isHtml = block.getFieldValue('IS_HTML');
 
-    var text = '{\n';
+    let text = '{\n';
     if (isHtml === 'TRUE') {
-        text += '   html: ' + message + ',\n';
+        text += `  html: ${message},\n`;
     } else {
-        text += '   text: ' + message + ',\n';
+        text += `  text: ${message},\n`;
     }
 
-    var value = Blockly.JavaScript.valueToCode(block, 'TO', Blockly.JavaScript.ORDER_ATOMIC);
-    if (value)     text += '   to: ' + value + ',\n';
+    const to = Blockly.JavaScript.valueToCode(block, 'TO', Blockly.JavaScript.ORDER_ATOMIC);
+    if (to) {
+        text += `  to: ${to},\n`;
+    }
 
-    value = Blockly.JavaScript.valueToCode(block, 'SUBJECT', Blockly.JavaScript.ORDER_ATOMIC);
-    if (value && value !== '') text += '   subject: ' + value + ',\n';
+    const subject = Blockly.JavaScript.valueToCode(block, 'SUBJECT', Blockly.JavaScript.ORDER_ATOMIC);
+    if (subject && subject !== '') {
+        text += `  subject: ${subject},\n`;
+    }
 
-    value = Blockly.JavaScript.valueToCode(block, 'FROM', Blockly.JavaScript.ORDER_ATOMIC);
-    if (value)     text += '   from: ' + value + ',\n';
+    const from = Blockly.JavaScript.valueToCode(block, 'FROM', Blockly.JavaScript.ORDER_ATOMIC);
+    if (from) {
+        text += `  from: ${from},\n`;
+    }
 
-    var files = [];
+    const files = [];
 
     files.push(Blockly.JavaScript.valueToCode(block, 'FILE_1', Blockly.JavaScript.ORDER_ATOMIC));
     files.push(Blockly.JavaScript.valueToCode(block, 'FILE_2', Blockly.JavaScript.ORDER_ATOMIC));
-    var attachments = '';
-    for (var f = 0; f < files.length; f++) {
+
+    let attachments = '';
+    for (let f = 0; f < files.length; f++) {
         if (files[f]) {
-            if (!attachments) attachments = '   attachments:[\n';
-            attachments += '      {path: ' + files[f] + ', cid: "file' + (f + 1) + '"},\n';
+            if (!attachments) {
+                attachments = '  attachments:[\n';
+            }
+
+            attachments += `    { path: ${files[f]}, cid: 'file${f + 1}' },\n`;
         }
     }
-    if (attachments) attachments += '    ],\n';
+    if (attachments) {
+        attachments += '  ],\n';
+    }
     text += attachments;
-
-    text = text.substring(0, text.length - 2);
-    text += '\n';
-
     text += '}';
-    var logText;
 
+    let logText = '';
     if (logLevel) {
-        logText = 'console.' + logLevel + '("email: " + ' + message + ');\n'
-    } else {
-        logText = '';
+        logText = `console.${logLevel}('email: ' + ${message});\n`;
     }
 
-    return 'sendTo("email' + dropdown_instance + '", "send", ' + text + ');\n' + logText;
+    return `sendTo('email${dropdown_instance}', 'send', ${text});\n${logText}`;
 };
