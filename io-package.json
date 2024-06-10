@@ -148,7 +148,7 @@
     "blockly": true,
     "connectionType": "cloud",
     "dataSource": "none",
-    "tier": 1,
+    "tier": 3,
     "dependencies": [
       {
         "js-controller": ">=5.0.19"
