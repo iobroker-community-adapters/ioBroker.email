@@ -143,7 +143,10 @@ function processMessage(adapter, obj) {
     }
 
     if (obj.message.options) {
-        const  options = JSON.parse(JSON.stringify(obj.message.options));
+        let  options = JSON.parse(JSON.stringify(obj.message.options));
+        options.secure = (options.secure === 'true');
+        options.requireTLS = (options.requireTLS === 'true');
+        options.auth.pass = decodeURIComponent(options.auth.pass);
         delete obj.message.options;
         sendEmail(adapter, null, options, obj.message, error =>
             obj.callback && adapter.sendTo(obj.from, 'send', {error}, obj.callback));
