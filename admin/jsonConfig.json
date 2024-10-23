@@ -1,0 +1,186 @@
+{
+  "type": "tabs",
+  "i18n": true,
+  "items": {
+    "tab-main": {
+      "type": "panel",
+      "label": "Connection settings",
+      "items": {
+        "transport": {
+          "type": "select",
+          "label": "Transport",
+          "options": [
+            {
+              "label": "SMTP",
+              "value": "SMTP"
+            }
+          ],
+          "xs": 12,
+          "sm": 12,
+          "md": 4,
+          "lg": 4,
+          "xl": 4
+        },
+        "transportOptions_service": {
+          "type": "select",
+          "label": "Service",
+          "options": [
+            { "label": "1und1", "value": "1und1" },
+            { "label": "AOL", "value": "AOL" },
+            { "label": "DebugMail.io", "value": "DebugMail.io" },
+            { "label": "DynectEmail", "value": "DynectEmail" },
+            { "label": "FastMail", "value": "FastMail" },
+            { "label": "GandiMail", "value": "GandiMail" },
+            { "label": "Gmail", "value": "Gmail" },
+            { "label": "Godaddy", "value": "Godaddy" },
+            { "label": "GodaddyAsia", "value": "GodaddyAsia" },
+            { "label": "GodaddyEurope", "value": "GodaddyEurope" },
+            { "label": "hot.ee", "value": "hot.ee" },
+            { "label": "Hotmail", "value": "Hotmail" },
+            { "label": "iCloud", "value": "iCloud" },
+            { "label": "ith", "value": "ith" },
+            { "label": "ionos", "value": "ionos" },
+            { "label": "mail.ee", "value": "mail.ee" },
+            { "label": "Mail.ru", "value": "Mail.ru" },
+            { "label": "Mailgun", "value": "Mailgun" },
+            { "label": "Mailjet", "value": "Mailjet" },
+            { "label": "Mandrill", "value": "Mandrill" },
+            { "label": "Naver", "value": "Naver" },
+            { "label": "Office365", "value": "Office365" },
+            { "label": "OpenMailBox", "value": "OpenMailBox" },
+            { "label": "Postmark", "value": "Postmark" },
+            { "label": "QQ", "value": "QQ" },
+            { "label": "QQex", "value": "QQex" },
+            { "label": "SendCloud", "value": "SendCloud" },
+            { "label": "SendGrid", "value": "SendGrid" },
+            { "label": "SES", "value": "SES" },
+            { "label": "SES-US-EAST-1", "value": "SES-US-EAST-1" },
+            { "label": "SES-US-WEST-2", "value": "SES-US-WEST-2" },
+            { "label": "SES-EU-WEST-1", "value": "SES-EU-WEST-1" },
+            { "label": "Sparkpost", "value": "Sparkpost" },
+            { "label": "web.de", "value": "web.de" },
+            { "label": "Yahoo", "value": "Yahoo" },
+            { "label": "Yandex", "value": "Yandex" },
+            { "label": "Zoho", "value": "Zoho" },
+            { "label": "User defined", "value": "" }
+          ],
+          "xs": 12,
+          "sm": 12,
+          "md": 4,
+          "lg": 4,
+          "xl": 4
+        },
+        "transportOptions_host": {
+          "type": "text",
+          "label": "Host",
+          "hidden": "data.transportOptions_service && data.transportOptions_service !== ''",
+          "xs": 12,
+          "sm": 12,
+          "md": 4,
+          "lg": 4,
+          "xl": 4,
+          "newLine": true
+        },
+        "transportOptions_port": {
+          "type": "number",
+          "label": "Port",
+          "hidden": "data.transportOptions_service && data.transportOptions_service !== ''",
+          "xs": 12,
+          "sm": 12,
+          "md": 4,
+          "lg": 4,
+          "xl": 4
+        },
+        "transportOptions_secure": {
+          "type": "checkbox",
+          "label": "SSL connection",
+          "hidden": "data.transportOptions_service && data.transportOptions_service !== ''",
+          "xs": 12,
+          "sm": 12,
+          "md": 4,
+          "lg": 4,
+          "xl": 4,
+          "newLine": true
+        },
+        "transportOptions_requireTLS": {
+          "type": "checkbox",
+          "label": "Always use STARTTLS",
+          "hidden": "data.transportOptions_service && data.transportOptions_service !== ''",
+          "xs": 12,
+          "sm": 12,
+          "md": 4,
+          "lg": 4,
+          "xl": 4
+        },
+        "transportOptions_auth_user": {
+          "type": "text",
+          "label": "User",
+          "xs": 12,
+          "sm": 12,
+          "md": 5,
+          "lg": 4,
+          "xl": 4,
+          "newLine": true
+        },
+        "transportOptions_auth_pass": {
+          "type": "password",
+          "label": "Password",
+          "xs": 12,
+          "sm": 12,
+          "md": 5,
+          "lg": 4,
+          "xl": 4
+        },
+        "test": {
+          "type": "sendTo",
+          "label": "Test",
+          "command": "send",
+          "jsonData": "{\"subject\": \"${data.defaults_subject}\", \"to\": \"${data.defaults_to}\", \"from\": \"${data.defaults_from}\", \"text\": \"This is a test email from ioBroker!\", \"service\": \"${data.transportOptions_service ? data.transportOptions_service : ''}\", \"options\": { \"host\": \"${data.transportOptions_host}\", \"port\": \"${data.transportOptions_port}\", \"secure\": \"${data.transportOptions_secure}\", \"requireTLS\": \"${data.transportOptions_requireTLS}\", \"auth\": {\"user\": \"${data.transportOptions_auth_user}\", \"pass\": \"${encodeURIComponent(data.transportOptions_auth_pass)}\"} } }",
+          "variant": "outlined",
+          "showProcess": true,
+          "xs": 12,
+          "sm": 12,
+          "md": 4,
+          "lg": 4,
+          "xl": 4,
+          "newLine": true
+        }
+      }
+    },
+    "tab-default": {
+      "type": "panel",
+      "label": "Default settings",
+      "items": {
+        "defaults_from": {
+          "type": "text",
+          "label": "From",
+          "xs": 12,
+          "sm": 12,
+          "md": 4,
+          "lg": 4,
+          "xl": 4,
+          "newLine": true
+        },
+        "defaults_to": {
+          "type": "text",
+          "label": "To",
+          "xs": 12,
+          "sm": 12,
+          "md": 4,
+          "lg": 4,
+          "xl": 4
+        },
+        "defaults_subject": {
+          "type": "text",
+          "label": "Subject",
+          "xs": 12,
+          "sm": 12,
+          "md": 4,
+          "lg": 4,
+          "xl": 4,
+          "newLine": true
+        }
+      }
+    }
+  }
+}
