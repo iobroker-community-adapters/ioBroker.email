@@ -1,6 +1,9 @@
 {
   "type": "tabs",
   "i18n": true,
+  "tabsStyle": {
+    "width": "calc(100% - 100px)"
+  },
   "items": {
     "tab-main": {
       "type": "panel",
