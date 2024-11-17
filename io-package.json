@@ -1,8 +1,21 @@
 {
   "common": {
     "name": "email",
-    "version": "1.3.1",
+    "version": "1.4.0",
     "news": {
+      "1.4.0": {
+        "en": "Responsive Design added",
+        "de": "Responsive Design hinzugefügt",
+        "ru": "Responsive Design",
+        "pt": "Design responsivo adicionado",
+        "nl": "Responsive Design toegevoegd",
+        "fr": "Design sensible ajouté",
+        "it": "Responsive Design aggiunto",
+        "es": "Diseño responsable añadido",
+        "pl": "Dodano projekt odpowiedzialny",
+        "uk": "Додано адаптивний дизайн",
+        "zh-cn": "添加响应设计"
+      },
       "1.3.1": {
         "en": "Updated Blockly definitions",
         "de": "Aktualisierte Blockly Definitionen",
@@ -79,18 +92,6 @@
         "es": "Prepare la compatibilidad con futuras versiones js-controller",
         "pl": "Prepare kompatybilność z przyszłymi wersjami js",
         "zh-cn": "A. 与今后控制的小册子版本的兼容性"
-      },
-      "1.1.3": {
-        "en": "Make sure the STARTTLS configuration field is displayed",
-        "de": "Stellen Sie sicher, dass das Konfigurationsfeld STARTTLS angezeigt wird",
-        "ru": "Убедитесь, что отображается поле конфигурации STARTTLS",
-        "pt": "Certifique-se de que o campo de configuração STARTTLS seja exibido",
-        "nl": "Zorg ervoor dat het STARTTLS-configuratieveld wordt weergegeven",
-        "fr": "Assurez-vous que le champ de configuration STARTTLS est affiché",
-        "it": "Assicurati che il campo di configurazione STARTTLS sia visualizzato",
-        "es": "Asegúrese de que se muestre el campo de configuración de STARTTLS",
-        "pl": "Upewnij się, że wyświetlane jest pole konfiguracji STARTTLS",
-        "zh-cn": "确保显示 STARTTLS 配置字段"
       }
     },
     "titleLang": {

@@ -1,4 +1,7 @@
 # Older changes
+## 1.2.0 (2023-06-02)
+* (foxriver76) support [Notification Manager](https://github.com/foxriver76/ioBroker.notification-manager)
+
 ## 1.1.4 (2022-10-08)
 * (Apollon77) Prepare compatibility with future js-controller versions
 
