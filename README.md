@@ -114,6 +114,9 @@ For other services see documentation of **Nodemailer**: `[https://github.com/nod
   Placeholder for the next version (at the beginning of the line):
   ### **WORK IN PROGRESS**
 -->
+### **WORK IN PROGRESS**
+* (simatec) Responsive Design added
+
 ### 1.3.1 (2024-06-09)
 * (klein0r) Updated Blockly definitions
 
