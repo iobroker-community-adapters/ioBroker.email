@@ -134,7 +134,6 @@
       "notifications": true
     },
     "readme": "https://github.com/iobroker-community-adapters/ioBroker.email/blob/master/README.md",
-    "wakeup": true,
     "enabled": true,
     "compact": true,
     "icon": "email.png",
@@ -156,7 +155,7 @@
     ],
     "globalDependencies": [
       {
-        "admin": ">=6.13.16"
+        "admin": ">=6.17.14"
       }
     ],
     "plugins": {
