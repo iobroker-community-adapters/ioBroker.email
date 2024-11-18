@@ -176,6 +176,9 @@
         "pass": "xxxxxx"
       }
     },
+    "nativeEncrypted": [
+      "transportOptions.auth.pass"
+    ],
     "defaults": {
       "from": "test <test@test.com>",
       "to": "abcdef@googlemail.com",
