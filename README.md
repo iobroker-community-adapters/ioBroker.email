@@ -114,8 +114,14 @@ For other services see documentation of **Nodemailer**: `[https://github.com/nod
   Placeholder for the next version (at the beginning of the line):
   ### **WORK IN PROGRESS**
 -->
+### **WORK IN PROGRESS**
+* (mcm1957) Adapter requires js-controller 5.0.19 and admin 6.17.14 now
+* (mcm1957) EsLint uses @iobroker/linter-config now
+* (mcm1957) Dependencies have been updated
+
 ### 1.4.0 (2024-11-17)
 * (simatec) Responsive Design added
+* (Jey-Cee) Admin-UI has been migrated to jsonConfig
 
 ### 1.3.1 (2024-06-09)
 * (klein0r) Updated Blockly definitions
