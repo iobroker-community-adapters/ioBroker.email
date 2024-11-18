@@ -104,6 +104,7 @@
       "it": "Inviare emails",
       "es": "Enviar correos electrónicos",
       "pl": "Wysyłać emaile",
+      "uk": "Надсилайте електронні листи",
       "zh-cn": "发电子邮件"
     },
     "desc": {
@@ -116,6 +117,7 @@
       "it": "Questo adattatore consente di inviare e-mail da ioBroker",
       "es": "Este adaptador permite enviar correos electrónicos desde ioBroker",
       "pl": "Ten adapter umożliwia wysyłanie wiadomości e-mail z oprogramowania ioBroker",
+      "uk": "Цей адаптер дозволяє відправляти електронні листи з ioBroker",
       "zh-cn": "此适配器允许从ioBroker发送电子邮件"
     },
     "authors": [
