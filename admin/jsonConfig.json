@@ -24,7 +24,7 @@
           "lg": 4,
           "xl": 4
         },
-        "transportOptions_service": {
+        "transportOptions.service": {
           "type": "select",
           "label": "Service",
           "options": [
@@ -73,7 +73,7 @@
           "lg": 4,
           "xl": 4
         },
-        "transportOptions_host": {
+        "transportOptions.host": {
           "type": "text",
           "label": "Host",
           "hidden": "data.transportOptions_service && data.transportOptions_service !== ''",
@@ -84,7 +84,7 @@
           "xl": 4,
           "newLine": true
         },
-        "transportOptions_port": {
+        "transportOptions.port": {
           "type": "number",
           "label": "Port",
           "hidden": "data.transportOptions_service && data.transportOptions_service !== ''",
@@ -94,7 +94,7 @@
           "lg": 4,
           "xl": 4
         },
-        "transportOptions_secure": {
+        "transportOptions.secure": {
           "type": "checkbox",
           "label": "SSL connection",
           "hidden": "data.transportOptions_service && data.transportOptions_service !== ''",
@@ -105,7 +105,7 @@
           "xl": 4,
           "newLine": true
         },
-        "transportOptions_requireTLS": {
+        "transportOptions.requireTLS": {
           "type": "checkbox",
           "label": "Always use STARTTLS",
           "hidden": "data.transportOptions_service && data.transportOptions_service !== ''",
@@ -115,7 +115,7 @@
           "lg": 4,
           "xl": 4
         },
-        "transportOptions_auth_user": {
+        "transportOptions.auth.user": {
           "type": "text",
           "label": "User",
           "xs": 12,
@@ -125,7 +125,7 @@
           "xl": 4,
           "newLine": true
         },
-        "transportOptions_auth_pass": {
+        "transportOptions.auth.pass": {
           "type": "password",
           "label": "Password",
           "xs": 12,
@@ -138,7 +138,7 @@
           "type": "sendTo",
           "label": "Test",
           "command": "send",
-          "jsonData": "{\"subject\": \"${data.defaults_subject}\", \"to\": \"${data.defaults_to}\", \"from\": \"${data.defaults_from}\", \"text\": \"This is a test email from ioBroker!\", \"service\": \"${data.transportOptions_service ? data.transportOptions_service : ''}\", \"options\": { \"host\": \"${data.transportOptions_host}\", \"port\": \"${data.transportOptions_port}\", \"secure\": \"${data.transportOptions_secure}\", \"requireTLS\": \"${data.transportOptions_requireTLS}\", \"auth\": {\"user\": \"${data.transportOptions_auth_user}\", \"pass\": \"${encodeURIComponent(data.transportOptions_auth_pass)}\"} } }",
+          "jsonData": "{\"subject\": \"${data.defaults.subject}\", \"to\": \"${data.defaults.to}\", \"from\": \"${data.defaults.from}\", \"text\": \"This is a test email from ioBroker!\", \"service\": \"${data.transportOptions.service ? data.transportOptions.service : ''}\", \"options\": { \"host\": \"${data.transportOptions.host}\", \"port\": \"${data.transportOptions.port}\", \"secure\": \"${data.transportOptions.secure}\", \"requireTLS\": \"${data.transportOptions.requireTLS}\", \"auth\": {\"user\": \"${data.transportOptions.auth.user}\", \"pass\": \"${encodeURIComponent(data.transportOptions.auth.pass)}\"} } }",
           "variant": "outlined",
           "showProcess": true,
           "xs": 12,
@@ -154,7 +154,7 @@
       "type": "panel",
       "label": "Default settings",
       "items": {
-        "defaults_from": {
+        "defaults.from": {
           "type": "text",
           "label": "From",
           "xs": 12,
@@ -164,7 +164,7 @@
           "xl": 4,
           "newLine": true
         },
-        "defaults_to": {
+        "defaults.to": {
           "type": "text",
           "label": "To",
           "xs": 12,
@@ -173,7 +173,7 @@
           "lg": 4,
           "xl": 4
         },
-        "defaults_subject": {
+        "defaults.subject": {
           "type": "text",
           "label": "Subject",
           "xs": 12,
