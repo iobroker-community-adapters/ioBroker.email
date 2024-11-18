@@ -31,7 +31,7 @@ function startAdapter(options) {
 
     adapter.on('message', obj => {
         if (obj && obj.command === 'send') {
-            processMessage(adapter, obj)
+            processMessage(adapter, obj);
         } else if (obj.command === 'sendNotification') {
             processNotification(adapter, obj);
         }
@@ -39,12 +39,15 @@ function startAdapter(options) {
 
     adapter.on('ready', () => {
         // it must be like this
-        adapter.config.transportOptions.auth.pass = adapter.decrypt('Zgfr56gFe87jJOM', adapter.config.transportOptions.auth.pass);
+        adapter.config.transportOptions.auth.pass = adapter.decrypt(
+            'Zgfr56gFe87jJOM',
+            adapter.config.transportOptions.auth.pass,
+        );
         main(adapter);
     });
 
-    adapter.__emailTransport  = null;
-    adapter.__stopTimer       = null;
+    adapter.__emailTransport = null;
+    adapter.__stopTimer = null;
     adapter.__lastMessageTime = 0;
     adapter.__lastMessageText = '';
 
@@ -71,23 +74,23 @@ function stop(adapter) {
 /**
  * Process a `sendNotification` request
  *
- * @param {ioBroker.Adapter} adapter
- * @param {ioBroker.Message} obj
+ * @param adapter
+ * @param obj
  */
 function processNotification(adapter, obj) {
     adapter.log.info(`New notification received from ${obj.from}`);
 
-    const mail = buildMessageFromNotification(obj.message)
+    const mail = buildMessageFromNotification(obj.message);
     sendEmail(adapter, null, null, mail, error => {
-        obj.callback && adapter.sendTo(obj.from, 'sendNotification', { sent: !error}, obj.callback);
+        obj.callback && adapter.sendTo(obj.from, 'sendNotification', { sent: !error }, obj.callback);
     });
 }
 
 /**
  * Build up a mail object from the notification message
  *
- * @param {Record<string, any>} message
- * @returns {{ subject: string, text: string }}
+ * @param message
+ * @returns
  */
 function buildMessageFromNotification(message) {
     const subject = message.category.name;
@@ -95,10 +98,10 @@ function buildMessageFromNotification(message) {
 
     const readableInstances = Object.entries(instances).map(([instance, entry]) => {
         if (instance.startsWith('system.host.')) {
-            return `${instance.substring('system.host.'.length)}: ${getNewestMessage(entry.messages)}`
+            return `${instance.substring('system.host.'.length)}: ${getNewestMessage(entry.messages)}`;
         }
 
-        return `${instance.substring('system.adapter.'.length)}: ${getNewestMessage(entry.messages)}`
+        return `${instance.substring('system.adapter.'.length)}: ${getNewestMessage(entry.messages)}`;
     });
 
     const text = `${message.category.description}
@@ -113,15 +116,14 @@ ${readableInstances.join('\n')}
 /**
  * Extract the newest message out of a notification messages together with the localized date
  *
- * @param {{ ts: number, message: string }[]} messages
- * @return string
+ * @param messages
+ * @returns string
  */
 function getNewestMessage(messages) {
-    const newestMessage = messages.sort((a, b) => a.ts < b.ts ? 1 : -1)[0]
+    const newestMessage = messages.sort((a, b) => (a.ts < b.ts ? 1 : -1))[0];
 
-    return `${new Date(newestMessage.ts).toLocaleString()} ${newestMessage.message}`
+    return `${new Date(newestMessage.ts).toLocaleString()} ${newestMessage.message}`;
 }
-
 
 function processMessage(adapter, obj) {
     if (!obj || !obj.message) {
@@ -130,8 +132,14 @@ function processMessage(adapter, obj) {
 
     // filter out double messages
     const json = JSON.stringify(obj.message);
-    if (adapter.__lastMessageTime && adapter.__lastMessageText === json && Date.now() - adapter.__lastMessageTime < 1000) {
-        return adapter.log.debug('Filter out double message [first was for ' + (Date.now() - adapter.__lastMessageTime) + 'ms]: ' + json);
+    if (
+        adapter.__lastMessageTime &&
+        adapter.__lastMessageText === json &&
+        Date.now() - adapter.__lastMessageTime < 1000
+    ) {
+        return adapter.log.debug(
+            `Filter out double message [first was for ${Date.now() - adapter.__lastMessageTime}ms]: ${json}`,
+        );
     }
 
     adapter.__lastMessageTime = Date.now();
@@ -143,16 +151,26 @@ function processMessage(adapter, obj) {
     }
 
     if (obj.message.options) {
-        let  options = JSON.parse(JSON.stringify(obj.message.options));
-        options.secure = (options.secure === 'true');
-        options.requireTLS = (options.requireTLS === 'true');
+        let options = JSON.parse(JSON.stringify(obj.message.options));
+        options.secure = options.secure === 'true';
+        options.requireTLS = options.requireTLS === 'true';
         options.auth.pass = decodeURIComponent(options.auth.pass);
         delete obj.message.options;
-        sendEmail(adapter, null, options, obj.message, error =>
-            obj.callback && adapter.sendTo(obj.from, 'send', {error}, obj.callback));
+        sendEmail(
+            adapter,
+            null,
+            options,
+            obj.message,
+            error => obj.callback && adapter.sendTo(obj.from, 'send', { error }, obj.callback),
+        );
     } else {
-        adapter.__emailTransport = sendEmail(adapter, adapter.__emailTransport, adapter.config.transportOptions, obj.message, error =>
-            obj.callback && adapter.sendTo(obj.from, 'send', {error}, obj.callback));
+        adapter.__emailTransport = sendEmail(
+            adapter,
+            adapter.__emailTransport,
+            adapter.config.transportOptions,
+            obj.message,
+            error => obj.callback && adapter.sendTo(obj.from, 'send', { error }, obj.callback),
+        );
     }
 
     stop(adapter);
@@ -171,16 +189,26 @@ function sendEmail(adapter, transport, options, message, callback) {
         //noinspection JSUnresolvedVariable
         if (!options.host || !options.port) {
             //noinspection JSUnresolvedVariable
-            if (options.host    !== undefined) delete options.host;
+            if (options.host !== undefined) {
+                delete options.host;
+            }
             //noinspection JSUnresolvedVariable
-            if (options.port    !== undefined) delete options.port;
+            if (options.port !== undefined) {
+                delete options.port;
+            }
             //noinspection JSUnresolvedVariable
-            if (options.secure  !== undefined) delete options.secure;
+            if (options.secure !== undefined) {
+                delete options.secure;
+            }
             //noinspection JSUnresolvedVariable
-            if (options.requireTLS  !== undefined) delete options.requireTLS;
+            if (options.requireTLS !== undefined) {
+                delete options.requireTLS;
+            }
         } else {
             //noinspection JSUnresolvedVariable
-            if (options.service !== undefined) delete options.service;
+            if (options.service !== undefined) {
+                delete options.service;
+            }
             if (options.requireTLS === undefined) {
                 options.requireTLS = false;
             }
@@ -230,7 +258,7 @@ function sendEmail(adapter, transport, options, message, callback) {
             //noinspection JSUnresolvedVariable
             //options.secureConnection = false;
             //noinspection JSUnresolvedVariable
-            options.tls = {ciphers: 'SSLv3', rejectUnauthorized: false };
+            options.tls = { ciphers: 'SSLv3', rejectUnauthorized: false };
             //noinspection JSUnresolvedVariable
             options.requireTLS = true;
             //noinspection JSUnresolvedVariable
@@ -243,7 +271,7 @@ function sendEmail(adapter, transport, options, message, callback) {
             //noinspection JSUnresolvedVariable
             //options.secureConnection = false;
             //noinspection JSUnresolvedVariable
-            options.tls = {ciphers: 'SSLv3', rejectUnauthorized: false };
+            options.tls = { ciphers: 'SSLv3', rejectUnauthorized: false };
             //noinspection JSUnresolvedVariable
             options.requireTLS = true;
             //noinspection JSUnresolvedVariable
@@ -258,29 +286,31 @@ function sendEmail(adapter, transport, options, message, callback) {
     }
 
     if (typeof message !== 'object') {
-        message = {text: message};
+        message = { text: message };
     }
 
     //noinspection JSUnresolvedVariable
-    message.from =    message.from    || adapter.config.defaults.from;
+    message.from = message.from || adapter.config.defaults.from;
     //noinspection JSUnresolvedVariable
-    message.to =      message.to      || adapter.config.defaults.to;
+    message.to = message.to || adapter.config.defaults.to;
     //noinspection JSUnresolvedVariable
     message.subject = message.subject || adapter.config.defaults.subject;
     //noinspection JSUnresolvedVariable
-    message.text =    message.text    || adapter.config.defaults.text;
+    message.text = message.text || adapter.config.defaults.text;
 
-    adapter.log.info('Send email: ' + JSON.stringify(message));
+    adapter.log.info(`Send email: ${JSON.stringify(message)}`);
 
     //noinspection JSUnresolvedFunction
     transport.sendMail(message, (error, info) => {
         if (error) {
-            adapter.log.error('Error ' + error.response || error.message || error.code || JSON.stringify(error));
-            typeof callback === 'function' && callback(error.response || error.message || error.code || JSON.stringify(error));
+            // adapter.log.error(`Error ${error.response}` || error.message || error.code || JSON.stringify(error));
+            adapter.log.error(`Error ${error.response || error.message || error.code || JSON.stringify(error)}`);
+            typeof callback === 'function' &&
+                callback(error.response || error.message || error.code || JSON.stringify(error));
         } else {
             //noinspection JSUnresolvedVariable
-            adapter.log.info('sent to ' + message.to);
-            adapter.log.debug('Response: ' + info.response);
+            adapter.log.info(`sent to ${message.to}`);
+            adapter.log.debug(`Response: ${info.response}`);
             typeof callback === 'function' && callback(null);
         }
         stop();
