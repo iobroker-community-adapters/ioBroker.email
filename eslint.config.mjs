@@ -8,26 +8,27 @@ export default [
     {
         // specify files to exclude from linting here
         ignores: [
-            '*.test.js', 
-            'test/**/*.js', 
-            '*.config.mjs', 
-            'build', 
-            'admin/build', 
+            '*.test.js',
+            'test/**/*.js',
+            '*.config.mjs',
+            'dist/**/*',
+            'admin/build',
             'admin/words.js',
             'admin/admin.d.ts',
             '**/adapter-config.d.ts',
-            
-            // these files need to be adapted in future
+
+            // these files need to be adapted in the future
             'admin/blockly.js',
-        ] 
+        ],
     },
 
     {
-        // you may disable some 'jsdoc' warnings - but using jsdoc is highly recommended
-        // as this improves maintainability. jsdoc warnings will not block buiuld process.
+        // disable temporary the rule 'jsdoc/require-param' and enable 'jsdoc/require-jsdoc'
         rules: {
-            // 'jsdoc/require-jsdoc': 'off',
+            'jsdoc/require-jsdoc': 'off',
+            'jsdoc/require-param': 'off',
+
+            '@typescript-eslint/no-require-imports': 'off',
         },
     },
-    
 ];
