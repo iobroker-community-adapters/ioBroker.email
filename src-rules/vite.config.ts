@@ -18,10 +18,10 @@ const config = {
     plugins: [
         federation({
             manifest: true,
-            name: 'ActionTelegram',
+            name: 'ActionSendEmail',
             filename: 'customRuleBlocks.js',
             exposes: {
-                './ActionTelegram': './src/ActionTelegram.tsx',
+                './ActionSendEmail': './src/ActionSendEmail.tsx',
             },
             remotes: {},
             shared: makeShared(['react', '@iobroker/adapter-react-v5', 'react-dom', 'prop-types']),
