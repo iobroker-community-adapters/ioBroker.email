@@ -9,6 +9,7 @@
   "Error: ": "Error ",
   "From:": "From",
   "Host:": "Host",
+  "Ignore SSL certificate errors": "Ignore SSL certificate errors",
   "Is secure connection": "Is secure connection",
   "Password:": "Password",
   "Port:": "Port",

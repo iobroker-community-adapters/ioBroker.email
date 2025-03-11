@@ -9,6 +9,7 @@
   "Error: ": "Fout",
   "From:": "Van",
   "Host:": "gastheer",
+  "Ignore SSL certificate errors": "Negeer SSL-certificaatfouten",
   "Is secure connection": "Is beveiligde verbinding",
   "Password:": "Wachtwoord",
   "Port:": "Haven",

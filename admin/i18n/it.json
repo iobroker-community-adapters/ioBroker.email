@@ -9,6 +9,7 @@
   "Error: ": "Errore",
   "From:": "A partire dal",
   "Host:": "Ospite",
+  "Ignore SSL certificate errors": "Ignora gli errori del certificato SSL",
   "Is secure connection": "È una connessione sicura",
   "Password:": "Parola d'ordine",
   "Port:": "Porta",

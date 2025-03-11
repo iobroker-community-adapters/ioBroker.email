@@ -89,9 +89,10 @@ export type EmailTransportOptions = {
     secure?: boolean | 'true' | 'false';
     requireTLS?: boolean | 'true' | 'false';
     ignoreTLS?: boolean;
+    ignoreSslErrors?: boolean;
     domains?: string[];
     tls?: {
-        ciphers: 'SSLv3';
+        ciphers?: 'SSLv3';
         rejectUnauthorized: boolean;
     };
 };

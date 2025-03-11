@@ -9,6 +9,7 @@
   "Error: ": "Помилка ",
   "From:": "Від",
   "Host:": "Хост",
+  "Ignore SSL certificate errors": "Ігноруйте помилки сертифіката SSL",
   "Is secure connection": "Захищене з'єднання",
   "Password:": "Пароль",
   "Port:": "Порт",

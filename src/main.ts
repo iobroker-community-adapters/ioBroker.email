@@ -94,7 +94,9 @@ export class EmailAdapter extends Adapter {
             this.accessToken = response.data;
 
             if (this.accessToken) {
-                this.accessToken.access_token_expires_on = new Date(Date.now() + this.accessToken.expires_in * 1_000).toISOString();
+                this.accessToken.access_token_expires_on = new Date(
+                    Date.now() + this.accessToken.expires_in * 1_000,
+                ).toISOString();
                 expiresIn = new Date(this.accessToken.access_token_expires_on).getTime() - Date.now() - 180_000;
                 await this.setState('microsoftTokens', JSON.stringify(this.accessToken), true);
                 this.log.debug('Tokens for outlook and co. updated');
@@ -147,7 +149,10 @@ export class EmailAdapter extends Adapter {
             const state = await this.getStateAsync('microsoftTokens');
             if (state) {
                 this.accessToken = JSON.parse(state.val as string);
-                if (this.accessToken?.access_token_expires_on && new Date(this.accessToken.access_token_expires_on).getTime() < Date.now()) {
+                if (
+                    this.accessToken?.access_token_expires_on &&
+                    new Date(this.accessToken.access_token_expires_on).getTime() < Date.now()
+                ) {
                     this.log.error('Access token is expired. Please make a authorization again');
                 } else {
                     this.log.error('Only expired tokens for outlook and co. found');
@@ -362,6 +367,8 @@ ${readableInstances.join('\n')}
                 options.port = '587';
 
                 delete options.service;
+            } else if (options.ignoreSslErrors) {
+                options.tls = { rejectUnauthorized: false };
             }
 
             transport = createTransport(options as any);
@@ -373,9 +380,11 @@ ${readableInstances.join('\n')}
 
         if (message.from !== (options.auth.user || this.config.transportOptions.auth.user)) {
             if (options.host === 'smtp.office365.com') {
-                message.from = (options.auth.user || this.config.transportOptions.auth.user);
+                message.from = options.auth.user || this.config.transportOptions.auth.user;
             } else {
-                this.log.warn('From email address is not equal to the configured email address for authentication. Some services do not allow this!');
+                this.log.warn(
+                    'From email address is not equal to the configured email address for authentication. Some services do not allow this!',
+                );
             }
         } else {
             message.from = message.from || this.config.defaults.from;

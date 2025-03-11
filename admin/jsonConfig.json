@@ -78,7 +78,7 @@
                 "transportOptions.host": {
                     "type": "text",
                     "label": "Host",
-                    "hidden": "data.transportOptions.service && data.transportOptions.service !== ''",
+                    "hidden": "data.transportOptions.service",
                     "xs": 12,
                     "sm": 12,
                     "md": 4,
@@ -89,7 +89,7 @@
                 "transportOptions.port": {
                     "type": "number",
                     "label": "Port",
-                    "hidden": "data.transportOptions.service && data.transportOptions.service !== ''",
+                    "hidden": "data.transportOptions.service",
                     "xs": 12,
                     "sm": 12,
                     "md": 4,
@@ -99,7 +99,7 @@
                 "transportOptions.secure": {
                     "type": "checkbox",
                     "label": "SSL connection",
-                    "hidden": "data.transportOptions.service && data.transportOptions.service !== ''",
+                    "hidden": "data.transportOptions.service",
                     "xs": 12,
                     "sm": 12,
                     "md": 4,
@@ -110,7 +110,17 @@
                 "transportOptions.requireTLS": {
                     "type": "checkbox",
                     "label": "Always use STARTTLS",
-                    "hidden": "data.transportOptions.service && data.transportOptions.service !== ''",
+                    "hidden": "data.transportOptions.service",
+                    "xs": 12,
+                    "sm": 12,
+                    "md": 4,
+                    "lg": 4,
+                    "xl": 4
+                },
+                "transportOptions.ignoreSslErrors": {
+                    "type": "checkbox",
+                    "label": "Ignore SSL certificate errors",
+                    "hidden": "data.transportOptions.service || (!data.transportOptions.secure && !data.transportOptions.requireTLS)",
                     "xs": 12,
                     "sm": 12,
                     "md": 4,

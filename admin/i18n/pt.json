@@ -9,6 +9,7 @@
   "Error: ": "Erro ",
   "From:": "Emissor",
   "Host:": "Hospedeiro",
+  "Ignore SSL certificate errors": "Ignorar erros de certificado SSL",
   "Is secure connection": "Conexão criptografada",
   "Password:": "Senha",
   "Port:": "Porta",
