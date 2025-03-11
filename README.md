@@ -9,10 +9,7 @@
 [![Translation status](https://weblate.iobroker.net/widgets/adapters/-/email/svg-badge.svg)](https://weblate.iobroker.net/engage/adapters/?utm_source=widget)
 [![Downloads](https://img.shields.io/npm/dm/iobroker.email.svg)](https://www.npmjs.com/package/iobroker.email)
 
-Send emails from ioBroker.
-
-| :exclamation: This adapter currently does not support microsoft mail servers (Hotmail, Live.com, Office365 und Web-Outlook).  |
-|-----------------------------------------|
+Send emails from ioBroker. You cannot check emails with this adapter, only send them.
 
 The adapter uses [nodemailer](https://github.com/nodemailer/nodemailer) to provide the functionality.
 
@@ -20,7 +17,6 @@ The adapter uses [nodemailer](https://github.com/nodemailer/nodemailer) to provi
 
 To use Gmail, you may need to configure "Allow Less Secure Apps" in your Gmail account unless you are using 2FA, in which
 case you would have to create an application-specific password. You also may need to unlock your account with "Allow access to your Google account" to use SMTP.
-
 
 ## Usage
 
@@ -115,6 +111,8 @@ For other services see documentation of **Nodemailer**: `[https://github.com/nod
   ### **WORK IN PROGRESS**
 -->
 ### **WORK IN PROGRESS**
+* (@GermanBluefox) Breaking change: Structure of configuration was corrected, and it could be they needed to be reconfigured
+* (@GermanBluefox) Made Outlook work again. Requires now to be authenticated via OAuth2
 * (mcm1957) Adapter requires js-controller 5.0.19 and admin 6.17.14 now
 * (mcm1957) EsLint uses @iobroker/linter-config now
 * (mcm1957) Dependencies have been updated

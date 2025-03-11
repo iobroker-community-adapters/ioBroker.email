@@ -1,0 +1,44 @@
+{
+    "name": "iobroker-admin-component-email",
+    "private": true,
+    "version": "3.1.0",
+    "type": "module",
+    "scripts": {
+        "start": "vite --port 4173",
+        "build": "tsc && vite build",
+        "preview": "vite preview",
+        "lint": "eslint -c eslint.config.mjs"
+    },
+    "devDependencies": {
+        "@emotion/react": "^11.14.0",
+        "@emotion/styled": "^11.14.0",
+        "@iobroker/adapter-react-v5": "7.6.1",
+        "@iobroker/json-config": "7.6.1",
+        "@module-federation/runtime": "^0.10.0",
+        "@module-federation/vite": "^1.2.5",
+        "@mui/icons-material": "^6.4.7",
+        "@mui/material": "^6.4.7",
+        "@originjs/vite-plugin-federation": "^1.3.9",
+        "@types/react": "^18.3.18",
+        "@types/react-dom": "^18.3.5",
+        "@vitejs/plugin-react": "^4.3.4",
+        "react": "^18.3.1",
+        "react-dom": "^18.3.1",
+        "vite": "6.2.1",
+        "vite-plugin-commonjs": "^0.10.4",
+        "vite-plugin-svgr": "^4.3.0",
+        "vite-tsconfig-paths": "^5.1.4"
+    },
+    "browserslist": {
+        "production": [
+            ">0.2%",
+            "not dead",
+            "not op_mini all"
+        ],
+        "development": [
+            "last 1 chrome version",
+            "last 1 firefox version",
+            "last 1 safari version"
+        ]
+    }
+}

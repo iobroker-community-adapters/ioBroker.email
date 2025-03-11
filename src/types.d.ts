@@ -23,6 +23,16 @@ interface FilteredNotificationCategory {
     };
 }
 
+export interface AccessTokens {
+    access_token: string;
+    expires_in: number;
+    access_token_expires_on: string;
+    ext_expires_in: number;
+    token_type: 'Bearer';
+    scope: string;
+    refresh_token: string;
+}
+
 export type EmailService =
     | '1und1'
     | 'AOL'
@@ -66,8 +76,13 @@ export type EmailService =
 export type EmailTransportOptions = {
     service?: EmailService;
     auth: {
+        type?: 'OAuth2';
+        clientId?: 'CLIENT_ID';
+        clientSecret?: 'CLIENT_SECRET';
+        refreshToken?: 'REFRESH_TOKEN';
+        accessToken?: accessToken.token;
         user: string;
-        pass: string;
+        pass?: string;
     };
     host?: string;
     port?: number | string;

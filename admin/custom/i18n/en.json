@@ -1,0 +1,10 @@
+{
+  "Authorization token exists": "Authorization token exists",
+  "Authorize this app by visiting this url:": "Authorize this app by visiting this url:",
+  "Enter the code from that page here": "Enter the code from that page here",
+  "Get Microsoft Access": "Get Microsoft access",
+  "Please allow popups in your browser for this page!": "Please allow popups in your browser for this page!",
+  "Renew Microsoft Access": "Renew Microsoft access",
+  "Successfully authorized. Token valid till %s and will be automatically renewed.": "Successfully authorized. Token valid till %s and will be automatically renewed.",
+  "Successfully authorized. Token valid till %s but it can expire as the instance is not running.": "Successfully authorized. Token valid till %s but it can expire as the instance is not running."
+}

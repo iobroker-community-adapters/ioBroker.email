@@ -1,4 +1,7 @@
 "use strict";
+var __importDefault = (this && this.__importDefault) || function (mod) {
+    return (mod && mod.__esModule) ? mod : { "default": mod };
+};
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.EmailAdapter = void 0;
 /**
@@ -12,25 +15,104 @@ exports.EmailAdapter = void 0;
  */
 const adapter_core_1 = require("@iobroker/adapter-core");
 const nodemailer_1 = require("nodemailer");
+const axios_1 = __importDefault(require("axios"));
+const OAUTH_URL = 'https://oauth2.iobroker.in/microsoft';
 class EmailAdapter extends adapter_core_1.Adapter {
     emailTransport = null;
     lastMessageTime = 0;
     lastMessageText = '';
     systemLang = 'en';
+    refreshTokenTimeout;
+    accessToken;
     constructor(options = {}) {
         super({
             ...options,
             name: 'email',
             ready: () => this.main(),
             message: (obj) => this.onMessage(obj),
+            stateChange: (id, state) => this.onStateChange(id, state),
+            unload: (callback) => {
+                if (this.refreshTokenTimeout) {
+                    this.clearTimeout(this.refreshTokenTimeout);
+                    this.refreshTokenTimeout = undefined;
+                }
+                this.emailTransport?.close();
+                callback();
+            },
         });
+    }
+    onStateChange(id, state) {
+        if (id.endsWith('microsoftTokens') && state?.ack) {
+            if (JSON.stringify(this.accessToken) !== state.val) {
+                try {
+                    this.accessToken = JSON.parse(state.val);
+                    this.refreshTokens().catch(error => this.log.error(`Cannot refresh tokens: ${error}`));
+                }
+                catch (error) {
+                    this.log.error(`Cannot parse tokens: ${error}`);
+                    this.accessToken = undefined;
+                }
+            }
+        }
+    }
+    async refreshTokens() {
+        if (this.refreshTokenTimeout) {
+            this.clearTimeout(this.refreshTokenTimeout);
+            this.refreshTokenTimeout = undefined;
+        }
+        if (!this.accessToken?.refresh_token) {
+            this.log.error('No tokens for outlook and co. found');
+            return;
+        }
+        if (!this.accessToken.access_token_expires_on ||
+            new Date(this.accessToken.access_token_expires_on).getTime() < Date.now()) {
+            this.log.error('Access token is expired. Please make an authorization again');
+            return;
+        }
+        let expiresIn = new Date(this.accessToken.access_token_expires_on).getTime() - Date.now() - 180_000;
+        if (expiresIn <= 0) {
+            // Refresh token
+            const response = await axios_1.default.post('https://oauth2.iobroker.in/microsoft', this.accessToken);
+            if (response.status !== 200) {
+                this.log.error(`Cannot refresh tokens: ${response.statusText}`);
+                return;
+            }
+            this.accessToken = response.data;
+            if (this.accessToken) {
+                this.accessToken.access_token_expires_on = new Date(Date.now() + this.accessToken.expires_in * 1_000).toISOString();
+                expiresIn = new Date(this.accessToken.access_token_expires_on).getTime() - Date.now() - 180_000;
+                await this.setState('microsoftTokens', JSON.stringify(this.accessToken), true);
+                this.log.debug('Tokens for outlook and co. updated');
+            }
+            else {
+                this.log.error('No tokens for outlook and co. could be refreshed');
+            }
+        }
+        // no longer than 10 minutes, as longer timer could be not reliable
+        if (expiresIn > 600_000) {
+            expiresIn = 600_000;
+        }
+        this.refreshTokenTimeout = this.setTimeout(() => {
+            this.refreshTokenTimeout = undefined;
+            this.refreshTokens().catch(error => this.log.error(`Cannot refresh tokens: ${error}`));
+        }, expiresIn);
     }
     onMessage(obj) {
         if (obj?.command === 'send') {
-            this.processMessage(obj);
+            this.processMessage(obj).catch((err) => this.log.error(`Cannot send email: ${err.toString()}`));
         }
         else if (obj?.command === 'sendNotification') {
-            this.processNotification(obj);
+            this.processNotification(obj).catch((err) => this.log.error(`Cannot send notification: ${err.toString()}`));
+        }
+        else if (obj?.command === 'authMicrosoft') {
+            (0, axios_1.default)(OAUTH_URL).then(response => {
+                if (obj.callback) {
+                    this.sendTo(obj.from, 'authMicrosoft', { url: response.data.authUrl }, obj.callback);
+                }
+                if (!response.data.authUrl) {
+                    throw new Error('Cannot get authorize URL');
+                }
+            });
         }
     }
     async main() {
@@ -38,13 +120,32 @@ class EmailAdapter extends adapter_core_1.Adapter {
         this.systemLang = systemConfig?.common?.language || 'en';
         // it must be like this
         this.config.transportOptions.auth.pass = this.decrypt('Zgfr56gFe87jJOM', this.config.transportOptions.auth.pass);
+        if (this.config.transportOptions.service === 'Office365') {
+            const state = await this.getStateAsync('microsoftTokens');
+            if (state) {
+                this.accessToken = JSON.parse(state.val);
+                if (this.accessToken?.access_token_expires_on && new Date(this.accessToken.access_token_expires_on).getTime() < Date.now()) {
+                    this.log.error('Access token is expired. Please make a authorization again');
+                }
+                else {
+                    this.log.error('Only expired tokens for outlook and co. found');
+                }
+            }
+            else {
+                this.log.error('No tokens for outlook and co. found');
+            }
+            await this.subscribeStatesAsync('microsoftTokens');
+            this.refreshTokens().catch(error => this.log.error(`Cannot refresh tokens: ${error}`));
+        }
     }
     /** Process a `sendNotification` request */
-    processNotification(obj) {
+    async processNotification(obj) {
         this.log.info(`New notification received from ${obj.from}`);
         const mail = this.buildMessageFromNotification(obj.message);
-        this.sendEmail(null, null, mail, error => {
-            obj.callback && this.sendTo(obj.from, 'sendNotification', { sent: !error }, obj.callback);
+        await this.sendEmail(null, null, mail, error => {
+            if (obj.callback) {
+                this.sendTo(obj.from, 'sendNotification', { sent: !error }, obj.callback);
+            }
         });
     }
     /** Build up a mail object from the notification message */
@@ -82,7 +183,7 @@ ${readableInstances.join('\n')}
         const newestMessage = messages.sort((a, b) => (a.ts < b.ts ? 1 : -1))[0];
         return `${new Date(newestMessage.ts).toLocaleString()} ${newestMessage.message}`;
     }
-    processMessage(obj) {
+    async processMessage(obj) {
         if (!obj?.message) {
             return;
         }
@@ -97,39 +198,39 @@ ${readableInstances.join('\n')}
             const options = JSON.parse(JSON.stringify(obj.message.options));
             options.secure = options.secure === 'true' || options.secure === true;
             options.requireTLS = options.requireTLS === 'true' || options.requireTLS === true;
-            options.auth.pass = decodeURIComponent(options.auth.pass);
+            options.auth.pass = decodeURIComponent(options.auth.pass || '');
             delete obj.message.options;
-            this.sendEmail(null, options, obj.message, error => obj.callback && this.sendTo(obj.from, 'send', { error }, obj.callback));
+            await this.sendEmail(null, options, obj.message, error => obj.callback && this.sendTo(obj.from, 'send', { error }, obj.callback));
         }
         else {
-            this.emailTransport = this.sendEmail(this.emailTransport, this.config.transportOptions, obj.message, error => obj.callback && this.sendTo(obj.from, 'send', { error }, obj.callback));
+            this.emailTransport = await this.sendEmail(this.emailTransport, this.config.transportOptions, obj.message, error => obj.callback && this.sendTo(obj.from, 'send', { error }, obj.callback));
         }
     }
-    sendEmail(transport, options, message, callback) {
+    async sendEmail(transport, options, message, callback) {
         message ||= {};
         options ||= this.config.transportOptions;
         if (!transport) {
-            //noinspection JSUnresolvedVariable
+            if (options.host === 'undefined' || options.host === 'null') {
+                delete options.host;
+            }
+            if (options.port === 'undefined' || options.port === 'null') {
+                delete options.port;
+            }
             if (!options.host || !options.port) {
-                //noinspection JSUnresolvedVariable
                 if (options.host !== undefined) {
                     delete options.host;
                 }
-                //noinspection JSUnresolvedVariable
                 if (options.port !== undefined) {
                     delete options.port;
                 }
-                //noinspection JSUnresolvedVariable
                 if (options.secure !== undefined) {
                     delete options.secure;
                 }
-                //noinspection JSUnresolvedVariable
                 if (options.requireTLS !== undefined) {
                     delete options.requireTLS;
                 }
             }
             else {
-                //noinspection JSUnresolvedVariable
                 if (options.service !== undefined) {
                     delete options.service;
                 }
@@ -140,101 +241,90 @@ ${readableInstances.join('\n')}
                     options.ignoreTLS = true;
                 }
             }
-            //noinspection JSUnresolvedVariable
             if (options.service === 'web.de') {
-                //noinspection JSUnresolvedVariable
                 options.domains = ['web.de'];
-                //noinspection JSUnresolvedVariable
                 options.host = 'smtp.web.de';
-                //noinspection JSUnresolvedVariable
                 options.port = '587';
-                //noinspection JSUnresolvedVariable
                 //options.tls = {ciphers: 'SSLv3', rejectUnauthorized: false };
-                //noinspection JSUnresolvedVariable
                 options.requireTLS = true;
-                //noinspection JSUnresolvedVariable
                 delete options.service;
             }
             else if (options.service === '1und1' || options.service === 'ionos') {
-                //noinspection JSUnresolvedVariable
                 options.host = 'smtp.ionos.de';
-                //noinspection JSUnresolvedVariable
                 options.port = '587';
-                //noinspection JSUnresolvedVariable
                 //options.tls = {ciphers: 'SSLv3', rejectUnauthorized: false };
-                //noinspection JSUnresolvedVariable
                 options.requireTLS = true;
-                //noinspection JSUnresolvedVariable
                 delete options.service;
             }
             else if (options.service === 'Office365') {
-                //noinspection JSUnresolvedVariable
                 //options.secureConnection = false;
-                //noinspection JSUnresolvedVariable
                 //options.tls = {ciphers: 'SSLv3'};
-                //noinspection JSUnresolvedVariable
                 options.requireTLS = true;
-                //noinspection JSUnresolvedVariable
                 options.host = 'smtp.office365.com';
-                //noinspection JSUnresolvedVariable
                 options.port = '587';
-                //noinspection JSUnresolvedVariable
                 delete options.service;
+                const tokens = await this.getStateAsync('microsoftTokens');
+                if (!tokens) {
+                    this.log.error('No tokens for outlook and co. found');
+                    return null;
+                }
+                if (!this.accessToken?.access_token) {
+                    this.log.error('No tokens for outlook and co. found');
+                    return null;
+                }
+                if (!this.accessToken.access_token_expires_on ||
+                    new Date(this.accessToken.access_token_expires_on).getTime() < Date.now()) {
+                    this.log.error('Access token is expired. Please make a authorization again');
+                    return null;
+                }
+                options.auth = {
+                    type: 'OAuth2',
+                    user: options.auth.user || this.config.transportOptions.auth.user,
+                    accessToken: this.accessToken.access_token,
+                };
             }
             else if (options.service === 'ith') {
-                //noinspection JSUnresolvedVariable
-                //options.secureConnection = false;
-                //noinspection JSUnresolvedVariable
                 options.tls = { ciphers: 'SSLv3', rejectUnauthorized: false };
-                //noinspection JSUnresolvedVariable
                 options.requireTLS = true;
-                //noinspection JSUnresolvedVariable
                 options.host = 'mail.ithnet.com';
-                //noinspection JSUnresolvedVariable
                 options.port = '587';
-                //noinspection JSUnresolvedVariable
                 delete options.service;
             }
             else if (options.service === 'mail.ee') {
-                //noinspection JSUnresolvedVariable
-                //options.secureConnection = false;
-                //noinspection JSUnresolvedVariable
                 options.tls = { ciphers: 'SSLv3', rejectUnauthorized: false };
-                //noinspection JSUnresolvedVariable
                 options.requireTLS = true;
-                //noinspection JSUnresolvedVariable
                 options.host = 'mail.ee';
-                //noinspection JSUnresolvedVariable
                 options.port = '587';
-                //noinspection JSUnresolvedVariable
                 delete options.service;
             }
-            //noinspection JSUnresolvedFunction, JSUnresolvedVariable
             transport = (0, nodemailer_1.createTransport)(options);
         }
         if (typeof message !== 'object') {
             message = { text: message };
         }
-        //noinspection JSUnresolvedVariable
-        message.from = message.from || this.config.defaults.from;
-        //noinspection JSUnresolvedVariable
+        if (message.from !== (options.auth.user || this.config.transportOptions.auth.user)) {
+            if (options.host === 'smtp.office365.com') {
+                message.from = (options.auth.user || this.config.transportOptions.auth.user);
+            }
+            else {
+                this.log.warn('From email address is not equal to the configured email address for authentication. Some services do not allow this!');
+            }
+        }
+        else {
+            message.from = message.from || this.config.defaults.from;
+        }
         message.to = message.to || this.config.defaults.to;
-        //noinspection JSUnresolvedVariable
         message.subject = message.subject || this.config.defaults.subject;
-        //noinspection JSUnresolvedVariable
         message.text = message.text || this.config.defaults.text || '';
         this.log.info(`Send email: ${JSON.stringify(message)}`);
-        //noinspection JSUnresolvedFunction
         transport.sendMail(message, (error, info) => {
             if (error) {
-                // adapter.log.error(`Error ${error.response}` || error.message || error.code || JSON.stringify(error));
                 this.log.error(`Error ${error.response || error.message || error.code || JSON.stringify(error)}`);
                 if (typeof callback === 'function') {
                     callback(error.response || error.message || error.code || JSON.stringify(error));
                 }
             }
             else {
-                //noinspection JSUnresolvedVariable
                 this.log.info(`sent to ${message.to}`);
                 this.log.debug(`Response: ${info.response}`);
                 if (typeof callback === 'function') {

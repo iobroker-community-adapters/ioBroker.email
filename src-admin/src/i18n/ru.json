@@ -1,0 +1,10 @@
+{
+  "Authorization token exists": "Токен авторизации существует",
+  "Authorize this app by visiting this url:": "Авторизуйте это приложение, перейдя по этой ссылке:",
+  "Enter the code from that page here": "Введите код с этой страницы здесь",
+  "Get Microsoft Access": "Получить Microsoft Access",
+  "Please allow popups in your browser for this page!": "Пожалуйста, разрешите всплывающие окна в вашем браузере для этой страницы!",
+  "Renew Microsoft Access": "Продлить доступ Microsoft",
+  "Successfully authorized. Token valid till %s and will be automatically renewed.": "Авторизация выполнена успешно. Токен действителен до %s и будет автоматически продлен.",
+  "Successfully authorized. Token valid till %s but it can expire as the instance is not running.": "Авторизация выполнена успешно. Токен действителен до %s, но его срок действия может истечь, так как экземпляр не запущен."
+}

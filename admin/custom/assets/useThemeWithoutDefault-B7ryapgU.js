@@ -1,0 +1,1 @@
+import{C as _}from"./ConfigCustomEmailSet__loadShare__react__loadShare__-BnhbmdUh.js";import{C as o}from"./ConfigCustomEmailSet__loadShare___mf_0_emotion_mf_1_react__loadShare__-B4dKnOHf.js";function a(e){return Object.keys(e).length===0}function r(e=null){const t=_.useContext(o.ThemeContext);return!t||a(t)?e:t}export{r as u};

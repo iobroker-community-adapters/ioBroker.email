@@ -5,6 +5,10 @@ admin/i18n/flat.txt
 admin/i18n/*/flat.txt
 iob_npm.done
 nbproject
+src-admin/package-lock.json
+src-admin/node_modules
+src-admin/build
+src-admin/.__mf__temp
 
 
 # ioBroker dev-server

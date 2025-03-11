@@ -1,0 +1,10 @@
+{
+  "Authorization token exists": "Маркер авторизації існує",
+  "Authorize this app by visiting this url:": "Авторизуйте цю програму, відвідавши цю URL-адресу:",
+  "Enter the code from that page here": "Введіть код із цієї сторінки тут",
+  "Get Microsoft Access": "Отримати Microsoft Access",
+  "Please allow popups in your browser for this page!": "Будь ласка, дозвольте спливаючі вікна у вашому браузері для цієї сторінки!",
+  "Renew Microsoft Access": "Поновити Microsoft Access",
+  "Successfully authorized. Token valid till %s and will be automatically renewed.": "Успішно авторизовано. Токен дійсний до %s і буде автоматично поновлений.",
+  "Successfully authorized. Token valid till %s but it can expire as the instance is not running.": "Успішно авторизовано. Маркер дійсний до %s, але може закінчитися, оскільки екземпляр не запущено."
+}
