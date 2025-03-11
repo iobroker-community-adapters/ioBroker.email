@@ -167,6 +167,12 @@
     },
     "adminUI": {
       "config": "json"
+    },
+    "javascriptRules": {
+      "i18n": true,
+      "url": "rules/customRuleBlocks.js",
+      "name": "ActionSendEmail",
+      "type": "module"
     }
   },
   "native": {
