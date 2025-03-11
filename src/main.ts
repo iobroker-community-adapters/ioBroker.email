@@ -155,7 +155,7 @@ export class EmailAdapter extends Adapter {
                 ) {
                     this.log.error('Access token is expired. Please make a authorization again');
                 } else {
-                    this.log.error('Only expired tokens for outlook and co. found');
+                    this.log.debug('Access token for outlook and co. found');
                 }
             } else {
                 this.log.error('No tokens for outlook and co. found');

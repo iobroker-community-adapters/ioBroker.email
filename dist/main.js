@@ -124,11 +124,12 @@ class EmailAdapter extends adapter_core_1.Adapter {
             const state = await this.getStateAsync('microsoftTokens');
             if (state) {
                 this.accessToken = JSON.parse(state.val);
-                if (this.accessToken?.access_token_expires_on && new Date(this.accessToken.access_token_expires_on).getTime() < Date.now()) {
+                if (this.accessToken?.access_token_expires_on &&
+                    new Date(this.accessToken.access_token_expires_on).getTime() < Date.now()) {
                     this.log.error('Access token is expired. Please make a authorization again');
                 }
                 else {
-                    this.log.error('Only expired tokens for outlook and co. found');
+                    this.log.debug('Access token for outlook and co. found');
                 }
             }
             else {
@@ -245,29 +246,20 @@ ${readableInstances.join('\n')}
                 options.domains = ['web.de'];
                 options.host = 'smtp.web.de';
                 options.port = '587';
-                //options.tls = {ciphers: 'SSLv3', rejectUnauthorized: false };
                 options.requireTLS = true;
                 delete options.service;
             }
             else if (options.service === '1und1' || options.service === 'ionos') {
                 options.host = 'smtp.ionos.de';
                 options.port = '587';
-                //options.tls = {ciphers: 'SSLv3', rejectUnauthorized: false };
                 options.requireTLS = true;
                 delete options.service;
             }
             else if (options.service === 'Office365') {
-                //options.secureConnection = false;
-                //options.tls = {ciphers: 'SSLv3'};
                 options.requireTLS = true;
                 options.host = 'smtp.office365.com';
                 options.port = '587';
                 delete options.service;
-                const tokens = await this.getStateAsync('microsoftTokens');
-                if (!tokens) {
-                    this.log.error('No tokens for outlook and co. found');
-                    return null;
-                }
                 if (!this.accessToken?.access_token) {
                     this.log.error('No tokens for outlook and co. found');
                     return null;
@@ -297,6 +289,12 @@ ${readableInstances.join('\n')}
                 options.port = '587';
                 delete options.service;
             }
+            else if (options.ignoreSslErrors) {
+                options.tls = { rejectUnauthorized: true };
+            }
+            else {
+                options.tls = { rejectUnauthorized: false };
+            }
             transport = (0, nodemailer_1.createTransport)(options);
         }
         if (typeof message !== 'object') {
@@ -304,7 +302,7 @@ ${readableInstances.join('\n')}
         }
         if (message.from !== (options.auth.user || this.config.transportOptions.auth.user)) {
             if (options.host === 'smtp.office365.com') {
-                message.from = (options.auth.user || this.config.transportOptions.auth.user);
+                message.from = options.auth.user || this.config.transportOptions.auth.user;
             }
             else {
                 this.log.warn('From email address is not equal to the configured email address for authentication. Some services do not allow this!');

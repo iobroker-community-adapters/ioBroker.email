@@ -19,7 +19,40 @@ function copyAllAdminFiles() {
     copyFiles(['src-admin/src/i18n/*.json'], 'admin/custom/i18n');
 }
 
-if (process.argv.includes('--admin-0-clean')) {
+function rulesClean() {
+    deleteFoldersRecursive(`${__dirname}/admin/rules`);
+    deleteFoldersRecursive(`${__dirname}/src-rules/build`);
+}
+
+function rulesCopy() {
+    copyFiles(['src-rules/build/**/*', '!*.json'], 'admin/rules');
+    copyFiles(['src-rules/src/i18n/*.json'], 'admin/rules/i18n');
+}
+
+if (process.argv.includes('--rules-0-clean')) {
+    rulesClean();
+} else if (process.argv.includes('--rules-1-npm')) {
+    npmInstall(`${__dirname}/src-rules/`).catch(e => {
+        console.error(e);
+        process.exit(2);
+    });
+} else if (process.argv.includes('--rules-2-compile')) {
+    buildReact(`${__dirname}/src-rules/`, { rootDir: `${__dirname}/src-rules/`, vite: true, tsc: true }).catch(e => {
+        console.error(e);
+        process.exit(2);
+    });
+} else if (process.argv.includes('--rules-3-copy')) {
+    rulesCopy();
+} else if (process.argv.includes('--rules-build')) {
+    rulesClean();
+    npmInstall(`${__dirname}/src-rules/`)
+        .then(() => buildReact(`${__dirname}/src-rules/`, { rootDir: `${__dirname}/src-rules/`, vite: true, tsc: true }))
+        .then(() => rulesCopy())
+        .catch(e => {
+            console.error(e);
+            process.exit(2);
+        });
+} else if (process.argv.includes('--admin-0-clean')) {
     cleanAdmin();
 } else if (process.argv.includes('--admin-1-npm')) {
     npmInstall(`${__dirname}/src-admin/`).catch(e => console.error(e));
@@ -35,8 +68,12 @@ if (process.argv.includes('--admin-0-clean')) {
         .catch(e => console.error(e));
 } else {
     cleanAdmin();
+    rulesClean();
     npmInstall(`${__dirname}/src-admin/`)
         .then(() => buildAdmin())
         .then(() => copyAllAdminFiles())
+        .then(() => npmInstall(`${__dirname}/src-rules/`))
+        .then(() => buildReact(`${__dirname}/src-rules/`, { rootDir: `${__dirname}/src-rules/`, vite: true, tsc: true }))
+        .then(() => rulesCopy())
         .catch(e => console.error(e));
 }
