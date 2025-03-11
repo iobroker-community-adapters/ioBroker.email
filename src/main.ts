@@ -311,31 +311,21 @@ ${readableInstances.join('\n')}
                 options.domains = ['web.de'];
                 options.host = 'smtp.web.de';
                 options.port = '587';
-                //options.tls = {ciphers: 'SSLv3', rejectUnauthorized: false };
                 options.requireTLS = true;
 
                 delete options.service;
             } else if (options.service === '1und1' || options.service === 'ionos') {
                 options.host = 'smtp.ionos.de';
                 options.port = '587';
-                //options.tls = {ciphers: 'SSLv3', rejectUnauthorized: false };
                 options.requireTLS = true;
 
                 delete options.service;
             } else if (options.service === 'Office365') {
-                //options.secureConnection = false;
-
-                //options.tls = {ciphers: 'SSLv3'};
                 options.requireTLS = true;
                 options.host = 'smtp.office365.com';
                 options.port = '587';
                 delete options.service;
 
-                const tokens: ioBroker.State | null | undefined = await this.getStateAsync('microsoftTokens');
-                if (!tokens) {
-                    this.log.error('No tokens for outlook and co. found');
-                    return null;
-                }
                 if (!this.accessToken?.access_token) {
                     this.log.error('No tokens for outlook and co. found');
                     return null;
@@ -368,6 +358,8 @@ ${readableInstances.join('\n')}
 
                 delete options.service;
             } else if (options.ignoreSslErrors) {
+                options.tls = { rejectUnauthorized: true };
+            } else {
                 options.tls = { rejectUnauthorized: false };
             }
 
