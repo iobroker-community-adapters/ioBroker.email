@@ -117,6 +117,7 @@ For other services see documentation of **Nodemailer**: `[https://github.com/nod
 * (mcm1957) EsLint uses @iobroker/linter-config now
 * (mcm1957) Dependencies have been updated
 * (@GermanBluefox) Migrated to TypeScript
+* (@GermanBluefox) Added "Ignore SSL errors" option
 
 ### 1.4.0 (2024-11-17)
 * (simatec) Responsive Design added
