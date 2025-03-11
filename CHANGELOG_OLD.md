@@ -1,4 +1,7 @@
 # Older changes
+## 1.2.1 (2023-12-08)
+ * (foxriver76) send the actual message too via notification-manager
+
 ## 1.2.0 (2023-06-02)
 * (foxriver76) support [Notification Manager](https://github.com/foxriver76/ioBroker.notification-manager)
 

@@ -110,7 +110,7 @@ For other services see documentation of **Nodemailer**: `[https://github.com/nod
   Placeholder for the next version (at the beginning of the line):
   ### **WORK IN PROGRESS**
 -->
-### **WORK IN PROGRESS**
+### 2.0.0 (2025-03-11)
 * (@GermanBluefox) Breaking change: Structure of configuration was corrected, and it could be they needed to be reconfigured
 * (@GermanBluefox) Made Outlook work again. Requires now to be authenticated via OAuth2
 * (mcm1957) Adapter requires js-controller 5.0.19 and admin 6.17.14 now
@@ -132,9 +132,6 @@ For other services see documentation of **Nodemailer**: `[https://github.com/nod
 
 ### 1.2.2 (2023-12-25)
 * (foxriver76) trim host messages from notification-manager correctly
-
-### 1.2.1 (2023-12-08)
- * (foxriver76) send the actual message too via notification-manager
 
 ## License
 

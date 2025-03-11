@@ -1,8 +1,21 @@
 {
   "common": {
     "name": "email",
-    "version": "1.4.0",
+    "version": "2.0.0",
     "news": {
+      "2.0.0": {
+        "en": "Breaking change: Structure of configuration was corrected, and it could be they needed to be reconfigured\nMade Outlook work again. Requires now to be authenticated via OAuth2\nAdapter requires js-controller 5.0.19 and admin 6.17.14 now\nEsLint uses @iobroker/linter-config now\nDependencies have been updated\nMigrated to TypeScript\nAdded \"Ignore SSL errors\" option",
+        "de": "Bruchänderung: Struktur der Konfiguration wurde korrigiert, und es könnte sein, dass sie neu konfiguriert werden müssen\nHat Outlook wieder funktioniert. Erfordert nun, über OAuth2 authiert zu werden\nAdapter erfordert jetzt js-controller 5.0.19 und admin 6.17.14\nEsLint verwendet jetzt @iobroker/linter-config\nAbhängigkeiten wurden aktualisiert\nZu TypeScript migriert\nHinzugefügt \"Ignore SSL-Fehler\" Option",
+        "ru": "Переломные изменения: Структура конфигурации была исправлена, и, возможно, их нужно было перенастроить\nOutlook снова работает Требуется аутентификация через OAuth2\nАдаптер требует js-контроллер 5.0.19 и админ 6.17.14\nEsLint использует @iobroker/linter-config\nЗависимости были обновлены\nИммиграция в TypeScript\nДобавлена опция «Игнорировать ошибки SSL»",
+        "pt": "Mudança de ruptura: A estrutura da configuração foi corrigida, e poderia ser necessário reconfigurar-se\nFez o Outlook funcionar novamente. Requer agora ser autenticado via OAuth2\nAdaptador requer js-controller 5.0.19 e admin 6.17.14 agora\nEsLint usa @iobroker/linter-config agora\nAs dependências foram atualizadas\nMigrado para TypeScript\nAdicionado \"Ignore erros SSL\" opção",
+        "nl": "Verandering: Structuur van de configuratie werd gecorrigeerd, en het kan zijn dat ze moesten worden aangepast\nOutlook weer laten werken. Vereist nu om te worden geauthenticeerd via OAuth2\nAdapter vereist js-controller 5.0.19 en admin 6.17.14 nu\nEsLint gebruikt nu @iobroker/linter-config\nAfhankelijkheden zijn bijgewerkt\nNaar typeScript migreren\nToegevoegd \"SSL-fouten negeren\" optie",
+        "fr": "Briser le changement : La structure de configuration a été corrigée, et il pourrait être nécessaire de la reconfigurer\nIl a encore fait fonctionner Outlook. Nécessite maintenant d'être authentifié via OAuth2\nAdaptateur nécessite js-controller 5.0.19 et admin 6.17.14 maintenant\nEsLint utilise @iobroker/linter-config maintenant\nLes dépendances ont été actualisées\nMigré vers TypeScript\nAjout de l'option \"Ignorer les erreurs SSL\"",
+        "it": "Cambiamento di rottura: La struttura di configurazione è stata corretta, e potrebbe essere necessario riconfigurare\nHa fatto lavorare di nuovo Outlook. Richiede ora di essere autenticato tramite OAuth2\nAdattatore richiede js-controller 5.0.19 e admin 6.17.14 ora\nEsLint utilizza @iobroker/linter-config ora\nLe dipendenze sono state aggiornate\nMigrato a TypeScript\nAggiunto \"Ignora errori SSL\" opzione",
+        "es": "Cambio de ruptura: Se corrigió la estructura de la configuración, y podría ser necesario reconfigurarla\nHa hecho que Outlook funcione de nuevo. Requiere ahora ser autenticado vía OAuth2\nAdaptador requiere js-controller 5.0.19 y admin 6.17.14 ahora\nEsLint utiliza @iobroker/linter-config ahora\nSe han actualizado las dependencias\nMigrado a TipoScript\nOpción \"Ignorar errores SSL\"",
+        "pl": "Łamanie zmian: Struktura konfiguracji została poprawiona i może być konieczne ich przekonfigurowanie\nSprawił, że Outlook znowu zadziałał. Wymaga teraz uwierzytelniania za pośrednictwem OAuth2\nAdapter wymaga sterownika js- 5.0.19 i admin 6.17.14 teraz\nEsLint używa @ iobroker / linter- config\nZaktualizowano zależności\nMigrated to TypeScript\nDodano opcję \"Ignoruj błędy SSL\"",
+        "uk": "Зміна розривів: Структура конфігурації була виправлена, і це може бути, що вони повинні бути перероблені\nЗроблено роботу Outlook знову. Вимагає зараз бути автентифікованим через OAuth2\nАдаптер вимагає js-controller 5.0.19 і admin 6.17.14 тепер\nEsLint використовує @iobroker/linter-config зараз\nЗалежність було оновлено\nMigrated до TypeScript\nДодано параметр \"Ignore SSL\"",
+        "zh-cn": "中断更改 : 调整了配置结构,可能需要重新配置\n又让Outlook成功 现在需要通过 OAuth2 认证\n适配器需要js控制器 5.0.19和管理员 6.17.14 现在\nEsLint 现在使用@iobroduc/linter-config\n依赖关系已更新\n移动到类型脚本\n添加“ 忽略 SSL 错误” 选项"
+      },
       "1.4.0": {
         "en": "Responsive Design added",
         "de": "Responsive Design hinzugefügt",
@@ -80,18 +93,6 @@
         "pl": "profil na stronie (ang.)",
         "uk": "підтримка [Повідомлення менеджера](https://github.com/foxriver76/ioBroker.notification-manager)",
         "zh-cn": "(http://github.com/foxriver76/ioBroker.com-manager)"
-      },
-      "1.1.4": {
-        "en": "Prepare compatibility with future js-controller versions",
-        "de": "Kompatibilität mit zukünftigen js-Controller-Versionen vorbereiten",
-        "ru": "Подготовьте совместимость с будущими версиями js-controller",
-        "pt": "Prepare a compatibilidade com as futuras versões js-controller",
-        "nl": "Bereid de compatibiliteit voor met toekomstige Js-controller versie",
-        "fr": "Préparer la compatibilité avec les versions futures de js-controller",
-        "it": "Preparare la compatibilità con le versioni js-controller future",
-        "es": "Prepare la compatibilidad con futuras versiones js-controller",
-        "pl": "Prepare kompatybilność z przyszłymi wersjami js",
-        "zh-cn": "A. 与今后控制的小册子版本的兼容性"
       }
     },
     "titleLang": {
