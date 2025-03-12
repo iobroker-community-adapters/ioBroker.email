@@ -11,7 +11,7 @@ export default [
             '*.test.js',
             'test/**/*.js',
             '*.config.mjs',
-            'dist/**/*',
+            'build/**/*',
             'admin/build',
             'admin/words.js',
             'admin/admin.d.ts',

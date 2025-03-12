@@ -57,10 +57,10 @@
   "bugs": {
     "url": "https://github.com/iobroker-community-adapters/ioBroker.email/issues"
   },
-  "main": "dist/main.js",
+  "main": "build/main.js",
   "files": [
     "admin/",
-    "dist/",
+    "build/",
     "io-package.json",
     "LICENSE"
   ],
