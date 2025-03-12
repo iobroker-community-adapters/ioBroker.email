@@ -23,16 +23,6 @@ interface FilteredNotificationCategory {
     };
 }
 
-export interface AccessTokens {
-    access_token: string;
-    expires_in: number;
-    access_token_expires_on: string;
-    ext_expires_in: number;
-    token_type: 'Bearer';
-    scope: string;
-    refresh_token: string;
-}
-
 export type EmailService =
     | '1und1'
     | 'AOL'

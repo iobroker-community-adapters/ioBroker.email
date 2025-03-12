@@ -9,14 +9,13 @@
  */
 import { Adapter, type AdapterOptions } from '@iobroker/adapter-core';
 import type {
-    AccessTokens,
     EmailAdapterConfig,
     EmailTransportOptions,
     FilteredNotificationCategory,
     NotificationMessageObject,
 } from './types';
 import { createTransport, type Transporter } from 'nodemailer';
-import axios from 'axios';
+import { TokenRefresher } from './lib/TokenRefresher';
 const OAUTH_URL = 'https://oauth2.iobroker.in/microsoft';
 
 export class EmailAdapter extends Adapter {
@@ -25,8 +24,7 @@ export class EmailAdapter extends Adapter {
     private lastMessageTime = 0;
     private lastMessageText = '';
     private systemLang: ioBroker.Languages = 'en';
-    private refreshTokenTimeout: ioBroker.Timeout | undefined;
-    private accessToken: AccessTokens | undefined;
+    private microsoftToken: TokenRefresher | undefined;
 
     public constructor(options: Partial<AdapterOptions> = {}) {
         super({
@@ -36,11 +34,7 @@ export class EmailAdapter extends Adapter {
             message: (obj: ioBroker.Message) => this.onMessage(obj),
             stateChange: (id, state) => this.onStateChange(id, state),
             unload: (callback: () => void): void => {
-                if (this.refreshTokenTimeout) {
-                    this.clearTimeout(this.refreshTokenTimeout);
-                    this.refreshTokenTimeout = undefined;
-                }
-
+                this.microsoftToken?.destroy();
                 this.emailTransport?.close();
 
                 callback();
@@ -49,89 +43,24 @@ export class EmailAdapter extends Adapter {
     }
 
     onStateChange(id: string, state: ioBroker.State | null | undefined): void {
-        if (id.endsWith('microsoftTokens') && state?.ack) {
-            if (JSON.stringify(this.accessToken) !== state.val) {
-                try {
-                    this.accessToken = JSON.parse(state.val as string);
-                    this.refreshTokens().catch(error => this.log.error(`Cannot refresh tokens: ${error}`));
-                } catch (error) {
-                    this.log.error(`Cannot parse tokens: ${error}`);
-                    this.accessToken = undefined;
-                }
-            }
-        }
-    }
-
-    async refreshTokens(): Promise<void> {
-        if (this.refreshTokenTimeout) {
-            this.clearTimeout(this.refreshTokenTimeout);
-            this.refreshTokenTimeout = undefined;
-        }
-
-        if (!this.accessToken?.refresh_token) {
-            this.log.error('No tokens for outlook and co. found');
-            return;
-        }
-
-        if (
-            !this.accessToken.access_token_expires_on ||
-            new Date(this.accessToken.access_token_expires_on).getTime() < Date.now()
-        ) {
-            this.log.error('Access token is expired. Please make an authorization again');
-            return;
-        }
-
-        let expiresIn = new Date(this.accessToken.access_token_expires_on).getTime() - Date.now() - 180_000;
-
-        if (expiresIn <= 0) {
-            // Refresh token
-            const response = await axios.post('https://oauth2.iobroker.in/microsoft', this.accessToken);
-            if (response.status !== 200) {
-                this.log.error(`Cannot refresh tokens: ${response.statusText}`);
-                return;
-            }
-
-            this.accessToken = response.data;
-
-            if (this.accessToken) {
-                this.accessToken.access_token_expires_on = new Date(
-                    Date.now() + this.accessToken.expires_in * 1_000,
-                ).toISOString();
-                expiresIn = new Date(this.accessToken.access_token_expires_on).getTime() - Date.now() - 180_000;
-                await this.setState('microsoftTokens', JSON.stringify(this.accessToken), true);
-                this.log.debug('Tokens for outlook and co. updated');
-            } else {
-                this.log.error('No tokens for outlook and co. could be refreshed');
-            }
-        }
-
-        // no longer than 10 minutes, as longer timer could be not reliable
-        if (expiresIn > 600_000) {
-            expiresIn = 600_000;
-        }
-
-        this.refreshTokenTimeout = this.setTimeout(() => {
-            this.refreshTokenTimeout = undefined;
-            this.refreshTokens().catch(error => this.log.error(`Cannot refresh tokens: ${error}`));
-        }, expiresIn);
+        this.microsoftToken?.onStateChange(id, state);
     }
 
     onMessage(obj: ioBroker.Message): void {
         if (obj?.command === 'send') {
-            this.processMessage(obj).catch((err: Error) => this.log.error(`Cannot send email: ${err.toString()}`));
+            this.processMessage(obj);
         } else if (obj?.command === 'sendNotification') {
-            this.processNotification(obj).catch((err: Error) =>
-                this.log.error(`Cannot send notification: ${err.toString()}`),
-            );
+            this.processNotification(obj);
         } else if (obj?.command === 'authMicrosoft') {
-            axios(OAUTH_URL).then(response => {
-                if (obj.callback) {
-                    this.sendTo(obj.from, 'authMicrosoft', { url: response.data.authUrl }, obj.callback);
-                }
-                if (!response.data.authUrl) {
-                    throw new Error('Cannot get authorize URL');
-                }
-            });
+            TokenRefresher.getAuthUrl(OAUTH_URL)
+                .then(url => {
+                    if (obj.callback) {
+                        this.sendTo(obj.from, 'authMicrosoft', { url }, obj.callback);
+                    }
+                })
+                .catch(error => {
+                    this.log.error(`Cannot get authorize URL: ${error}`);
+                });
         }
     }
 
@@ -146,31 +75,16 @@ export class EmailAdapter extends Adapter {
         );
 
         if (this.config.transportOptions.service === 'Office365') {
-            const state = await this.getStateAsync('microsoftTokens');
-            if (state) {
-                this.accessToken = JSON.parse(state.val as string);
-                if (
-                    this.accessToken?.access_token_expires_on &&
-                    new Date(this.accessToken.access_token_expires_on).getTime() < Date.now()
-                ) {
-                    this.log.error('Access token is expired. Please make a authorization again');
-                } else {
-                    this.log.debug('Access token for outlook and co. found');
-                }
-            } else {
-                this.log.error('No tokens for outlook and co. found');
-            }
-            await this.subscribeStatesAsync('microsoftTokens');
-            this.refreshTokens().catch(error => this.log.error(`Cannot refresh tokens: ${error}`));
+            this.microsoftToken = new TokenRefresher(this, 'microsoftTokens');
         }
     }
 
     /** Process a `sendNotification` request */
-    async processNotification(obj: ioBroker.Message): Promise<void> {
+    processNotification(obj: ioBroker.Message): void {
         this.log.info(`New notification received from ${obj.from}`);
 
         const mail = this.buildMessageFromNotification(obj.message);
-        await this.sendEmail(null, null, mail, error => {
+        this.sendEmail(null, null, mail, error => {
             if (obj.callback) {
                 this.sendTo(obj.from, 'sendNotification', { sent: !error }, obj.callback);
             }
@@ -220,7 +134,7 @@ ${readableInstances.join('\n')}
         return `${new Date(newestMessage.ts).toLocaleString()} ${newestMessage.message}`;
     }
 
-    async processMessage(obj: ioBroker.Message): Promise<void> {
+    processMessage(obj: ioBroker.Message): void {
         if (!obj?.message) {
             return;
         }
@@ -242,14 +156,14 @@ ${readableInstances.join('\n')}
             options.requireTLS = options.requireTLS === 'true' || options.requireTLS === true;
             options.auth.pass = decodeURIComponent(options.auth.pass || '');
             delete obj.message.options;
-            await this.sendEmail(
+            this.sendEmail(
                 null,
                 options,
                 obj.message,
                 error => obj.callback && this.sendTo(obj.from, 'send', { error }, obj.callback),
             );
         } else {
-            this.emailTransport = await this.sendEmail(
+            this.emailTransport = this.sendEmail(
                 this.emailTransport,
                 this.config.transportOptions,
                 obj.message,
@@ -258,7 +172,7 @@ ${readableInstances.join('\n')}
         }
     }
 
-    async sendEmail(
+    sendEmail(
         transport: Transporter<any, any> | null,
         options: EmailTransportOptions | null,
         message:
@@ -270,7 +184,7 @@ ${readableInstances.join('\n')}
               }
             | string,
         callback?: (error?: string | null) => void,
-    ): Promise<Transporter<any, any> | null> {
+    ): Transporter<any, any> | null {
         message ||= {};
 
         options ||= this.config.transportOptions;
@@ -326,22 +240,16 @@ ${readableInstances.join('\n')}
                 options.port = '587';
                 delete options.service;
 
-                if (!this.accessToken?.access_token) {
+                const accessToken = this.microsoftToken?.getAccessToken();
+                if (!accessToken) {
                     this.log.error('No tokens for outlook and co. found');
-                    return null;
-                }
-                if (
-                    !this.accessToken.access_token_expires_on ||
-                    new Date(this.accessToken.access_token_expires_on).getTime() < Date.now()
-                ) {
-                    this.log.error('Access token is expired. Please make a authorization again');
                     return null;
                 }
 
                 options.auth = {
                     type: 'OAuth2',
                     user: options.auth.user || this.config.transportOptions.auth.user,
-                    accessToken: this.accessToken.access_token,
+                    accessToken,
                 };
             } else if (options.service === 'ith') {
                 options.tls = { ciphers: 'SSLv3', rejectUnauthorized: false };
