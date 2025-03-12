@@ -42,7 +42,10 @@ class Microsoft extends ConfigGeneric<ConfigGenericProps, MicrosoftState> {
             window.attachEvent('onmessage', this.onMessage as any, false);
         }
 
-        await this.props.oContext.socket.subscribeState(`${this.props.oContext.adapterName}.${this.props.oContext.instance}.microsoftTokens`, this.onTokensUpdated);
+        await this.props.oContext.socket.subscribeState(
+            `${this.props.oContext.adapterName}.${this.props.oContext.instance}.microsoftTokens`,
+            this.onTokensUpdated,
+        );
 
         // read tokens
         const tokens = await this.props.oContext.socket.getState(
@@ -67,7 +70,7 @@ class Microsoft extends ConfigGeneric<ConfigGenericProps, MicrosoftState> {
             }
         }
         this.setState({ accessTokens: '' });
-    }
+    };
 
     componentWillUnmount(): void {
         super.componentWillUnmount();
@@ -76,7 +79,10 @@ class Microsoft extends ConfigGeneric<ConfigGenericProps, MicrosoftState> {
         } else {
             window.detachEvent('onmessage', this.onMessage as any, false);
         }
-        this.props.oContext.socket.unsubscribeState(`${this.props.oContext.adapterName}.${this.props.oContext.instance}.microsoftTokens`, this.onTokensUpdated);
+        this.props.oContext.socket.unsubscribeState(
+            `${this.props.oContext.adapterName}.${this.props.oContext.instance}.microsoftTokens`,
+            this.onTokensUpdated,
+        );
     }
 
     saveToken(accessTokens: string): void {
@@ -138,7 +144,7 @@ class Microsoft extends ConfigGeneric<ConfigGenericProps, MicrosoftState> {
     }
 
     renderItem(): React.JSX.Element {
-        let validTill: string = '';
+        let validTill = '';
         if (this.state.accessTokens) {
             try {
                 const accessTokensParsed: AccessTokens = JSON.parse(this.state.accessTokens);
