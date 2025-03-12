@@ -191,5 +191,20 @@
       "subject": "ioBroker"
     }
   },
-  "objects": []
+  "objects": [],
+  "instanceObjects": [
+    {
+      "_id": "microsoftTokens",
+      "type": "state",
+      "common": {
+        "role": "state",
+        "name": "Microsoft refresh and access tokens",
+        "type": "json",
+        "read": true,
+        "write": false,
+        "expert": true
+      },
+      "native": {}
+    }
+  ]
 }
