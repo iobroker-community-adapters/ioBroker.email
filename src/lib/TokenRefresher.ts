@@ -41,7 +41,7 @@ export class TokenRefresher {
                 .subscribeStatesAsync(this.stateName)
                 .catch(error => this.adapter.log.error(`Cannot read tokens: ${error}`));
 
-            this.refreshTokens().catch(error => this.adapter.log.error(`Cannot refresh tokens: ${error}`));
+            return this.refreshTokens().catch(error => this.adapter.log.error(`Cannot refresh tokens: ${error}`));
         });
     }
 
