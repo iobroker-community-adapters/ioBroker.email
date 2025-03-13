@@ -12,10 +12,12 @@ class TokenRefresher {
     accessToken;
     url;
     readyPromise;
+    name;
     constructor(adapter, stateName, oauthURL) {
         this.adapter = adapter;
         this.stateName = stateName;
         this.url = oauthURL;
+        this.name = stateName.replace('info.', '').replace('Tokens', '').replace('tokens', '');
         this.readyPromise = this.adapter.getStateAsync(this.stateName).then(state => {
             if (state) {
                 this.accessToken = JSON.parse(state.val);
@@ -24,11 +26,11 @@ class TokenRefresher {
                     this.adapter.log.error('Access token is expired. Please make a authorization again');
                 }
                 else {
-                    this.adapter.log.debug('Access token for outlook and co. found');
+                    this.adapter.log.debug(`Access token for ${this.name} found`);
                 }
             }
             else {
-                this.adapter.log.error('No tokens for outlook and co. found');
+                this.adapter.log.error(`No tokens for ${this.name} found`);
             }
             this.adapter
                 .subscribeStatesAsync(this.stateName)
@@ -59,7 +61,7 @@ class TokenRefresher {
     async getAccessToken() {
         await this.readyPromise;
         if (!this.accessToken?.access_token) {
-            this.adapter.log.error('No tokens for outlook and co. found');
+            this.adapter.log.error(`No tokens for ${this.name} found`);
             return undefined;
         }
         if (!this.accessToken.access_token_expires_on ||
@@ -75,7 +77,7 @@ class TokenRefresher {
             this.refreshTokenTimeout = undefined;
         }
         if (!this.accessToken?.refresh_token) {
-            this.adapter.log.error('No tokens for outlook and co. found');
+            this.adapter.log.error(`No tokens for ${this.name} found`);
             return;
         }
         if (!this.accessToken.access_token_expires_on ||
@@ -96,10 +98,10 @@ class TokenRefresher {
                 this.accessToken.access_token_expires_on = new Date(Date.now() + this.accessToken.expires_in * 1_000).toISOString();
                 expiresIn = new Date(this.accessToken.access_token_expires_on).getTime() - Date.now() - 180_000;
                 await this.adapter.setState(this.stateName, JSON.stringify(this.accessToken), true);
-                this.adapter.log.debug('Tokens for outlook and co. updated');
+                this.adapter.log.debug(`Tokens for ${this.name} updated`);
             }
             else {
-                this.adapter.log.error('No tokens for outlook and co. could be refreshed');
+                this.adapter.log.error(`No tokens for ${this.name} could be refreshed`);
             }
         }
         // no longer than 10 minutes, as longer timer could be not reliable

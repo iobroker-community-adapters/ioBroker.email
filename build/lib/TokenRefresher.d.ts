@@ -14,6 +14,7 @@ export declare class TokenRefresher {
     private accessToken;
     private readonly url;
     private readonly readyPromise;
+    private readonly name;
     constructor(adapter: ioBroker.Adapter, stateName: string, oauthURL: string);
     destroy(): void;
     onStateChange(id: string, state: ioBroker.State | null | undefined): void;
