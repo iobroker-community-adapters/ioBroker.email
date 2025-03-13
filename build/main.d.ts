@@ -9,7 +9,6 @@
  */
 import { Adapter, type AdapterOptions } from '@iobroker/adapter-core';
 import type { EmailAdapterConfig, EmailTransportOptions, FilteredNotificationCategory, NotificationMessageObject } from './types';
-import { type Transporter } from 'nodemailer';
 export declare class EmailAdapter extends Adapter {
     config: EmailAdapterConfig;
     private emailTransport;
@@ -22,7 +21,7 @@ export declare class EmailAdapter extends Adapter {
     onMessage(obj: ioBroker.Message): void;
     main(): Promise<void>;
     /** Process a `sendNotification` request */
-    processNotification(obj: ioBroker.Message): void;
+    processNotification(obj: ioBroker.Message): Promise<void>;
     /** Build up a mail object from the notification message */
     buildMessageFromNotification(message: {
         category: FilteredNotificationCategory;
@@ -33,11 +32,11 @@ export declare class EmailAdapter extends Adapter {
     };
     /** Extract the newest message out of a notification messages together with the localized date */
     getNewestMessage(messages: NotificationMessageObject[]): string;
-    processMessage(obj: ioBroker.Message): void;
-    sendEmail(transport: Transporter<any, any> | null, options: EmailTransportOptions | null, message: {
+    processMessage(obj: ioBroker.Message): Promise<void>;
+    sendEmail(options: EmailTransportOptions | null, message: {
         from?: string;
         to?: string;
         subject?: string;
         text?: string;
-    } | string, callback?: (error?: string | null) => void): Transporter<any, any> | null;
+    } | string): Promise<void>;
 }

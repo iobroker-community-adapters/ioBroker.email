@@ -39,10 +39,10 @@ class EmailAdapter extends adapter_core_1.Adapter {
     }
     onMessage(obj) {
         if (obj?.command === 'send') {
-            this.processMessage(obj);
+            this.processMessage(obj).catch(error => this.log.error(`Cannot process message: ${error}`));
         }
         else if (obj?.command === 'sendNotification') {
-            this.processNotification(obj);
+            this.processNotification(obj).catch(error => this.log.error(`Cannot process message: ${error}`));
         }
         else if (obj?.command === 'authMicrosoft') {
             TokenRefresher_1.TokenRefresher.getAuthUrl(OAUTH_URL)
@@ -62,18 +62,25 @@ class EmailAdapter extends adapter_core_1.Adapter {
         // it must be like this
         this.config.transportOptions.auth.pass = this.decrypt('Zgfr56gFe87jJOM', this.config.transportOptions.auth.pass);
         if (this.config.transportOptions.service === 'Office365') {
-            this.microsoftToken = new TokenRefresher_1.TokenRefresher(this, 'microsoftTokens');
+            this.microsoftToken = new TokenRefresher_1.TokenRefresher(this, 'microsoftTokens', OAUTH_URL);
         }
     }
     /** Process a `sendNotification` request */
-    processNotification(obj) {
+    async processNotification(obj) {
         this.log.info(`New notification received from ${obj.from}`);
         const mail = this.buildMessageFromNotification(obj.message);
-        this.sendEmail(null, null, mail, error => {
+        try {
+            await this.sendEmail(null, mail);
             if (obj.callback) {
-                this.sendTo(obj.from, 'sendNotification', { sent: !error }, obj.callback);
+                this.sendTo(obj.from, 'sendNotification', { sent: true }, obj.callback);
             }
-        });
+        }
+        catch (error) {
+            this.log.error(`Error sending notification: ${error}`);
+            if (obj.callback) {
+                this.sendTo(obj.from, 'sendNotification', { sent: false, error: error.toString() }, obj.callback);
+            }
+        }
     }
     /** Build up a mail object from the notification message */
     buildMessageFromNotification(message) {
@@ -110,7 +117,7 @@ ${readableInstances.join('\n')}
         const newestMessage = messages.sort((a, b) => (a.ts < b.ts ? 1 : -1))[0];
         return `${new Date(newestMessage.ts).toLocaleString()} ${newestMessage.message}`;
     }
-    processMessage(obj) {
+    async processMessage(obj) {
         if (!obj?.message) {
             return;
         }
@@ -121,22 +128,33 @@ ${readableInstances.join('\n')}
         }
         this.lastMessageTime = Date.now();
         this.lastMessageText = json;
-        if (obj.message.options) {
-            const options = JSON.parse(JSON.stringify(obj.message.options));
-            options.secure = options.secure === 'true' || options.secure === true;
-            options.requireTLS = options.requireTLS === 'true' || options.requireTLS === true;
-            options.auth.pass = decodeURIComponent(options.auth.pass || '');
-            delete obj.message.options;
-            this.sendEmail(null, options, obj.message, error => obj.callback && this.sendTo(obj.from, 'send', { error }, obj.callback));
+        try {
+            if (obj.message.options) {
+                const options = JSON.parse(JSON.stringify(obj.message.options));
+                options.secure = options.secure === 'true' || options.secure === true;
+                options.requireTLS = options.requireTLS === 'true' || options.requireTLS === true;
+                options.auth.pass = decodeURIComponent(options.auth.pass || '');
+                delete obj.message.options;
+                await this.sendEmail(options, obj.message);
+            }
+            else {
+                await this.sendEmail(null, obj.message);
+            }
         }
-        else {
-            this.emailTransport = this.sendEmail(this.emailTransport, this.config.transportOptions, obj.message, error => obj.callback && this.sendTo(obj.from, 'send', { error }, obj.callback));
+        catch (error) {
+            this.log.error(`Cannot send email: ${error}`);
+            if (obj.callback) {
+                this.sendTo(obj.from, 'send', { error: error.toString() }, obj.callback);
+            }
         }
     }
-    sendEmail(transport, options, message, callback) {
+    async sendEmail(options, message) {
         message ||= {};
         options ||= this.config.transportOptions;
-        if (!transport) {
+        let transport;
+        if (options || !this.emailTransport) {
+            const useStandardTransport = !options;
+            options ||= this.config.transportOptions;
             if (options.host === 'undefined' || options.host === 'null') {
                 delete options.host;
             }
@@ -186,10 +204,10 @@ ${readableInstances.join('\n')}
                 options.host = 'smtp.office365.com';
                 options.port = '587';
                 delete options.service;
-                const accessToken = this.microsoftToken?.getAccessToken();
+                const accessToken = await this.microsoftToken?.getAccessToken();
                 if (!accessToken) {
                     this.log.error('No tokens for outlook and co. found');
-                    return null;
+                    throw new Error('No tokens for outlook and co. found');
                 }
                 options.auth = {
                     type: 'OAuth2',
@@ -218,6 +236,12 @@ ${readableInstances.join('\n')}
                 options.tls = { rejectUnauthorized: false };
             }
             transport = (0, nodemailer_1.createTransport)(options);
+            if (useStandardTransport) {
+                this.emailTransport = transport;
+            }
+        }
+        else {
+            transport = this.emailTransport;
         }
         if (typeof message !== 'object') {
             message = { text: message };
@@ -237,22 +261,17 @@ ${readableInstances.join('\n')}
         message.subject = message.subject || this.config.defaults.subject;
         message.text = message.text || this.config.defaults.text || '';
         this.log.info(`Send email: ${JSON.stringify(message)}`);
-        transport.sendMail(message, (error, info) => {
+        await new Promise((resolve, reject) => transport.sendMail(message, (error, info) => {
             if (error) {
                 this.log.error(`Error ${error.response || error.message || error.code || JSON.stringify(error)}`);
-                if (typeof callback === 'function') {
-                    callback(error.response || error.message || error.code || JSON.stringify(error));
-                }
+                reject(new Error(error.response || error.message || error.code || JSON.stringify(error)));
             }
             else {
                 this.log.info(`sent to ${message.to}`);
                 this.log.debug(`Response: ${info.response}`);
-                if (typeof callback === 'function') {
-                    callback(null);
-                }
+                resolve();
             }
-        });
-        return transport;
+        }));
     }
 }
 exports.EmailAdapter = EmailAdapter;

@@ -15,14 +15,15 @@ export class TokenRefresher {
     private readonly stateName: string;
     private refreshTokenTimeout: ioBroker.Timeout | undefined;
     private accessToken: AccessTokens | undefined;
-    private readonly url: string | undefined;
+    private readonly url: string;
+    private readonly readyPromise: Promise<void>;
 
-    constructor(adapter: ioBroker.Adapter, stateName: string, oauthURL?: string) {
+    constructor(adapter: ioBroker.Adapter, stateName: string, oauthURL: string) {
         this.adapter = adapter;
         this.stateName = stateName;
         this.url = oauthURL;
 
-        void this.adapter.getStateAsync(this.stateName).then(state => {
+        this.readyPromise = this.adapter.getStateAsync(this.stateName).then(state => {
             if (state) {
                 this.accessToken = JSON.parse(state.val as string);
                 if (
@@ -65,7 +66,8 @@ export class TokenRefresher {
         }
     }
 
-    getAccessToken(): string | undefined {
+    async getAccessToken(): Promise<string | undefined> {
+        await this.readyPromise;
         if (!this.accessToken?.access_token) {
             this.adapter.log.error('No tokens for outlook and co. found');
             return undefined;
@@ -103,7 +105,7 @@ export class TokenRefresher {
 
         if (expiresIn <= 0) {
             // Refresh token
-            const response = await axios.post('https://oauth2.iobroker.in/microsoft', this.accessToken);
+            const response = await axios.post(this.url, this.accessToken);
             if (response.status !== 200) {
                 this.adapter.log.error(`Cannot refresh tokens: ${response.statusText}`);
                 return;
@@ -132,6 +134,18 @@ export class TokenRefresher {
             this.refreshTokenTimeout = undefined;
             this.refreshTokens().catch(error => this.adapter.log.error(`Cannot refresh tokens: ${error}`));
         }, expiresIn);
+    }
+
+    async getAuthUrl(): Promise<string> {
+        if (!this.url) {
+            throw new Error('No OAuth URL provided');
+        }
+        try {
+            const response = await axios(this.url);
+            return response.data.authUrl;
+        } catch (error) {
+            throw new Error(`Cannot get authorize URL: ${error}`);
+        }
     }
 
     static async getAuthUrl(url: string): Promise<string> {

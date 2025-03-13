@@ -13,10 +13,12 @@ export declare class TokenRefresher {
     private refreshTokenTimeout;
     private accessToken;
     private readonly url;
-    constructor(adapter: ioBroker.Adapter, stateName: string, oauthURL?: string);
+    private readonly readyPromise;
+    constructor(adapter: ioBroker.Adapter, stateName: string, oauthURL: string);
     destroy(): void;
     onStateChange(id: string, state: ioBroker.State | null | undefined): void;
-    getAccessToken(): string | undefined;
+    getAccessToken(): Promise<string | undefined>;
     private refreshTokens;
+    getAuthUrl(): Promise<string>;
     static getAuthUrl(url: string): Promise<string>;
 }

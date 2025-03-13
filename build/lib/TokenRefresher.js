@@ -11,11 +11,12 @@ class TokenRefresher {
     refreshTokenTimeout;
     accessToken;
     url;
+    readyPromise;
     constructor(adapter, stateName, oauthURL) {
         this.adapter = adapter;
         this.stateName = stateName;
         this.url = oauthURL;
-        void this.adapter.getStateAsync(this.stateName).then(state => {
+        this.readyPromise = this.adapter.getStateAsync(this.stateName).then(state => {
             if (state) {
                 this.accessToken = JSON.parse(state.val);
                 if (this.accessToken?.access_token_expires_on &&
@@ -55,7 +56,8 @@ class TokenRefresher {
             }
         }
     }
-    getAccessToken() {
+    async getAccessToken() {
+        await this.readyPromise;
         if (!this.accessToken?.access_token) {
             this.adapter.log.error('No tokens for outlook and co. found');
             return undefined;
@@ -84,7 +86,7 @@ class TokenRefresher {
         let expiresIn = new Date(this.accessToken.access_token_expires_on).getTime() - Date.now() - 180_000;
         if (expiresIn <= 0) {
             // Refresh token
-            const response = await axios_1.default.post('https://oauth2.iobroker.in/microsoft', this.accessToken);
+            const response = await axios_1.default.post(this.url, this.accessToken);
             if (response.status !== 200) {
                 this.adapter.log.error(`Cannot refresh tokens: ${response.statusText}`);
                 return;
@@ -108,6 +110,18 @@ class TokenRefresher {
             this.refreshTokenTimeout = undefined;
             this.refreshTokens().catch(error => this.adapter.log.error(`Cannot refresh tokens: ${error}`));
         }, expiresIn);
+    }
+    async getAuthUrl() {
+        if (!this.url) {
+            throw new Error('No OAuth URL provided');
+        }
+        try {
+            const response = await (0, axios_1.default)(this.url);
+            return response.data.authUrl;
+        }
+        catch (error) {
+            throw new Error(`Cannot get authorize URL: ${error}`);
+        }
     }
     static async getAuthUrl(url) {
         if (!url) {

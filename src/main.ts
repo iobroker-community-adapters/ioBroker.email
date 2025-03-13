@@ -48,9 +48,9 @@ export class EmailAdapter extends Adapter {
 
     onMessage(obj: ioBroker.Message): void {
         if (obj?.command === 'send') {
-            this.processMessage(obj);
+            this.processMessage(obj).catch(error => this.log.error(`Cannot process message: ${error}`));
         } else if (obj?.command === 'sendNotification') {
-            this.processNotification(obj);
+            this.processNotification(obj).catch(error => this.log.error(`Cannot process message: ${error}`));
         } else if (obj?.command === 'authMicrosoft') {
             TokenRefresher.getAuthUrl(OAUTH_URL)
                 .then(url => {
@@ -75,20 +75,26 @@ export class EmailAdapter extends Adapter {
         );
 
         if (this.config.transportOptions.service === 'Office365') {
-            this.microsoftToken = new TokenRefresher(this, 'microsoftTokens');
+            this.microsoftToken = new TokenRefresher(this, 'microsoftTokens', OAUTH_URL);
         }
     }
 
     /** Process a `sendNotification` request */
-    processNotification(obj: ioBroker.Message): void {
+    async processNotification(obj: ioBroker.Message): Promise<void> {
         this.log.info(`New notification received from ${obj.from}`);
 
         const mail = this.buildMessageFromNotification(obj.message);
-        this.sendEmail(null, null, mail, error => {
+        try {
+            await this.sendEmail(null, mail);
             if (obj.callback) {
-                this.sendTo(obj.from, 'sendNotification', { sent: !error }, obj.callback);
+                this.sendTo(obj.from, 'sendNotification', { sent: true }, obj.callback);
             }
-        });
+        } catch (error) {
+            this.log.error(`Error sending notification: ${error}`);
+            if (obj.callback) {
+                this.sendTo(obj.from, 'sendNotification', { sent: false, error: error.toString() }, obj.callback);
+            }
+        }
     }
 
     /** Build up a mail object from the notification message */
@@ -134,7 +140,7 @@ ${readableInstances.join('\n')}
         return `${new Date(newestMessage.ts).toLocaleString()} ${newestMessage.message}`;
     }
 
-    processMessage(obj: ioBroker.Message): void {
+    async processMessage(obj: ioBroker.Message): Promise<void> {
         if (!obj?.message) {
             return;
         }
@@ -150,30 +156,26 @@ ${readableInstances.join('\n')}
         this.lastMessageTime = Date.now();
         this.lastMessageText = json;
 
-        if (obj.message.options) {
-            const options: EmailTransportOptions = JSON.parse(JSON.stringify(obj.message.options));
-            options.secure = options.secure === 'true' || options.secure === true;
-            options.requireTLS = options.requireTLS === 'true' || options.requireTLS === true;
-            options.auth.pass = decodeURIComponent(options.auth.pass || '');
-            delete obj.message.options;
-            this.sendEmail(
-                null,
-                options,
-                obj.message,
-                error => obj.callback && this.sendTo(obj.from, 'send', { error }, obj.callback),
-            );
-        } else {
-            this.emailTransport = this.sendEmail(
-                this.emailTransport,
-                this.config.transportOptions,
-                obj.message,
-                error => obj.callback && this.sendTo(obj.from, 'send', { error }, obj.callback),
-            );
+        try {
+            if (obj.message.options) {
+                const options: EmailTransportOptions = JSON.parse(JSON.stringify(obj.message.options));
+                options.secure = options.secure === 'true' || options.secure === true;
+                options.requireTLS = options.requireTLS === 'true' || options.requireTLS === true;
+                options.auth.pass = decodeURIComponent(options.auth.pass || '');
+                delete obj.message.options;
+                await this.sendEmail(options, obj.message);
+            } else {
+                await this.sendEmail(null, obj.message);
+            }
+        } catch (error) {
+            this.log.error(`Cannot send email: ${error}`);
+            if (obj.callback) {
+                this.sendTo(obj.from, 'send', { error: error.toString() }, obj.callback);
+            }
         }
     }
 
-    sendEmail(
-        transport: Transporter<any, any> | null,
+    async sendEmail(
         options: EmailTransportOptions | null,
         message:
             | {
@@ -183,13 +185,15 @@ ${readableInstances.join('\n')}
                   text?: string;
               }
             | string,
-        callback?: (error?: string | null) => void,
-    ): Transporter<any, any> | null {
+    ): Promise<void> {
         message ||= {};
 
         options ||= this.config.transportOptions;
 
-        if (!transport) {
+        let transport: Transporter<any, any>;
+        if (options || !this.emailTransport) {
+            const useStandardTransport = !options;
+            options ||= this.config.transportOptions;
             if (options.host === 'undefined' || options.host === 'null') {
                 delete options.host;
             }
@@ -240,10 +244,10 @@ ${readableInstances.join('\n')}
                 options.port = '587';
                 delete options.service;
 
-                const accessToken = this.microsoftToken?.getAccessToken();
+                const accessToken = await this.microsoftToken?.getAccessToken();
                 if (!accessToken) {
                     this.log.error('No tokens for outlook and co. found');
-                    return null;
+                    throw new Error('No tokens for outlook and co. found');
                 }
 
                 options.auth = {
@@ -272,6 +276,12 @@ ${readableInstances.join('\n')}
             }
 
             transport = createTransport(options as any);
+
+            if (useStandardTransport) {
+                this.emailTransport = transport;
+            }
+        } else {
+            transport = this.emailTransport;
         }
 
         if (typeof message !== 'object') {
@@ -295,22 +305,18 @@ ${readableInstances.join('\n')}
 
         this.log.info(`Send email: ${JSON.stringify(message)}`);
 
-        transport.sendMail(message, (error: any, info: any): void => {
-            if (error) {
-                this.log.error(`Error ${error.response || error.message || error.code || JSON.stringify(error)}`);
-                if (typeof callback === 'function') {
-                    callback(error.response || error.message || error.code || JSON.stringify(error));
+        await new Promise<void>((resolve, reject) =>
+            transport.sendMail(message, (error: any, info: any): void => {
+                if (error) {
+                    this.log.error(`Error ${error.response || error.message || error.code || JSON.stringify(error)}`);
+                    reject(new Error(error.response || error.message || error.code || JSON.stringify(error)));
+                } else {
+                    this.log.info(`sent to ${message.to}`);
+                    this.log.debug(`Response: ${info.response}`);
+                    resolve();
                 }
-            } else {
-                this.log.info(`sent to ${message.to}`);
-                this.log.debug(`Response: ${info.response}`);
-                if (typeof callback === 'function') {
-                    callback(null);
-                }
-            }
-        });
-
-        return transport;
+            }),
+        );
     }
 }
 
