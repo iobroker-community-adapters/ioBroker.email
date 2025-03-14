@@ -110,7 +110,7 @@ For other services see documentation of **Nodemailer**: `[https://github.com/nod
   Placeholder for the next version (at the beginning of the line):
   ### **WORK IN PROGRESS**
 -->
-### 2.0.1 (2025-03-14)
+### **WORK IN PROGRESS**
 * (@GermanBluefox) Renamed `dist` folder to `build`
 * (@GermanBluefox) Fixing pass decoding
 

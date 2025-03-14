@@ -3,19 +3,6 @@
     "name": "email",
     "version": "2.0.1",
     "news": {
-      "2.0.1": {
-        "en": "Renamed `dist` folder to `build`\nFixing pass decoding",
-        "de": "Umbenannt `dist` Ordner zu `build `\nDecodierung des Festpasses",
-        "ru": "Переименованная папка «dist» в «build» пункт\nДекодирование фиксирующих пропусков",
-        "pt": "Renomeada pasta `dist` para `build \"\nDescodificação do passe de fixação",
-        "nl": "Gehernoemde map van de dist. Wat\nDecodering van de pass",
-        "fr": "Renommé dossier `dist` pour `build \"\nCorrection du décodage de la passe",
-        "it": "Rinominata cartella `dist` a `build #\nDecodifica del passaggio di fissaggio",
-        "es": "Carpeta llamada `dist` para `compilar `\nFijación paso decodificación",
-        "pl": "Zmień nazwę folderu 'dist' na 'build'\nDekodowanie pass",
-        "uk": "Перейменована папка `dist` для `build й\nВиправлення проходу декодування",
-        "zh-cn": "将“ dist” 文件夹重命名为“ 构建 ” `\n正在修复密码"
-      },
       "2.0.0": {
         "en": "Breaking change: Structure of configuration was corrected, and it could be they needed to be reconfigured\nMade Outlook work again. Requires now to be authenticated via OAuth2\nAdapter requires js-controller 5.0.19 and admin 6.17.14 now\nEsLint uses @iobroker/linter-config now\nDependencies have been updated\nMigrated to TypeScript\nAdded \"Ignore SSL errors\" option",
         "de": "Bruchänderung: Struktur der Konfiguration wurde korrigiert, und es könnte sein, dass sie neu konfiguriert werden müssen\nHat Outlook wieder funktioniert. Erfordert nun, über OAuth2 authiert zu werden\nAdapter erfordert jetzt js-controller 5.0.19 und admin 6.17.14\nEsLint verwendet jetzt @iobroker/linter-config\nAbhängigkeiten wurden aktualisiert\nZu TypeScript migriert\nHinzugefügt \"Ignore SSL-Fehler\" Option",
