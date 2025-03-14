@@ -112,6 +112,7 @@ For other services see documentation of **Nodemailer**: `[https://github.com/nod
 -->
 ### **WORK IN PROGRESS**
 * (@GermanBluefox) Renamed `dist` folder to `build`
+* (@GermanBluefox) Fixing pass decoding
 
 ### 2.0.0 (2025-03-11)
 * (@GermanBluefox) Breaking change: Structure of configuration was corrected, and it could be they needed to be reconfigured

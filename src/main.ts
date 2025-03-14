@@ -68,12 +68,6 @@ export class EmailAdapter extends Adapter {
         const systemConfig = await this.getForeignObjectAsync('system.config');
         this.systemLang = systemConfig?.common?.language || 'en';
 
-        // it must be like this
-        this.config.transportOptions.auth.pass = this.decrypt(
-            'Zgfr56gFe87jJOM',
-            this.config.transportOptions.auth.pass,
-        );
-
         if (this.config.transportOptions.service === 'Office365') {
             this.microsoftToken = new TokenRefresher(this, 'microsoftTokens', OAUTH_URL);
         }

@@ -176,6 +176,8 @@
       "type": "module"
     }
   },
+  "protectedNative1": ["transportOptions.auth.pass"],
+  "encryptedNative1": ["transportOptions.auth.pass"],
   "native": {
     "transport": "SMTP",
     "transportOptions": {

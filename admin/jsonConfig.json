@@ -195,7 +195,7 @@
                 },
                 "defaults.to": {
                     "type": "text",
-                    "label": "To",
+                    "label": "Send to",
                     "xs": 12,
                     "sm": 12,
                     "md": 4,
