@@ -250,6 +250,7 @@ ${readableInstances.join('\n')}
             }
             else {
                 this.log.warn('From email address is not equal to the configured email address for authentication. Some services do not allow this!');
+                message.from = message.from || this.config.defaults.from;
             }
         }
         else {
