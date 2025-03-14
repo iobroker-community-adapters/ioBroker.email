@@ -1,4 +1,7 @@
 # Older changes
+## 1.2.2 (2023-12-25)
+* (foxriver76) trim host messages from notification-manager correctly
+
 ## 1.2.1 (2023-12-08)
  * (foxriver76) send the actual message too via notification-manager
 
