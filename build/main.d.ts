@@ -38,5 +38,5 @@ export declare class EmailAdapter extends Adapter {
         to?: string;
         subject?: string;
         text?: string;
-    } | string): Promise<void>;
+    } | string): Promise<string>;
 }

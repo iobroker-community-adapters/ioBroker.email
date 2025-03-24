@@ -127,16 +127,20 @@ ${readableInstances.join('\n')}
         this.lastMessageTime = Date.now();
         this.lastMessageText = json;
         try {
+            let response;
             if (obj.message.options) {
                 const options = JSON.parse(JSON.stringify(obj.message.options));
                 options.secure = options.secure === 'true' || options.secure === true;
                 options.requireTLS = options.requireTLS === 'true' || options.requireTLS === true;
                 options.auth.pass = decodeURIComponent(options.auth.pass || '');
                 delete obj.message.options;
-                await this.sendEmail(options, obj.message);
+                response = await this.sendEmail(options, obj.message);
             }
             else {
-                await this.sendEmail(null, obj.message);
+                response = await this.sendEmail(null, obj.message);
+            }
+            if (obj.callback) {
+                this.sendTo(obj.from, 'send', { result: response }, obj.callback);
             }
         }
         catch (error) {
@@ -194,6 +198,12 @@ ${readableInstances.join('\n')}
             else if (options.service === '1und1' || options.service === 'ionos') {
                 options.host = 'smtp.ionos.de';
                 options.port = '587';
+                options.requireTLS = true;
+                delete options.service;
+            }
+            else if (options.service === 't-online.de') {
+                options.host = 'securesmtp.t-online.de';
+                options.port = '465';
                 options.requireTLS = true;
                 delete options.service;
             }
@@ -260,7 +270,7 @@ ${readableInstances.join('\n')}
         message.subject = message.subject || this.config.defaults.subject;
         message.text = message.text || this.config.defaults.text || '';
         this.log.info(`Send email: ${JSON.stringify(message)}`);
-        await new Promise((resolve, reject) => transport.sendMail(message, (error, info) => {
+        return new Promise((resolve, reject) => transport.sendMail(message, (error, info) => {
             if (error) {
                 this.log.error(`Error ${error.response || error.message || error.code || JSON.stringify(error)}`);
                 reject(new Error(error.response || error.message || error.code || JSON.stringify(error)));
@@ -268,7 +278,7 @@ ${readableInstances.join('\n')}
             else {
                 this.log.info(`sent to ${message.to}`);
                 this.log.debug(`Response: ${info.response}`);
-                resolve();
+                resolve(info.response);
             }
         }));
     }

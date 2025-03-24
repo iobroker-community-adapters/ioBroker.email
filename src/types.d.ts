@@ -57,6 +57,7 @@ export type EmailService =
     | 'SES-US-WEST-2'
     | 'SES-EU-WEST-1'
     | 'Sparkpost'
+    | 't-online.de'
     | 'web.de'
     | 'Yahoo'
     | 'Yandex'
