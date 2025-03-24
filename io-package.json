@@ -1,8 +1,21 @@
 {
   "common": {
     "name": "email",
-    "version": "2.0.2",
+    "version": "2.0.3",
     "news": {
+      "2.0.3": {
+        "en": "Added t-online.de to the list of supported services",
+        "de": "Hinzugefügt t-online. de in die Liste der unterstützten Dienste",
+        "ru": "Добавлено t-online. Перечень поддерживаемых услуг",
+        "pt": "Adicionado t-online. de para a lista de serviços suportados",
+        "nl": "Toegevoegd t-online. de lijst van ondersteunde diensten",
+        "fr": "Ajouté en ligne. de la liste des services soutenus",
+        "it": "Aggiunto t-online. de all'elenco dei servizi supportati",
+        "es": "Añadido t-online. de la lista de servicios apoyados",
+        "pl": "Dodano t- online. de do listy usług wspieranych",
+        "uk": "Додано t-online. де до списку допоміжних послуг",
+        "zh-cn": "添加t在线. 服务清单"
+      },
       "2.0.2": {
         "en": "Renamed `dist` folder to `build`\nFixing pass decoding",
         "de": "Umbenannt `dist` Ordner zu `build `\nDecodierung des Festpasses",
@@ -80,19 +93,6 @@
         "pl": "trema hostel",
         "uk": "обрізка повідомлень хост від повідомлення-менеджера правильно",
         "zh-cn": "通知-manager的三边寄电"
-      },
-      "1.2.1": {
-        "en": "send the actual message too via notification-manager",
-        "de": "die eigentliche nachricht auch über benachrichtigungsmanager senden",
-        "ru": "отправить фактическое сообщение также через менеджер уведомлений",
-        "pt": "enviar a mensagem real também através de notificação-manager",
-        "nl": "stuur de boodschap ook door via de manager",
-        "fr": "envoyer le message réel aussi via notification-manager",
-        "it": "inviare il messaggio effettivo anche tramite notifica-manager",
-        "es": "enviar el mensaje real también a través del administrador de notificación",
-        "pl": "wysłać rzeczywistą wiadomość poprzez powiadomienie-managera",
-        "uk": "надсилання фактичного повідомлення через повідомлення-менеджер",
-        "zh-cn": "通过通知-manager发送实际信息"
       }
     },
     "titleLang": {

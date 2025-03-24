@@ -97,6 +97,7 @@ To send email from another adapter, use `adapter.sendTo` function.
 - SES-US-EAST-1
 - SES-US-WEST-2
 - SES-EU-WEST-1
+- t-online.de
 - Sparkpost
 - Yahoo
 - Yandex
@@ -110,7 +111,7 @@ For other services see documentation of **Nodemailer**: `[https://github.com/nod
   Placeholder for the next version (at the beginning of the line):
   ### **WORK IN PROGRESS**
 -->
-### **WORK IN PROGRESS**
+### 2.0.3 (2025-03-24)
 * (@GermanBluefox) Added t-online.de to the list of supported services
 
 ### 2.0.2 (2025-03-14)
