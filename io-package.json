@@ -1,8 +1,21 @@
 {
   "common": {
     "name": "email",
-    "version": "2.0.3",
+    "version": "2.0.4",
     "news": {
+      "2.0.4": {
+        "en": "`From email address is not equal to the configured email address for authentication.` changed to debug level.\nDependencies have been updated",
+        "de": "`From email address is not equal to the configured email address for authentication.` geändert auf Debug-Ebene.\nAbhängigkeiten wurden aktualisiert",
+        "ru": "«От адреса электронной почты не равен сконфигурированному адресу электронной почты для аутентификации». Меняется на уровень отладки.\nЗависимости были обновлены",
+        "pt": "\"Do endereço de e-mail não é igual ao endereço de e-mail configurado para autenticação.\" mudou para debug level.\nAs dependências foram atualizadas",
+        "nl": "Vanuit e-mailadres is niet gelijk aan het geconfigureerde e-mailadres voor authenticatie. veranderd in debugniveau.\nAfhankelijkheden zijn bijgewerkt",
+        "fr": "`L'adresse e-mail n'est pas égale à l'adresse e-mail configurée pour l'authentification.' changé au niveau de débogage.\nLes dépendances ont été actualisées",
+        "it": "`Dall'indirizzo email non è uguale all'indirizzo e-mail configurato per l'autenticazione.` cambiato a livello di debug.\nLe dipendenze sono state aggiornate",
+        "es": "`Desde la dirección de correo electrónico no es igual a la dirección de correo electrónico configurada para la autenticación.` cambió a nivel de depuración.\nSe han actualizado las dependencias",
+        "pl": "'Z adresu e-mail nie jest równy konfigurowanemu adresowi e-mail do uwierzytelniania.' Zmieniono na poziom debugowania.\nZaktualizowano zależności",
+        "uk": "`Від адреси електронної пошти не дорівнює налаштованій адресі електронної пошти для ідентифікації.` змінено на рівень відключення.\nЗалежність було оновлено",
+        "zh-cn": "`来自电子邮件地址不等于所配置的用于认证的电子邮件地址'。 改为调试级别.\n依赖关系已更新"
+      },
       "2.0.3": {
         "en": "Added t-online.de to the list of supported services",
         "de": "Hinzugefügt t-online. de in die Liste der unterstützten Dienste",
@@ -80,19 +93,6 @@
         "pl": "Adapter wymaga node.js > = 18 i kontroler js- > = 5 teraz\nZaktualizowano zależności",
         "uk": "Адаптер вимагає node.js >= 18 і js-controller >= 5 тепер\nЗалежність було оновлено",
         "zh-cn": "适配器需要节点.js QQ18和js控制器 QQ 现在5号\n依赖关系已更新"
-      },
-      "1.2.2": {
-        "en": "trim host messages from notification-manager correctly",
-        "de": "host-nachrichten von benachrichtigungsmanager korrekt einblenden",
-        "ru": "трим хост-сообщения от уведомления-менеджера правильно",
-        "pt": "aparar mensagens de host do gerenciador de notificações corretamente",
-        "nl": "strim gastheer berichten van de manager correct",
-        "fr": "les messages d'hôte de notification-manager correctement",
-        "it": "trim messaggi host da notifica-manager correttamente",
-        "es": "trim mensajes de host desde el administrador de notificación correctamente",
-        "pl": "trema hostel",
-        "uk": "обрізка повідомлень хост від повідомлення-менеджера правильно",
-        "zh-cn": "通知-manager的三边寄电"
       }
     },
     "titleLang": {
