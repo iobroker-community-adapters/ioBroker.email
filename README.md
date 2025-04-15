@@ -111,6 +111,10 @@ For other services see documentation of **Nodemailer**: `[https://github.com/nod
   Placeholder for the next version (at the beginning of the line):
   ### **WORK IN PROGRESS**
 -->
+### **WORK IN PROGRESS**
+* (@mcm1957) `From email address is not equal to the configured email address for authentication.` changed to debug level.
+* (mcm1957) Dependencies have been updated
+
 ### 2.0.3 (2025-03-24)
 * (@GermanBluefox) Added t-online.de to the list of supported services
 
