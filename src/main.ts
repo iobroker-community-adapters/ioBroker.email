@@ -296,7 +296,7 @@ ${readableInstances.join('\n')}
             if (options.host === 'smtp.office365.com') {
                 message.from = options.auth.user || this.config.transportOptions.auth.user;
             } else {
-                this.log.warn(
+                this.log.debug(
                     'From email address is not equal to the configured email address for authentication. Some services do not allow this!',
                 );
                 message.from = message.from || this.config.defaults.from;
