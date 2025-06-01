@@ -18,7 +18,7 @@
         "@module-federation/vite": "^1.2.7",
         "@mui/icons-material": "^6.4.7",
         "@mui/material": "^6.4.7",
-        "@originjs/vite-plugin-federation": "^1.3.9",
+        "@originjs/vite-plugin-federation": "^1.4.1",
         "@types/react": "^18.3.18",
         "@types/react-dom": "^18.3.5",
         "@vitejs/plugin-react": "^4.3.4",
