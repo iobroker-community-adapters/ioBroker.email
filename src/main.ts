@@ -156,7 +156,15 @@ ${readableInstances.join('\n')}
                 const options: EmailTransportOptions = JSON.parse(JSON.stringify(obj.message.options));
                 options.secure = options.secure === 'true' || options.secure === true;
                 options.requireTLS = options.requireTLS === 'true' || options.requireTLS === true;
-                options.auth.pass = decodeURIComponent(options.auth.pass || '');
+                if (options.auth) {
+                    options.auth.pass = decodeURIComponent(options.auth.pass || '');
+                }
+                
+                // Remove auth object if both user and password are empty to allow anonymous SMTP connections
+                if (options.auth && !options.auth.user && !options.auth.pass) {
+                    delete options.auth;
+                }
+                
                 delete obj.message.options;
                 response = await this.sendEmail(options, obj.message);
             } else {
@@ -256,7 +264,7 @@ ${readableInstances.join('\n')}
 
                 options.auth = {
                     type: 'OAuth2',
-                    user: options.auth.user || this.config.transportOptions.auth.user,
+                    user: (options.auth?.user) || this.config.transportOptions.auth?.user || '',
                     accessToken,
                 };
             } else if (options.service === 'ith') {
@@ -279,6 +287,11 @@ ${readableInstances.join('\n')}
                 options.tls = { rejectUnauthorized: false };
             }
 
+            // Remove auth object if both user and password are empty to allow anonymous SMTP connections
+            if (options.auth && !options.auth.user && !options.auth.pass) {
+                delete options.auth;
+            }
+
             transport = createTransport(options as any);
 
             if (useStandardTransport) {
@@ -292,9 +305,9 @@ ${readableInstances.join('\n')}
             message = { text: message };
         }
 
-        if (message.from !== (options.auth.user || this.config.transportOptions.auth.user)) {
+        if (message.from !== (options.auth?.user || this.config.transportOptions.auth?.user)) {
             if (options.host === 'smtp.office365.com') {
-                message.from = options.auth.user || this.config.transportOptions.auth.user;
+                message.from = options.auth?.user || this.config.transportOptions.auth?.user;
             } else {
                 this.log.debug(
                     'From email address is not equal to the configured email address for authentication. Some services do not allow this!',
