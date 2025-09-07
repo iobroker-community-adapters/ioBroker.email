@@ -134,10 +134,10 @@ ${readableInstances.join('\n')}
                 options.requireTLS = options.requireTLS === 'true' || options.requireTLS === true;
                 if (options.auth) {
                     options.auth.pass = decodeURIComponent(options.auth.pass || '');
-                }
-                // Remove auth object if both user and password are empty to allow anonymous SMTP connections
-                if (options.auth && !options.auth.user && !options.auth.pass) {
-                    delete options.auth;
+                    // Remove auth object if both user and password are empty to allow anonymous SMTP connections
+                    if (!options.auth.user && !options.auth.pass) {
+                        delete options.auth;
+                    }
                 }
                 delete obj.message.options;
                 response = await this.sendEmail(options, obj.message);
