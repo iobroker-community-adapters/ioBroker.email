@@ -1,0 +1,1 @@
+import{C as o,a as t}from"./ConfigCustomEmailSet__mf_v__runtimeInit__mf_v__-CaxA21FP.js";const{loadShare:_}=t,{initPromise:r}=o,a=r.then(e=>_("@emotion/react",{customShareInfo:{shareConfig:{singleton:!0,strictVersion:!1,requiredVersion:"*"}}})),i=await a.then(e=>e());var s=i;export{s as C};
