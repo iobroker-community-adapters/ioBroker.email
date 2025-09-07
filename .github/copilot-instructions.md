@@ -65,6 +65,12 @@ Always reference these instructions first and fallback to search or bash command
 - ALWAYS run `npm run test:package` to validate package files
 - Check that build artifacts are properly generated in `build/`, `admin/custom/`, and `admin/rules/`
 
+### Build Artifacts Committing
+- **IMPORTANT**: Build artifacts in `admin/custom/`, `admin/rules/`, and `src-rules/build/` directories should be committed to the repository
+- These pre-built UI components are required for the adapter to function in ioBroker
+- After running `npm run build`, always commit the generated artifacts along with source code changes
+- This ensures that users installing the adapter get the latest UI components without needing to build them locally
+
 ## Common Tasks
 
 ### Project Structure
