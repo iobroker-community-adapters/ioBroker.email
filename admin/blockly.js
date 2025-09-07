@@ -80,6 +80,8 @@ Blockly.Blocks['email'] = {
             }
         }
 
+        this.attachmentCount_ = 2; // Default to 2 for backward compatibility
+
         this.appendDummyInput('INSTANCE')
             .appendField(Blockly.Translate('email'))
             .appendField(new Blockly.FieldDropdown(options), 'INSTANCE');
@@ -109,19 +111,8 @@ Blockly.Blocks['email'] = {
             inputFrom.connection._optional = true;
         }
 
-        const inputFile1 = this.appendValueInput('FILE_1')
-            .setCheck('String')
-            .appendField(Blockly.Translate('email_file'));
-        if (inputFile1.connection) {
-            inputFile1.connection._optional = true;
-        }
-
-        const inputFile2 = this.appendValueInput('FILE_2')
-            .setCheck('String')
-            .appendField(Blockly.Translate('email_file'));
-        if (inputFile2.connection) {
-            inputFile2.connection._optional = true;
-        }
+        // Create attachment inputs dynamically
+        this.updateAttachments_();
 
         this.appendDummyInput('LOG')
             .appendField(Blockly.Translate('email_log'))
@@ -140,7 +131,113 @@ Blockly.Blocks['email'] = {
         this.setColour(Blockly.Sendto.HUE);
         this.setTooltip(Blockly.Translate('email_tooltip'));
         this.setHelpUrl(Blockly.Translate('email_help'));
+        this.setMutator(new Blockly.Mutator(['email_attachment_item']));
     },
+
+    // Helper method to update attachment inputs
+    updateAttachments_: function() {
+        // Remove existing attachment inputs
+        for (let i = 1; i <= 10; i++) {
+            if (this.getInput('FILE_' + i)) {
+                this.removeInput('FILE_' + i);
+            }
+        }
+
+        // Add the required number of attachment inputs
+        for (let i = 1; i <= this.attachmentCount_; i++) {
+            const inputFile = this.appendValueInput('FILE_' + i)
+                .setCheck('String')
+                .appendField(Blockly.Translate('email_file'));
+            if (inputFile.connection) {
+                inputFile.connection._optional = true;
+            }
+        }
+    },
+
+    // Mutator methods for customizing attachment count
+    mutationToDom: function() {
+        const container = document.createElement('mutation');
+        container.setAttribute('attachments', this.attachmentCount_);
+        return container;
+    },
+
+    domToMutation: function(xmlElement) {
+        this.attachmentCount_ = parseInt(xmlElement.getAttribute('attachments'), 10) || 2;
+        this.updateAttachments_();
+    },
+
+    decompose: function(workspace) {
+        const containerBlock = workspace.newBlock('email_attachments_container');
+        containerBlock.initSvg();
+        let connection = containerBlock.getInput('STACK').connection;
+        for (let i = 1; i <= this.attachmentCount_; i++) {
+            const itemBlock = workspace.newBlock('email_attachment_item');
+            itemBlock.initSvg();
+            connection.connect(itemBlock.previousConnection);
+            connection = itemBlock.nextConnection;
+        }
+        return containerBlock;
+    },
+
+    compose: function(containerBlock) {
+        let itemBlock = containerBlock.getInputTargetBlock('STACK');
+        const connections = [];
+        while (itemBlock) {
+            connections.push(itemBlock.valueConnection_);
+            itemBlock = itemBlock.nextConnection && itemBlock.nextConnection.targetBlock();
+        }
+        
+        // Count the number of items
+        this.attachmentCount_ = connections.length;
+        
+        // Update the attachment inputs
+        this.updateAttachments_();
+        
+        // Reconnect any blocks
+        for (let i = 1; i <= this.attachmentCount_; i++) {
+            if (connections[i - 1]) {
+                const input = this.getInput('FILE_' + i);
+                if (input && connections[i - 1]) {
+                    input.connection.connect(connections[i - 1]);
+                }
+            }
+        }
+    },
+
+    saveConnections: function(containerBlock) {
+        let itemBlock = containerBlock.getInputTargetBlock('STACK');
+        let i = 1;
+        while (itemBlock) {
+            const input = this.getInput('FILE_' + i);
+            itemBlock.valueConnection_ = input && input.connection.targetConnection;
+            i++;
+            itemBlock = itemBlock.nextConnection && itemBlock.nextConnection.targetBlock();
+        }
+    }
+};
+
+// Mutator blocks for configuring attachments
+Blockly.Blocks['email_attachments_container'] = {
+    init: function() {
+        this.appendDummyInput()
+            .appendField(Blockly.Translate('email_file'));
+        this.appendStatementInput('STACK');
+        this.setColour(Blockly.Sendto.HUE);
+        this.setTooltip('');
+        this.contextMenu = false;
+    }
+};
+
+Blockly.Blocks['email_attachment_item'] = {
+    init: function() {
+        this.appendDummyInput()
+            .appendField(Blockly.Translate('email_file'));
+        this.setPreviousStatement(true);
+        this.setNextStatement(true);
+        this.setColour(Blockly.Sendto.HUE);
+        this.setTooltip('');
+        this.contextMenu = false;
+    }
 };
 
 Blockly.JavaScript['email'] = function(block) {
@@ -173,8 +270,11 @@ Blockly.JavaScript['email'] = function(block) {
 
     const files = [];
 
-    files.push(Blockly.JavaScript.valueToCode(block, 'FILE_1', Blockly.JavaScript.ORDER_ATOMIC));
-    files.push(Blockly.JavaScript.valueToCode(block, 'FILE_2', Blockly.JavaScript.ORDER_ATOMIC));
+    // Handle variable number of attachments
+    const attachmentCount = block.attachmentCount_ || 2; // Default to 2 for backward compatibility
+    for (let i = 1; i <= attachmentCount; i++) {
+        files.push(Blockly.JavaScript.valueToCode(block, 'FILE_' + i, Blockly.JavaScript.ORDER_ATOMIC));
+    }
 
     let attachments = '';
     for (let f = 0; f < files.length; f++) {
