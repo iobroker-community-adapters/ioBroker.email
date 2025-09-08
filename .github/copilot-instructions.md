@@ -8,26 +8,26 @@ Always reference these instructions first and fallback to search or bash command
 
 ### Bootstrap and Build
 - **Install dependencies**: `npm install` -- takes 20 seconds
-- **Build the project**: `npm run build` -- takes 45 seconds. NEVER CANCEL. Set timeout to 120+ seconds.
+- **Build the project**: `npm run build` -- takes 1 minute 45 seconds. NEVER CANCEL. Set timeout to 180+ seconds.
   - Compiles TypeScript (`src/` → `build/`)
   - Builds admin React UI (`src-admin/` → `admin/custom/`)
   - Builds rules React UI (`src-rules/` → `admin/rules/`)
   - Uses Module Federation architecture with Vite
 
 ### TypeScript Compilation
-- **Compile TypeScript only**: `npm run tsc` -- takes 5 seconds
+- **Compile TypeScript only**: `npm run tsc` -- takes 1-2 seconds
 - **Type checking**: TypeScript configuration in `tsconfig.json` and `tsconfig.build.json`
 - Main source files in `src/main.ts` (adapter entry point) and `src/lib/`
 
 ### Testing
-- **Run package validation tests**: `npm run test:package` -- takes ~15ms, 40 tests
-- **Run integration tests**: `npm run test:integration` -- takes 40 seconds. NEVER CANCEL. Set timeout to 90+ seconds.
+- **Run package validation tests**: `npm run test:package` -- takes ~360ms, 40 tests
+- **Run integration tests**: `npm run test:integration` -- takes 36-40 seconds. NEVER CANCEL. Set timeout to 90+ seconds.
   - Tests actual adapter startup and termination
   - Validates adapter can connect to ioBroker infrastructure
 - **IMPORTANT**: Main `npm run test` command has issues with node_modules test discovery. Use specific test commands instead.
 
 ### Linting
-- **Lint TypeScript files**: `npx eslint src/**/*.ts` -- takes 1 second
+- **Lint TypeScript files**: `npx eslint src/**/*.ts` -- takes 3 seconds
 - **IMPORTANT**: The main `npm run lint` command may hang. Use specific file patterns instead.
 - Uses `@iobroker/eslint-config` configuration
 
@@ -35,10 +35,10 @@ Always reference these instructions first and fallback to search or bash command
 - **Clean build**: Delete `build/`, `admin/custom/`, `admin/rules/` directories before building
 - **Admin UI development**: 
   - Source in `src-admin/` (React + TypeScript + Vite)
-  - Run `cd src-admin && npm install && npm run build`
+  - Run `cd src-admin && npm install && npm run build` -- takes ~25 seconds
 - **Rules UI development**:
   - Source in `src-rules/` (React + TypeScript + Vite)  
-  - Run `cd src-rules && npm install && npm run build`
+  - Run `cd src-rules && npm install && npm run build` -- takes ~16 seconds
 
 ## Validation
 
@@ -182,7 +182,9 @@ drwxr-xr-x  2 runner docker   4096 test
 ## Critical Timeouts and Timing
 - **NEVER CANCEL** any build or test commands before their expected completion time
 - **npm install**: 20 seconds (set timeout: 60+ seconds)
-- **npm run build**: 45 seconds (set timeout: 120+ seconds) 
-- **npm run test:integration**: 40 seconds (set timeout: 90+ seconds)
-- **npm run test:package**: 15ms (set timeout: 30+ seconds)
-- **npm run tsc**: 5 seconds (set timeout: 30+ seconds)
+- **npm run build**: 1 minute 45 seconds (set timeout: 180+ seconds) 
+- **npm run test:integration**: 36-40 seconds (set timeout: 90+ seconds)
+- **npm run test:package**: 360ms (set timeout: 30+ seconds)
+- **npm run tsc**: 1-2 seconds (set timeout: 30+ seconds)
+- **Admin UI build**: 25 seconds (set timeout: 60+ seconds)
+- **Rules UI build**: 16 seconds (set timeout: 45+ seconds)
