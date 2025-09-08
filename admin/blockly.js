@@ -112,7 +112,7 @@ Blockly.Blocks['email'] = {
         }
 
         // Create attachment inputs dynamically
-        this.updateAttachments_();
+        this.updateShape_();
 
         this.appendDummyInput('LOG')
             .appendField(Blockly.Translate('email_log'))
@@ -131,46 +131,41 @@ Blockly.Blocks['email'] = {
         this.setColour(Blockly.Sendto.HUE);
         this.setTooltip(Blockly.Translate('email_tooltip'));
         this.setHelpUrl(Blockly.Translate('email_help'));
-        this.setMutator(new Blockly.Mutator(['email_attachment_item']));
+        this.setMutator(new Blockly.icons.MutatorIcon(['email_attachment_item'], this));
     },
 
-    // Helper method to update attachment inputs
-    updateAttachments_: function() {
-        // Remove existing attachment inputs
-        for (let i = 1; i <= 10; i++) {
-            if (this.getInput('FILE_' + i)) {
-                this.removeInput('FILE_' + i);
-            }
-        }
-
-        // Add the required number of attachment inputs
-        for (let i = 1; i <= this.attachmentCount_; i++) {
-            const inputFile = this.appendValueInput('FILE_' + i)
-                .setCheck('String')
-                .appendField(Blockly.Translate('email_file'));
-            if (inputFile.connection) {
-                inputFile.connection._optional = true;
-            }
-        }
-    },
-
-    // Mutator methods for customizing attachment count
+    /**
+     * Create XML to represent number of attachment inputs.
+     * @return {!Element} XML storage element.
+     * @this Blockly.Block
+     */
     mutationToDom: function() {
         const container = document.createElement('mutation');
         container.setAttribute('attachments', this.attachmentCount_);
         return container;
     },
 
+    /**
+     * Parse XML to restore the attachment inputs.
+     * @param {!Element} xmlElement XML storage element.
+     * @this Blockly.Block
+     */
     domToMutation: function(xmlElement) {
         this.attachmentCount_ = parseInt(xmlElement.getAttribute('attachments'), 10) || 2;
-        this.updateAttachments_();
+        this.updateShape_();
     },
 
+    /**
+     * Populate the mutator's dialog with this block's components.
+     * @param {!Blockly.Workspace} workspace Mutator's workspace.
+     * @return {!Blockly.Block} Root block in mutator.
+     * @this Blockly.Block
+     */
     decompose: function(workspace) {
         const containerBlock = workspace.newBlock('email_attachments_container');
         containerBlock.initSvg();
         let connection = containerBlock.getInput('STACK').connection;
-        for (let i = 1; i <= this.attachmentCount_; i++) {
+        for (let i = 0; i < this.attachmentCount_; i++) {
             const itemBlock = workspace.newBlock('email_attachment_item');
             itemBlock.initSvg();
             connection.connect(itemBlock.previousConnection);
@@ -179,6 +174,11 @@ Blockly.Blocks['email'] = {
         return containerBlock;
     },
 
+    /**
+     * Reconfigure this block based on the mutator dialog's components.
+     * @param {!Blockly.Block} containerBlock Root block in mutator.
+     * @this Blockly.Block
+     */
     compose: function(containerBlock) {
         let itemBlock = containerBlock.getInputTargetBlock('STACK');
         const connections = [];
@@ -186,55 +186,125 @@ Blockly.Blocks['email'] = {
             connections.push(itemBlock.valueConnection_);
             itemBlock = itemBlock.nextConnection && itemBlock.nextConnection.targetBlock();
         }
-        
-        // Count the number of items
-        this.attachmentCount_ = connections.length;
-        
-        // Update the attachment inputs
-        this.updateAttachments_();
-        
-        // Reconnect any blocks
-        for (let i = 1; i <= this.attachmentCount_; i++) {
-            if (connections[i - 1]) {
-                const input = this.getInput('FILE_' + i);
-                if (input && connections[i - 1]) {
-                    input.connection.connect(connections[i - 1]);
+
+        // Disconnect any children that don't belong.
+        for (let k = 0; k < this.attachmentCount_; k++) {
+            const input = this.getInput('FILE_' + (k + 1));
+            if (input) {
+                const connection = input.connection.targetConnection;
+                if (connection && !connections.includes(connection)) {
+                    connection.disconnect();
                 }
             }
         }
+
+        this.attachmentCount_ = connections.length;
+        if (this.attachmentCount_ < 0) {
+            this.attachmentCount_ = 0;
+        }
+        this.updateShape_();
+
+        // Reconnect any child blocks.
+        for (let i = 0; i < this.attachmentCount_; i++) {
+            Blockly.icons.MutatorIcon.reconnect(connections[i], this, 'FILE_' + (i + 1));
+        }
     },
 
+    /**
+     * Store pointers to any connected child blocks.
+     * @param {!Blockly.Block} containerBlock Root block in mutator.
+     * @this Blockly.Block
+     */
     saveConnections: function(containerBlock) {
         let itemBlock = containerBlock.getInputTargetBlock('STACK');
-        let i = 1;
+        let i = 0;
         while (itemBlock) {
-            const input = this.getInput('FILE_' + i);
+            const input = this.getInput('FILE_' + (i + 1));
             itemBlock.valueConnection_ = input && input.connection.targetConnection;
             i++;
             itemBlock = itemBlock.nextConnection && itemBlock.nextConnection.targetBlock();
+        }
+    },
+
+    /**
+     * Modify this block to have the correct number of attachment inputs.
+     * @private
+     * @this Blockly.Block
+     */
+    updateShape_: function() {
+        const workspace = this.workspace;
+
+        // Add new inputs.
+        for (let i = 0; i < this.attachmentCount_; i++) {
+            const inputName = 'FILE_' + (i + 1);
+            let input;
+            try {
+                input = this.getInput(inputName);
+            } catch (e) {
+                input = null;
+            }
+
+            if (!input) {
+                input = this.appendValueInput(inputName)
+                    .setCheck('String')
+                    .appendField(Blockly.Translate('email_file'));
+                if (input.connection) {
+                    input.connection._optional = true;
+                }
+
+                // Add shadow block after a short delay
+                if (workspace) {
+                    setTimeout(function(__input) {
+                        if (!__input.connection.isConnected()) {
+                            const _shadow = workspace.newBlock('text');
+                            _shadow.setShadow(true);
+                            _shadow.initSvg();
+                            _shadow.render();
+                            _shadow.outputConnection.connect(__input.connection);
+                        }
+                    }, 100, input);
+                }
+            }
+        }
+
+        // Remove deleted inputs.
+        try {
+            for (let i = this.attachmentCount_; this.getInput('FILE_' + (i + 1)); i++) {
+                this.removeInput('FILE_' + (i + 1));
+            }
+        } catch (e) {
+            // Ignore error if input does not exist
         }
     }
 };
 
 // Mutator blocks for configuring attachments
 Blockly.Blocks['email_attachments_container'] = {
+    /**
+     * Mutator block for container.
+     * @this Blockly.Block
+     */
     init: function() {
+        this.setColour(Blockly.Sendto.HUE);
         this.appendDummyInput()
             .appendField(Blockly.Translate('email_file'));
         this.appendStatementInput('STACK');
-        this.setColour(Blockly.Sendto.HUE);
         this.setTooltip('');
         this.contextMenu = false;
     }
 };
 
 Blockly.Blocks['email_attachment_item'] = {
+    /**
+     * Mutator block for add items.
+     * @this Blockly.Block
+     */
     init: function() {
+        this.setColour(Blockly.Sendto.HUE);
         this.appendDummyInput()
             .appendField(Blockly.Translate('email_file'));
         this.setPreviousStatement(true);
         this.setNextStatement(true);
-        this.setColour(Blockly.Sendto.HUE);
         this.setTooltip('');
         this.contextMenu = false;
     }
