@@ -23,7 +23,7 @@
     "node": ">=18"
   },
   "dependencies": {
-    "@iobroker/adapter-core": "^3.2.3",
+    "@iobroker/adapter-core": "^3.3.2",
     "axios": "^1.11.0",
     "googleapis": "^146.0.0",
     "nodemailer": "^6.10.1"
