@@ -80,7 +80,7 @@ Blockly.Blocks['email'] = {
             }
         }
 
-        this.attachmentCount_ = 1; // Default to 1 attachment
+        this.attachmentCount_ = 2; // Default to 2 attachments for backward compatibility
 
         this.appendDummyInput('INSTANCE')
             .appendField(Blockly.Translate('email'))
@@ -151,7 +151,7 @@ Blockly.Blocks['email'] = {
      * @this Blockly.Block
      */
     domToMutation: function(xmlElement) {
-        this.attachmentCount_ = parseInt(xmlElement.getAttribute('attachments'), 10) || 1;
+        this.attachmentCount_ = parseInt(xmlElement.getAttribute('attachments'), 10) || 2;
         this.updateShape_();
     },
 
@@ -341,7 +341,7 @@ Blockly.JavaScript['email'] = function(block) {
     const files = [];
 
     // Handle variable number of attachments
-    const attachmentCount = block.attachmentCount_ || 1; // Default to 1 attachment
+    const attachmentCount = block.attachmentCount_ || 2; // Default to 2 attachments for backward compatibility
     for (let i = 1; i <= attachmentCount; i++) {
         files.push(Blockly.JavaScript.valueToCode(block, 'FILE_' + i, Blockly.JavaScript.ORDER_ATOMIC));
     }
