@@ -113,6 +113,7 @@ For other services see documentation of **Nodemailer**: `[https://github.com/nod
 -->
 ### **WORK IN PROGRESS**
 * (@copilot) Fixed SMTP relay anonymous access by ignoring user and password when empty
+* (@copilot) Added configurable attachment blocks for Blockly email block with mutator interface for dynamic attachment management
 
 ### 2.0.4 (2025-04-15)
 * (@mcm1957) `From email address is not equal to the configured email address for authentication.` changed to debug level.
