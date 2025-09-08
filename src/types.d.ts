@@ -66,7 +66,7 @@ export type EmailService =
 
 export type EmailTransportOptions = {
     service?: EmailService;
-    auth: {
+    auth?: {
         type?: 'OAuth2';
         clientId?: 'CLIENT_ID';
         clientSecret?: 'CLIENT_SECRET';
