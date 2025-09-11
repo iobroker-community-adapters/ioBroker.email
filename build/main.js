@@ -160,7 +160,7 @@ ${readableInstances.join('\n')}
         message ||= {};
         options ||= this.config.transportOptions;
         let transport;
-        if (options || !this.emailTransport) {
+        if (options || !this.emailTransport || this.config.transportOptions.service === 'Office365') {
             const useStandardTransport = !options;
             options ||= this.config.transportOptions;
             if (options.host === 'undefined' || options.host === 'null') {
