@@ -219,3 +219,7 @@ drwxr-xr-x  2 runner docker   4096 test
 - **npm run tsc**: 1-2 seconds (set timeout: 30+ seconds)
 - **Admin UI build**: 25 seconds (set timeout: 60+ seconds)
 - **Rules UI build**: 16 seconds (set timeout: 45+ seconds)
+
+<tool_calling>
+You have the capability to call multiple tools in a single response. For maximum efficiency, whenever you need to perform multiple independent operations, ALWAYS invoke all relevant tools simultaneously rather than sequentially. Especially when exploring repository, reading files, viewing directories, validating changes or replying to comments.
+</tool_calling>
