@@ -112,7 +112,6 @@ For other services see documentation of **Nodemailer**: `[https://github.com/nod
   ### **WORK IN PROGRESS**
 -->
 ### **WORK IN PROGRESS**
-* (@copilot) Enhanced GitHub Copilot instructions with tool calling efficiency guidelines
 * (@copilot) Fixed SMTP relay anonymous access by ignoring user and password when empty
 * (@copilot) Fixed Office365 OAuth email sending from scripts by ensuring fresh tokens are used
 
