@@ -2,32 +2,56 @@
 
 ioBroker.email is a TypeScript-based email adapter for the ioBroker home automation platform. The adapter enables sending emails from ioBroker using various email services like Gmail, Outlook, Yahoo, and many others via nodemailer.
 
+## Adapter Purpose and Features
+
+The email adapter provides comprehensive email sending capabilities for ioBroker automation scenarios:
+
+- **Email sending**: Send emails from scripts, rules, and automations using nodemailer
+- **Multiple email services**: Supports 30+ email providers including Gmail, Outlook, Yahoo, and custom SMTP
+- **OAuth2 authentication**: Secure authentication for modern email services like Outlook
+- **Attachments support**: Send files, URLs, and embedded images as email attachments
+- **HTML and text formats**: Support for both plain text and rich HTML email content
+- **Blockly integration**: Visual scripting support for JavaScript adapter with email sending blocks
+- **Rules integration**: React-based rules component for visual automation workflows
+- **Admin interface**: React-based configuration UI for easy setup and management
+
+The adapter integrates seamlessly with ioBroker's automation ecosystem, providing reliable email notifications for smart home events, system alerts, and custom automations.
+
+## Pull Request Requirements
+
+### Changelog Updates
+- **MANDATORY**: Every PR must include changelog updates in README.md
+- **Format**: Changelog entries must be single-line format (no multi-line entries)
+- **Location**: Add new entries under the `### **WORK IN PROGRESS**` section in README.md
+- **Structure**: Follow the existing format: `* (@username) Brief description of change`
+- **Example**: `* (@copilot) Fixed SMTP relay anonymous access by ignoring user and password when empty`
+
 Always reference these instructions first and fallback to search or bash commands only when you encounter unexpected information that does not match the info here.
 
 ## Working Effectively
 
 ### Bootstrap and Build
 - **Install dependencies**: `npm install` -- takes 20 seconds
-- **Build the project**: `npm run build` -- takes 45 seconds. NEVER CANCEL. Set timeout to 120+ seconds.
+- **Build the project**: `npm run build` -- takes 1 minute 45 seconds. NEVER CANCEL. Set timeout to 180+ seconds.
   - Compiles TypeScript (`src/` → `build/`)
   - Builds admin React UI (`src-admin/` → `admin/custom/`)
   - Builds rules React UI (`src-rules/` → `admin/rules/`)
   - Uses Module Federation architecture with Vite
 
 ### TypeScript Compilation
-- **Compile TypeScript only**: `npm run tsc` -- takes 5 seconds
+- **Compile TypeScript only**: `npm run tsc` -- takes 1-2 seconds
 - **Type checking**: TypeScript configuration in `tsconfig.json` and `tsconfig.build.json`
 - Main source files in `src/main.ts` (adapter entry point) and `src/lib/`
 
 ### Testing
-- **Run package validation tests**: `npm run test:package` -- takes ~15ms, 40 tests
-- **Run integration tests**: `npm run test:integration` -- takes 40 seconds. NEVER CANCEL. Set timeout to 90+ seconds.
+- **Run package validation tests**: `npm run test:package` -- takes ~360ms, 40 tests
+- **Run integration tests**: `npm run test:integration` -- takes 36-40 seconds. NEVER CANCEL. Set timeout to 90+ seconds.
   - Tests actual adapter startup and termination
   - Validates adapter can connect to ioBroker infrastructure
 - **IMPORTANT**: Main `npm run test` command has issues with node_modules test discovery. Use specific test commands instead.
 
 ### Linting
-- **Lint TypeScript files**: `npx eslint src/**/*.ts` -- takes 1 second
+- **Lint TypeScript files**: `npx eslint src/**/*.ts` -- takes 3 seconds
 - **IMPORTANT**: The main `npm run lint` command may hang. Use specific file patterns instead.
 - Uses `@iobroker/eslint-config` configuration
 
@@ -35,10 +59,14 @@ Always reference these instructions first and fallback to search or bash command
 - **Clean build**: Delete `build/`, `admin/custom/`, `admin/rules/` directories before building
 - **Admin UI development**: 
   - Source in `src-admin/` (React + TypeScript + Vite)
-  - Run `cd src-admin && npm install && npm run build`
+  - Run `cd src-admin && npm install && npm run build` -- takes ~25 seconds
 - **Rules UI development**:
   - Source in `src-rules/` (React + TypeScript + Vite)  
-  - Run `cd src-rules && npm install && npm run build`
+  - Run `cd src-rules && npm install && npm run build` -- takes ~16 seconds
+- **Blockly integration**: 
+  - Email sending blocks for JavaScript adapter visual scripting
+  - Configuration in `admin/blockly.js`
+- **Rules and Admin components**: Both written in React with TypeScript and Vite build system
 
 ## Validation
 
@@ -97,6 +125,7 @@ Always reference these instructions first and fallback to search or bash command
 │   └── build/                # Vite build output
 ├── build/                     # TypeScript compilation output
 ├── admin/                     # ioBroker admin interface files
+│   ├── blockly.js            # Blockly blocks for JavaScript adapter
 │   ├── custom/               # Built admin UI components
 │   └── rules/                # Built rules UI components
 └── test/                      # Test files
@@ -110,6 +139,7 @@ Always reference these instructions first and fallback to search or bash command
 - **Type definitions**: `src/types.d.ts` (TypeScript interfaces)
 - **Admin UI entry**: `src-admin/src/App.tsx` (React configuration UI)
 - **Rules UI entry**: `src-rules/src/ActionSendEmail.tsx` (Rule system integration)
+- **Blockly configuration**: `admin/blockly.js` (Email blocks for JavaScript adapter)
 - **Build configuration**: `tasks.js` (coordinates multi-component builds)
 
 ### Frequently Used Commands Output
@@ -168,8 +198,9 @@ drwxr-xr-x  2 runner docker   4096 test
 - **Framework**: ioBroker adapter-core 3.2+
 - **Email**: nodemailer 6.10+
 - **OAuth**: googleapis 146.0+ (for Microsoft integration)
-- **Admin UI**: React 18 + Material-UI 6 + Vite 6
-- **Rules UI**: React 18 + Module Federation
+- **Admin UI**: React 18 + Material-UI 6 + Vite 6 (React-based configuration interface)
+- **Rules UI**: React 18 + Module Federation (React-based rules component for JavaScript adapter)
+- **Blockly**: Visual scripting blocks for JavaScript adapter
 - **Testing**: Mocha + @iobroker/testing 5.1+
 - **Linting**: ESLint 9 + @iobroker/eslint-config
 
@@ -182,7 +213,13 @@ drwxr-xr-x  2 runner docker   4096 test
 ## Critical Timeouts and Timing
 - **NEVER CANCEL** any build or test commands before their expected completion time
 - **npm install**: 20 seconds (set timeout: 60+ seconds)
-- **npm run build**: 45 seconds (set timeout: 120+ seconds) 
-- **npm run test:integration**: 40 seconds (set timeout: 90+ seconds)
-- **npm run test:package**: 15ms (set timeout: 30+ seconds)
-- **npm run tsc**: 5 seconds (set timeout: 30+ seconds)
+- **npm run build**: 1 minute 45 seconds (set timeout: 180+ seconds) 
+- **npm run test:integration**: 36-40 seconds (set timeout: 90+ seconds)
+- **npm run test:package**: 360ms (set timeout: 30+ seconds)
+- **npm run tsc**: 1-2 seconds (set timeout: 30+ seconds)
+- **Admin UI build**: 25 seconds (set timeout: 60+ seconds)
+- **Rules UI build**: 16 seconds (set timeout: 45+ seconds)
+
+<tool_calling>
+You have the capability to call multiple tools in a single response. For maximum efficiency, whenever you need to perform multiple independent operations, ALWAYS invoke all relevant tools simultaneously rather than sequentially. Especially when exploring repository, reading files, viewing directories, validating changes or replying to comments.
+</tool_calling>
