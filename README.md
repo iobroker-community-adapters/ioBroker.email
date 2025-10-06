@@ -127,7 +127,7 @@ For other services see documentation of **Nodemailer**: `[https://github.com/nod
   Placeholder for the next version (at the beginning of the line):
   ### **WORK IN PROGRESS**
 -->
-### **WORK IN PROGRESS**
+### 2.0.5-alpha.0 (2025-10-06)
 * (@copilot) Fixed SMTP relay anonymous access by ignoring user and password when empty
 * (@copilot) Fixed Office365 OAuth email sending from scripts by ensuring fresh tokens are used
 * (mcm1957) Dependencies have been updated
@@ -151,10 +151,6 @@ For other services see documentation of **Nodemailer**: `[https://github.com/nod
 * (mcm1957) Dependencies have been updated
 * (@GermanBluefox) Migrated to TypeScript
 * (@GermanBluefox) Added "Ignore SSL errors" option
-
-### 1.4.0 (2024-11-17)
-* (simatec) Responsive Design added
-* (Jey-Cee) Admin-UI has been migrated to jsonConfig
 
 ## License
 
