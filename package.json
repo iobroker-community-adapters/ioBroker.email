@@ -26,7 +26,7 @@
     "@iobroker/adapter-core": "^3.3.2",
     "axios": "^1.11.0",
     "googleapis": "^146.0.0",
-    "nodemailer": "^6.10.1"
+    "nodemailer": "^7.0.7"
   },
   "devDependencies": {
     "@alcalzone/release-script": "^3.8.0",
