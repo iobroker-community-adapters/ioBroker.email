@@ -24,7 +24,7 @@
   },
   "dependencies": {
     "@iobroker/adapter-core": "^3.3.2",
-    "axios": "^1.11.0",
+    "axios": "^1.13.2",
     "googleapis": "^146.0.0",
     "nodemailer": "^6.10.1"
   },
