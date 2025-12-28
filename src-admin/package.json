@@ -21,7 +21,7 @@
         "@originjs/vite-plugin-federation": "^1.3.9",
         "@types/react": "^18.3.23",
         "@types/react-dom": "^18.3.5",
-        "@vitejs/plugin-react": "^4.3.4",
+        "@vitejs/plugin-react": "^5.1.1",
         "react": "^18.3.1",
         "react-dom": "^18.3.1",
         "vite": "6.2.7",
