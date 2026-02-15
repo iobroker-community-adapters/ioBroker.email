@@ -138,6 +138,7 @@ For other services see documentation of **Nodemailer**: `[https://github.com/nod
 
 ### 2.0.5-alpha.0 (2025-10-06)
 * (@copilot) Fixed SMTP relay anonymous access by ignoring user and password when empty
+* (@copilot) Added configurable attachment blocks for Blockly email block with mutator interface for dynamic attachment management
 * (@copilot) Fixed Office365 OAuth email sending from scripts by ensuring fresh tokens are used
 * (mcm1957) Dependencies have been updated
 
