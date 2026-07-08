@@ -36,8 +36,26 @@ Blockly.Words['email_anyInstance']   = {"en": "all instances",                  
 Blockly.Words['email_tooltip']       = {"en": "Send an email",                                   "de": "Sende ein E-Mail",                                "ru": "Послать email",                                   "pt": "Envie um e-mail",                                 "nl": "Stuur een e-mail",                                "fr": "Envoyer un e-mail",                               "it": "Inviare una mail",                                "es": "Enviar un correo electrónico",                    "pl": "Wyślij e-mail",                                   "zh-cn": "发送电子邮件"};
 Blockly.Words['email_help']          = {"en": "https://github.com/ioBroker/ioBroker.email/blob/master/README.md", "de": "https://github.com/ioBroker/ioBroker.email/blob/master/README.md", "ru": "https://github.com/ioBroker/ioBroker.email/blob/master/README.md", "pt": "https://github.com/ioBroker/ioBroker.email/blob/master/README.md", "nl": "https://github.com/ioBroker/ioBroker.email/blob/master/README.md", "fr": "https://github.com/ioBroker/ioBroker.email/blob/master/README.md", "it": "https://github.com/ioBroker/ioBroker.email/blob/master/README.md", "es": "https://github.com/ioBroker/ioBroker.email/blob/master/README.md", "pl": "https://github.com/ioBroker/ioBroker.email/blob/master/README.md", "zh-cn": "https://github.com/ioBroker/ioBroker.email/blob/master/README.md"};
 
+// --- Plus/minus button icons (computed once at load time) ----------
+var EMAIL_PLUS_IMAGE = (function () {
+    var svg = '<svg xmlns="http://www.w3.org/2000/svg" width="15" height="15">'
+        + '<circle cx="7.5" cy="7.5" r="7.5" fill="#5ba3f5"/>'
+        + '<path d="M4 7.5h7M7.5 4v7" stroke="#fff" stroke-width="2"/>'
+        + '</svg>';
+    return 'data:image/svg+xml;charset=utf-8,' + encodeURIComponent(svg);
+}());
+
+var EMAIL_MINUS_IMAGE = (function () {
+    var svg = '<svg xmlns="http://www.w3.org/2000/svg" width="15" height="15">'
+        + '<circle cx="7.5" cy="7.5" r="7.5" fill="#e57373"/>'
+        + '<path d="M4 7.5h7" stroke="#fff" stroke-width="2"/>'
+        + '</svg>';
+    return 'data:image/svg+xml;charset=utf-8,' + encodeURIComponent(svg);
+}());
+
 Blockly.Sendto.blocks['email'] =
     '<block type="email">' +
+    '  <mutation filecount="2"></mutation>' +
     '  <field name="INSTANCE"></field>' +
     '  <field name="IS_HTML">FALSE</field>' +
     '  <field name="LOG"></field>' +
@@ -59,6 +77,8 @@ Blockly.Sendto.blocks['email'] =
     '</block>';
 
 Blockly.Blocks['email'] = {
+    itemCount_: 2,
+
     init: function() {
         const options = [[Blockly.Translate('email_anyInstance'), '']];
         if (typeof main !== 'undefined' && main.instances) {
@@ -109,19 +129,7 @@ Blockly.Blocks['email'] = {
             inputFrom.connection._optional = true;
         }
 
-        const inputFile1 = this.appendValueInput('FILE_1')
-            .setCheck('String')
-            .appendField(Blockly.Translate('email_file'));
-        if (inputFile1.connection) {
-            inputFile1.connection._optional = true;
-        }
-
-        const inputFile2 = this.appendValueInput('FILE_2')
-            .setCheck('String')
-            .appendField(Blockly.Translate('email_file'));
-        if (inputFile2.connection) {
-            inputFile2.connection._optional = true;
-        }
+        this.updateShape_();
 
         this.appendDummyInput('LOG')
             .appendField(Blockly.Translate('email_log'))
@@ -140,6 +148,86 @@ Blockly.Blocks['email'] = {
         this.setColour(Blockly.Sendto.HUE);
         this.setTooltip(Blockly.Translate('email_tooltip'));
         this.setHelpUrl(Blockly.Translate('email_help'));
+    },
+
+    mutationToDom: function() {
+        const container = document.createElement('mutation');
+        container.setAttribute('filecount', this.itemCount_);
+        return container;
+    },
+
+    domToMutation: function(xmlElement) {
+        const count = parseInt(xmlElement.getAttribute('filecount'), 10);
+        this.itemCount_ = isNaN(count) ? 2 : count;
+        this.updateShape_();
+    },
+
+    addFile_: function() {
+        const connections = this.saveFileConnections_();
+        connections.push(null);
+        this.itemCount_++;
+        this.updateShape_(connections);
+    },
+
+    removeFileAt_: function(index) {
+        const connections = this.saveFileConnections_();
+        connections.splice(index - 1, 1);
+        this.itemCount_--;
+        this.updateShape_(connections);
+    },
+
+    saveFileConnections_: function() {
+        const connections = [];
+        for (let i = 1; i <= this.itemCount_; i++) {
+            const input = this.getInput('FILE_' + i);
+            const conn = input && input.connection.targetConnection;
+            if (conn) conn.disconnect();
+            connections.push(conn || null);
+        }
+        return connections;
+    },
+
+    updateShape_: function(connections) {
+        // Remove existing FILE inputs and + row
+        let i = 1;
+        while (this.getInput('FILE_' + i)) {
+            this.removeInput('FILE_' + i);
+            i++;
+        }
+        if (this.getInput('PLUS_ROW')) {
+            this.removeInput('PLUS_ROW');
+        }
+
+        // Re-add FILE inputs with individual minus buttons
+        for (let j = 1; j <= this.itemCount_; j++) {
+            const idx = j;
+            const input = this.appendValueInput('FILE_' + j)
+                .setCheck('String')
+                .appendField(new Blockly.FieldImage(
+                    EMAIL_MINUS_IMAGE, 15, 15, '-',
+                    function() { this.sourceBlock_.removeFileAt_(idx); }
+                ))
+                .appendField(Blockly.Translate('email_file'));
+            if (input.connection) {
+                input.connection._optional = true;
+            }
+            if (connections && connections[j - 1]) {
+                input.connection.connect(connections[j - 1]);
+            }
+            if (this.getInput('LOG')) {
+                this.moveInputBefore('FILE_' + j, 'LOG');
+            }
+        }
+
+        // Add + row at the bottom of the file section
+        this.appendDummyInput('PLUS_ROW')
+            .appendField(new Blockly.FieldImage(
+                EMAIL_PLUS_IMAGE, 15, 15, '+',
+                function() { this.sourceBlock_.addFile_(); }
+            ));
+        if (this.getInput('LOG')) {
+            this.moveInputBefore('PLUS_ROW', 'LOG');
+        }
     },
 };
 
@@ -171,10 +259,11 @@ Blockly.JavaScript['email'] = function(block) {
         text += `  from: ${from},\n`;
     }
 
+    const fileCount = block.itemCount_ !== undefined ? block.itemCount_ : 2;
     const files = [];
-
-    files.push(Blockly.JavaScript.valueToCode(block, 'FILE_1', Blockly.JavaScript.ORDER_ATOMIC));
-    files.push(Blockly.JavaScript.valueToCode(block, 'FILE_2', Blockly.JavaScript.ORDER_ATOMIC));
+    for (let fi = 1; fi <= fileCount; fi++) {
+        files.push(Blockly.JavaScript.valueToCode(block, 'FILE_' + fi, Blockly.JavaScript.ORDER_ATOMIC));
+    }
 
     let attachments = '';
     for (let f = 0; f < files.length; f++) {
@@ -182,7 +271,6 @@ Blockly.JavaScript['email'] = function(block) {
             if (!attachments) {
                 attachments = '  attachments:[\n';
             }
-
             attachments += `    { path: ${files[f]}, cid: 'file${f + 1}' },\n`;
         }
     }
