@@ -1,6 +1,6 @@
 'use strict';
 
-if (typeof goog === 'undefined') {
+if (typeof goog !== 'undefined') {
     goog.provide('Blockly.JavaScript.Sendto');
 
     goog.require('Blockly.JavaScript');
@@ -157,8 +157,8 @@ Blockly.Blocks['email'] = {
     },
 
     domToMutation: function(xmlElement) {
-        const count = parseInt(xmlElement.getAttribute('filecount'), 10);
-        this.itemCount_ = isNaN(count) ? 2 : count;
+        const rawCount = parseInt(xmlElement.getAttribute('filecount'), 10);
+        this.itemCount_ = isNaN(rawCount) ? 2 : Math.max(0, Math.min(rawCount, 20));
         this.updateShape_();
     },
 
@@ -205,7 +205,7 @@ Blockly.Blocks['email'] = {
                 .setCheck('String')
                 .appendField(new Blockly.FieldImage(
                     EMAIL_MINUS_IMAGE, 15, 15, '-',
-                    function() { this.sourceBlock_.removeFileAt_(idx); }
+                    function() { this.getSourceBlock().removeFileAt_(idx); }
                 ))
                 .appendField(Blockly.Translate('email_file'));
             if (input.connection) {
@@ -223,7 +223,7 @@ Blockly.Blocks['email'] = {
         this.appendDummyInput('PLUS_ROW')
             .appendField(new Blockly.FieldImage(
                 EMAIL_PLUS_IMAGE, 15, 15, '+',
-                function() { this.sourceBlock_.addFile_(); }
+                function() { this.getSourceBlock().addFile_(); }
             ));
         if (this.getInput('LOG')) {
             this.moveInputBefore('PLUS_ROW', 'LOG');
