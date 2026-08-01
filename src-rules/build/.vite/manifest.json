@@ -1,144 +1,153 @@
 {
-  "_ActionSendEmail__loadShare__react__loadShare__-T8uLApET.js": {
-    "file": "assets/ActionSendEmail__loadShare__react__loadShare__-T8uLApET.js",
-    "name": "ActionSendEmail__loadShare__react__loadShare__",
+  "__virtual_mf___mfe_internal__ActionSendEmail__mf_owner__1__loadShare___mf_0_iobroker_mf_1_gui_mf_2_components__loadShare__.js-DaYmwWP0.js": {
+    "file": "assets/_virtual_mf___mfe_internal__ActionSendEmail__mf_owner__1__loadShare___mf_0_iobroker_mf_1_gui_mf_2_components__loadShare__.js-DaYmwWP0.js",
+    "name": "_virtual_mf___mfe_internal__ActionSendEmail__mf_owner__1__loadShare___mf_0_iobroker_mf_1_gui_mf_2_components__loadShare__.js",
     "imports": [
-      "__commonjsHelpers-Cpj98o6Y.js",
-      "_ActionSendEmail__mf_v__runtimeInit__mf_v__-eLULivoH.js"
+      "_rolldown-runtime-B0Z9INg1.js"
     ]
   },
-  "_ActionSendEmail__loadShare__react_mf_2_dom__loadShare__-Bmf-uuOi.js": {
-    "file": "assets/ActionSendEmail__loadShare__react_mf_2_dom__loadShare__-Bmf-uuOi.js",
-    "name": "ActionSendEmail__loadShare__react_mf_2_dom__loadShare__",
+  "__virtual_mf___mfe_internal__ActionSendEmail__mf_owner__1__loadShare__react_mf_2_dom_mf_1_client__loadShare__.js-D9f99l0E.js": {
+    "file": "assets/_virtual_mf___mfe_internal__ActionSendEmail__mf_owner__1__loadShare__react_mf_2_dom_mf_1_client__loadShare__.js-D9f99l0E.js",
+    "name": "_virtual_mf___mfe_internal__ActionSendEmail__mf_owner__1__loadShare__react_mf_2_dom_mf_1_client__loadShare__.js",
     "imports": [
-      "_ActionSendEmail__loadShare__react__loadShare__-T8uLApET.js",
-      "__commonjsHelpers-Cpj98o6Y.js",
-      "_ActionSendEmail__mf_v__runtimeInit__mf_v__-eLULivoH.js"
+      "_rolldown-runtime-B0Z9INg1.js",
+      "__virtual_mf___mfe_internal__ActionSendEmail__mf_owner__1__loadShare___mf_0_iobroker_mf_1_gui_mf_2_components__loadShare__.js-DaYmwWP0.js"
     ]
   },
-  "_ActionSendEmail__mf_v__runtimeInit__mf_v__-eLULivoH.js": {
-    "file": "assets/ActionSendEmail__mf_v__runtimeInit__mf_v__-eLULivoH.js",
-    "name": "ActionSendEmail__mf_v__runtimeInit__mf_v__"
-  },
-  "__commonjsHelpers-Cpj98o6Y.js": {
-    "file": "assets/_commonjsHelpers-Cpj98o6Y.js",
-    "name": "_commonjsHelpers"
-  },
-  "_index-B2YccqDp.js": {
-    "file": "assets/index-B2YccqDp.js",
-    "name": "index",
-    "isDynamicEntry": true,
+  "_dist-PnYvbzKY.js": {
+    "file": "assets/dist-PnYvbzKY.js",
+    "name": "dist",
     "imports": [
-      "__commonjsHelpers-Cpj98o6Y.js",
-      "_ActionSendEmail__loadShare__react__loadShare__-T8uLApET.js"
+      "_vite-preload-helper-B7qeedMF.js"
     ]
   },
-  "_index-DQiceR5U.js": {
-    "file": "assets/index-DQiceR5U.js",
-    "name": "index",
-    "isDynamicEntry": true,
+  "_rolldown-runtime-B0Z9INg1.js": {
+    "file": "assets/rolldown-runtime-B0Z9INg1.js",
+    "name": "rolldown-runtime"
+  },
+  "_virtual_mf-REMOTE_ENTRY_ID___mfe_internal__ActionSendEmail__customRuleBlocks_js-CZDT7kOd.js": {
+    "file": "assets/virtual_mf-REMOTE_ENTRY_ID___mfe_internal__ActionSendEmail__customRuleBlocks_js-CZDT7kOd.js",
+    "name": "virtual_mf-REMOTE_ENTRY_ID___mfe_internal__ActionSendEmail__customRuleBlocks_js",
     "imports": [
-      "__commonjsHelpers-Cpj98o6Y.js"
+      "_vite-preload-helper-B7qeedMF.js",
+      "_dist-PnYvbzKY.js"
+    ],
+    "dynamicImports": [
+      "virtual:mf-localSharedImportMap:__mfe_internal__ActionSendEmail__mf_owner__1",
+      "virtual:mf-exposes:__mfe_internal__ActionSendEmail__customRuleBlocks_js"
     ]
   },
-  "_index-Do-nCdWy.js": {
-    "file": "assets/index-Do-nCdWy.js",
-    "name": "index",
-    "isDynamicEntry": true,
+  "_virtual_mf-exposes___mfe_internal__ActionSendEmail__customRuleBlocks_js-0_KClVkp.js": {
+    "file": "assets/virtual_mf-exposes___mfe_internal__ActionSendEmail__customRuleBlocks_js-0_KClVkp.js",
+    "name": "virtual_mf-exposes___mfe_internal__ActionSendEmail__customRuleBlocks_js",
     "imports": [
-      "__commonjsHelpers-Cpj98o6Y.js"
+      "_vite-preload-helper-B7qeedMF.js"
+    ],
+    "dynamicImports": [
+      "src/ActionSendEmail.tsx"
     ]
   },
-  "_preload-helper-C1FmrZbK.js": {
-    "file": "assets/preload-helper-C1FmrZbK.js",
-    "name": "preload-helper"
+  "_vite-preload-helper-B7qeedMF.js": {
+    "file": "assets/vite-preload-helper-B7qeedMF.js",
+    "name": "vite-preload-helper"
   },
   "index.html": {
-    "file": "assets/index-NLLngCvV.js",
+    "file": "assets/index-McsjczMt.js",
     "name": "index",
     "src": "index.html",
     "isEntry": true,
     "imports": [
-      "_preload-helper-C1FmrZbK.js",
-      "_ActionSendEmail__mf_v__runtimeInit__mf_v__-eLULivoH.js"
+      "_vite-preload-helper-B7qeedMF.js",
+      "_virtual_mf-exposes___mfe_internal__ActionSendEmail__customRuleBlocks_js-0_KClVkp.js",
+      "_virtual_mf-REMOTE_ENTRY_ID___mfe_internal__ActionSendEmail__customRuleBlocks_js-CZDT7kOd.js"
     ],
     "dynamicImports": [
       "src/bootstrap.tsx"
     ]
   },
-  "node_modules/@iobroker/adapter-react-v5/build/index.js": {
-    "file": "assets/index-B-yF24eR.js",
-    "name": "index",
-    "src": "node_modules/@iobroker/adapter-react-v5/build/index.js",
-    "isDynamicEntry": true,
-    "imports": [
-      "_ActionSendEmail__loadShare__react__loadShare__-T8uLApET.js",
-      "__commonjsHelpers-Cpj98o6Y.js",
-      "_ActionSendEmail__mf_v__runtimeInit__mf_v__-eLULivoH.js",
-      "_ActionSendEmail__loadShare__react_mf_2_dom__loadShare__-Bmf-uuOi.js"
-    ]
-  },
-  "node_modules/__mf__virtual/ActionSendEmail__H_A_I__hostAutoInit__H_A_I__.js": {
-    "file": "assets/hostInit-CUxlaMpR.js",
-    "name": "hostInit",
-    "src": "node_modules/__mf__virtual/ActionSendEmail__H_A_I__hostAutoInit__H_A_I__.js",
-    "isEntry": true,
-    "imports": [
-      "_preload-helper-C1FmrZbK.js"
-    ],
-    "dynamicImports": [
-      "virtual:mf-REMOTE_ENTRY_ID"
-    ]
-  },
   "src/ActionSendEmail.tsx": {
-    "file": "assets/ActionSendEmail-DveA0wPa.js",
+    "file": "assets/ActionSendEmail-C3pn9PfM.js",
     "name": "ActionSendEmail",
     "src": "src/ActionSendEmail.tsx",
-    "isDynamicEntry": true,
+    "isEntry": true,
     "imports": [
-      "_ActionSendEmail__mf_v__runtimeInit__mf_v__-eLULivoH.js"
+      "_rolldown-runtime-B0Z9INg1.js",
+      "__virtual_mf___mfe_internal__ActionSendEmail__mf_owner__1__loadShare___mf_0_iobroker_mf_1_gui_mf_2_components__loadShare__.js-DaYmwWP0.js"
     ]
   },
   "src/bootstrap.tsx": {
-    "file": "assets/bootstrap-Dnd7B01W.js",
+    "file": "assets/bootstrap-DtZihOEf.js",
     "name": "bootstrap",
     "src": "src/bootstrap.tsx",
     "isDynamicEntry": true,
     "imports": [
-      "_ActionSendEmail__loadShare__react_mf_2_dom__loadShare__-Bmf-uuOi.js",
-      "_ActionSendEmail__loadShare__react__loadShare__-T8uLApET.js",
-      "__commonjsHelpers-Cpj98o6Y.js",
-      "_ActionSendEmail__mf_v__runtimeInit__mf_v__-eLULivoH.js"
+      "__virtual_mf___mfe_internal__ActionSendEmail__mf_owner__1__loadShare___mf_0_iobroker_mf_1_gui_mf_2_components__loadShare__.js-DaYmwWP0.js",
+      "__virtual_mf___mfe_internal__ActionSendEmail__mf_owner__1__loadShare__react_mf_2_dom_mf_1_client__loadShare__.js-D9f99l0E.js"
     ]
   },
-  "virtual:mf-REMOTE_ENTRY_ID": {
+  "virtual:mf-REMOTE_ENTRY_ID:__mfe_internal__ActionSendEmail__customRuleBlocks_js": {
     "file": "customRuleBlocks.js",
-    "name": "customRuleBlocks",
-    "src": "virtual:mf-REMOTE_ENTRY_ID",
-    "isEntry": true,
-    "isDynamicEntry": true,
+    "name": "remoteEntry",
+    "src": "virtual:mf-REMOTE_ENTRY_ID:__mfe_internal__ActionSendEmail__customRuleBlocks_js",
     "imports": [
-      "_ActionSendEmail__mf_v__runtimeInit__mf_v__-eLULivoH.js",
-      "virtual:mf-exposes",
-      "_preload-helper-C1FmrZbK.js"
+      "_virtual_mf-REMOTE_ENTRY_ID___mfe_internal__ActionSendEmail__customRuleBlocks_js-CZDT7kOd.js"
+    ]
+  },
+  "virtual:mf-REMOTE_ENTRY_SSR_ID:__mfe_internal__ActionSendEmail__customRuleBlocks_js": {
+    "file": "customRuleBlocks.ssr.js",
+    "name": "ssrRemoteEntry",
+    "src": "virtual:mf-REMOTE_ENTRY_SSR_ID:__mfe_internal__ActionSendEmail__customRuleBlocks_js",
+    "imports": [
+      "_vite-preload-helper-B7qeedMF.js"
     ],
     "dynamicImports": [
-      "node_modules/@iobroker/adapter-react-v5/build/index.js",
-      "_index-Do-nCdWy.js",
-      "_index-B2YccqDp.js",
-      "_index-DQiceR5U.js"
+      "virtual:mf-exposes-ssr:__mfe_internal__ActionSendEmail__customRuleBlocks_js"
     ]
   },
-  "virtual:mf-exposes": {
-    "file": "assets/virtualExposes-CloUvxp3.js",
-    "name": "virtualExposes",
-    "src": "virtual:mf-exposes",
-    "isEntry": true,
+  "virtual:mf-exposes-ssr:__mfe_internal__ActionSendEmail__customRuleBlocks_js": {
+    "file": "assets/virtual_mf-exposes-ssr___mfe_internal__ActionSendEmail__customRuleBlocks_js-BDy3YWUo.js",
+    "name": "virtual_mf-exposes-ssr___mfe_internal__ActionSendEmail__customRuleBlocks_js",
+    "src": "virtual:mf-exposes-ssr:__mfe_internal__ActionSendEmail__customRuleBlocks_js",
+    "isDynamicEntry": true,
     "imports": [
-      "_preload-helper-C1FmrZbK.js"
+      "_vite-preload-helper-B7qeedMF.js"
     ],
     "dynamicImports": [
       "src/ActionSendEmail.tsx"
+    ]
+  },
+  "virtual:mf-exposes:__mfe_internal__ActionSendEmail__customRuleBlocks_js": {
+    "file": "assets/virtualExposes-CVjpYRiT.js",
+    "name": "virtualExposes",
+    "src": "virtual:mf-exposes:__mfe_internal__ActionSendEmail__customRuleBlocks_js",
+    "imports": [
+      "_virtual_mf-exposes___mfe_internal__ActionSendEmail__customRuleBlocks_js-0_KClVkp.js"
+    ]
+  },
+  "virtual:mf-localSharedImportMap:__mfe_internal__ActionSendEmail__mf_owner__1": {
+    "file": "assets/_virtual_mf-localSharedImportMap___mfe_internal__ActionSendEmail__mf_owner__1-D6pQR8uF.js",
+    "name": "_virtual_mf-localSharedImportMap___mfe_internal__ActionSendEmail__mf_owner__1",
+    "src": "virtual:mf-localSharedImportMap:__mfe_internal__ActionSendEmail__mf_owner__1",
+    "isDynamicEntry": true,
+    "imports": [
+      "_vite-preload-helper-B7qeedMF.js",
+      "_dist-PnYvbzKY.js"
+    ],
+    "dynamicImports": [
+      "__virtual_mf___mfe_internal__ActionSendEmail__mf_owner__1__loadShare___mf_0_iobroker_mf_1_gui_mf_2_components__loadShare__.js-DaYmwWP0.js",
+      "__virtual_mf___mfe_internal__ActionSendEmail__mf_owner__1__loadShare__react_mf_2_dom_mf_1_client__loadShare__.js-D9f99l0E.js"
+    ]
+  },
+  "virtual:mf:__mfe_internal__ActionSendEmail__mf_owner__1__H_A_I__hostAutoInit__H_A_I__.js": {
+    "file": "assets/hostInit-C1yPistm.js",
+    "name": "hostInit",
+    "src": "virtual:mf:__mfe_internal__ActionSendEmail__mf_owner__1__H_A_I__hostAutoInit__H_A_I__.js",
+    "imports": [
+      "_vite-preload-helper-B7qeedMF.js"
+    ],
+    "dynamicImports": [
+      "virtual:mf-REMOTE_ENTRY_ID:__mfe_internal__ActionSendEmail__customRuleBlocks_js",
+      "virtual:mf-localSharedImportMap:__mfe_internal__ActionSendEmail__mf_owner__1"
     ]
   }
 }

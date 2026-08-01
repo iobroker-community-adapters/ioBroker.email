@@ -3,7 +3,7 @@ import React from 'react';
 import { Button, TextField } from '@mui/material';
 import { CloudUpload } from '@mui/icons-material';
 
-import { I18n } from '@iobroker/adapter-react-v5';
+import { I18n } from '@iobroker/gui-components';
 import { ConfigGeneric, type ConfigGenericProps, type ConfigGenericState } from '@iobroker/json-config';
 
 declare global {
@@ -31,7 +31,7 @@ type MicrosoftState = ConfigGenericState & {
     running: boolean;
 };
 
-class Microsoft extends ConfigGeneric<ConfigGenericProps, MicrosoftState> {
+export default class Microsoft extends ConfigGeneric<ConfigGenericProps, MicrosoftState> {
     authWindow?: WindowProxy | null;
 
     async componentDidMount(): Promise<void> {
@@ -237,5 +237,3 @@ class Microsoft extends ConfigGeneric<ConfigGenericProps, MicrosoftState> {
         );
     }
 }
-
-export default Microsoft;

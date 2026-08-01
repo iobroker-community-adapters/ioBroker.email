@@ -115,6 +115,7 @@ For other services see documentation of **Nodemailer**: `[https://github.com/nod
 * (@copilot) Fixed SMTP relay anonymous access by ignoring user and password when empty
 * (@copilot) Added configurable attachment blocks for Blockly email block with mutator interface for dynamic attachment management
 * (@copilot) Fixed Office365 OAuth email sending from scripts by ensuring fresh tokens are used
+* (@GermanBluefox) Migrated to admin 8
 
 ### 2.0.4 (2025-04-15)
 * (@mcm1957) `From email address is not equal to the configured email address for authentication.` changed to debug level.
@@ -144,7 +145,7 @@ For other services see documentation of **Nodemailer**: `[https://github.com/nod
 
 The MIT License (MIT)
 
-Copyright (c) 2014-2025 bluefox
+Copyright (c) 2014-2026 bluefox
 
 Permission is hereby granted, free of charge, to any person obtaining a copy
 of this software and associated documentation files (the "Software"), to deal
