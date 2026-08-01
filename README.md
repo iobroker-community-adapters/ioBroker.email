@@ -136,7 +136,7 @@ For other services see documentation of **Nodemailer**: `[https://github.com/nod
 * (copilot) Adapter requires admin >= 7.7.22 now
 * (copilot) Adapter requires js-controller >= 6.0.11 now
 * (@copilot) Set up GitHub Copilot instructions with centralized ioBroker template (v0.5.7) and weekly monitoring workflow
-* (@copilot) Added configurable attachment blocks for Blockly email block with mutator interface for dynamic attachment management
+* (@ipod86) Added configurable number of file attachments to the Blockly email block via plus/minus buttons
 * (@GermanBluefox) Migrated to admin 8
 
 ### 2.0.5-alpha.0 (2025-10-06)
