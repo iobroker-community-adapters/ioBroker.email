@@ -36,8 +36,26 @@ Blockly.Words['email_anyInstance']   = {"en": "all instances",                  
 Blockly.Words['email_tooltip']       = {"en": "Send an email",                                   "de": "Sende ein E-Mail",                                "ru": "Послать email",                                   "pt": "Envie um e-mail",                                 "nl": "Stuur een e-mail",                                "fr": "Envoyer un e-mail",                               "it": "Inviare una mail",                                "es": "Enviar un correo electrónico",                    "pl": "Wyślij e-mail",                                   "zh-cn": "发送电子邮件"};
 Blockly.Words['email_help']          = {"en": "https://github.com/ioBroker/ioBroker.email/blob/master/README.md", "de": "https://github.com/ioBroker/ioBroker.email/blob/master/README.md", "ru": "https://github.com/ioBroker/ioBroker.email/blob/master/README.md", "pt": "https://github.com/ioBroker/ioBroker.email/blob/master/README.md", "nl": "https://github.com/ioBroker/ioBroker.email/blob/master/README.md", "fr": "https://github.com/ioBroker/ioBroker.email/blob/master/README.md", "it": "https://github.com/ioBroker/ioBroker.email/blob/master/README.md", "es": "https://github.com/ioBroker/ioBroker.email/blob/master/README.md", "pl": "https://github.com/ioBroker/ioBroker.email/blob/master/README.md", "zh-cn": "https://github.com/ioBroker/ioBroker.email/blob/master/README.md"};
 
+// --- Plus/minus button icons (computed once at load time) ----------
+var EMAIL_PLUS_IMAGE = (function () {
+    var svg = '<svg xmlns="http://www.w3.org/2000/svg" width="15" height="15">'
+        + '<circle cx="7.5" cy="7.5" r="7.5" fill="#5ba3f5"/>'
+        + '<path d="M4 7.5h7M7.5 4v7" stroke="#fff" stroke-width="2"/>'
+        + '</svg>';
+    return 'data:image/svg+xml;charset=utf-8,' + encodeURIComponent(svg);
+}());
+
+var EMAIL_MINUS_IMAGE = (function () {
+    var svg = '<svg xmlns="http://www.w3.org/2000/svg" width="15" height="15">'
+        + '<circle cx="7.5" cy="7.5" r="7.5" fill="#e57373"/>'
+        + '<path d="M4 7.5h7" stroke="#fff" stroke-width="2"/>'
+        + '</svg>';
+    return 'data:image/svg+xml;charset=utf-8,' + encodeURIComponent(svg);
+}());
+
 Blockly.Sendto.blocks['email'] =
     '<block type="email">' +
+    '  <mutation filecount="2"></mutation>' +
     '  <field name="INSTANCE"></field>' +
     '  <field name="IS_HTML">FALSE</field>' +
     '  <field name="LOG"></field>' +
@@ -59,6 +77,8 @@ Blockly.Sendto.blocks['email'] =
     '</block>';
 
 Blockly.Blocks['email'] = {
+    itemCount_: 2,
+
     init: function() {
         const options = [[Blockly.Translate('email_anyInstance'), '']];
         if (typeof main !== 'undefined' && main.instances) {
@@ -79,8 +99,6 @@ Blockly.Blocks['email'] = {
                 options.push(['email.' + n, '.' + n]);
             }
         }
-
-        this.attachmentCount_ = 2; // Default to 2 attachments for backward compatibility
 
         this.appendDummyInput('INSTANCE')
             .appendField(Blockly.Translate('email'))
@@ -111,6 +129,8 @@ Blockly.Blocks['email'] = {
             inputFrom.connection._optional = true;
         }
 
+        this.updateShape_();
+
         this.appendDummyInput('LOG')
             .appendField(Blockly.Translate('email_log'))
             .appendField(new Blockly.FieldDropdown([
@@ -121,9 +141,6 @@ Blockly.Blocks['email'] = {
                 [Blockly.Translate('email_log_error'), 'error'],
             ]), 'LOG');
 
-        // Create attachment inputs dynamically at the end
-        this.updateShape_();
-
         this.setInputsInline(false);
         this.setPreviousStatement(true, null);
         this.setNextStatement(true, null);
@@ -131,183 +148,87 @@ Blockly.Blocks['email'] = {
         this.setColour(Blockly.Sendto.HUE);
         this.setTooltip(Blockly.Translate('email_tooltip'));
         this.setHelpUrl(Blockly.Translate('email_help'));
-        this.setMutator(new Blockly.icons.MutatorIcon(['email_attachment_item'], this));
     },
 
-    /**
-     * Create XML to represent number of attachment inputs.
-     * @return {!Element} XML storage element.
-     * @this Blockly.Block
-     */
     mutationToDom: function() {
         const container = document.createElement('mutation');
-        container.setAttribute('attachments', this.attachmentCount_);
+        container.setAttribute('filecount', this.itemCount_);
         return container;
     },
 
-    /**
-     * Parse XML to restore the attachment inputs.
-     * @param {!Element} xmlElement XML storage element.
-     * @this Blockly.Block
-     */
     domToMutation: function(xmlElement) {
-        this.attachmentCount_ = parseInt(xmlElement.getAttribute('attachments'), 10) || 2;
+        const count = parseInt(xmlElement.getAttribute('filecount'), 10);
+        this.itemCount_ = isNaN(count) ? 2 : count;
         this.updateShape_();
     },
 
-    /**
-     * Populate the mutator's dialog with this block's components.
-     * @param {!Blockly.Workspace} workspace Mutator's workspace.
-     * @return {!Blockly.Block} Root block in mutator.
-     * @this Blockly.Block
-     */
-    decompose: function(workspace) {
-        const containerBlock = workspace.newBlock('email_attachments_container');
-        containerBlock.initSvg();
-        let connection = containerBlock.getInput('STACK').connection;
-        for (let i = 0; i < this.attachmentCount_; i++) {
-            const itemBlock = workspace.newBlock('email_attachment_item');
-            itemBlock.initSvg();
-            connection.connect(itemBlock.previousConnection);
-            connection = itemBlock.nextConnection;
-        }
-        return containerBlock;
+    addFile_: function() {
+        const connections = this.saveFileConnections_();
+        connections.push(null);
+        this.itemCount_++;
+        this.updateShape_(connections);
     },
 
-    /**
-     * Reconfigure this block based on the mutator dialog's components.
-     * @param {!Blockly.Block} containerBlock Root block in mutator.
-     * @this Blockly.Block
-     */
-    compose: function(containerBlock) {
-        let itemBlock = containerBlock.getInputTargetBlock('STACK');
+    removeFileAt_: function(index) {
+        const connections = this.saveFileConnections_();
+        connections.splice(index - 1, 1);
+        this.itemCount_--;
+        this.updateShape_(connections);
+    },
+
+    saveFileConnections_: function() {
         const connections = [];
-        while (itemBlock) {
-            connections.push(itemBlock.valueConnection_);
-            itemBlock = itemBlock.nextConnection && itemBlock.nextConnection.targetBlock();
+        for (let i = 1; i <= this.itemCount_; i++) {
+            const input = this.getInput('FILE_' + i);
+            const conn = input && input.connection.targetConnection;
+            if (conn) conn.disconnect();
+            connections.push(conn || null);
         }
-
-        // Disconnect any children that don't belong.
-        for (let k = 0; k < this.attachmentCount_; k++) {
-            const input = this.getInput('FILE_' + (k + 1));
-            if (input) {
-                const connection = input.connection.targetConnection;
-                if (connection && !connections.includes(connection)) {
-                    connection.disconnect();
-                }
-            }
-        }
-
-        this.attachmentCount_ = connections.length;
-        if (this.attachmentCount_ < 0) {
-            this.attachmentCount_ = 0;
-        }
-        this.updateShape_();
-
-        // Reconnect any child blocks.
-        for (let i = 0; i < this.attachmentCount_; i++) {
-            Blockly.icons.MutatorIcon.reconnect(connections[i], this, 'FILE_' + (i + 1));
-        }
+        return connections;
     },
 
-    /**
-     * Store pointers to any connected child blocks.
-     * @param {!Blockly.Block} containerBlock Root block in mutator.
-     * @this Blockly.Block
-     */
-    saveConnections: function(containerBlock) {
-        let itemBlock = containerBlock.getInputTargetBlock('STACK');
-        let i = 0;
-        while (itemBlock) {
-            const input = this.getInput('FILE_' + (i + 1));
-            itemBlock.valueConnection_ = input && input.connection.targetConnection;
+    updateShape_: function(connections) {
+        // Remove existing FILE inputs and + row
+        let i = 1;
+        while (this.getInput('FILE_' + i)) {
+            this.removeInput('FILE_' + i);
             i++;
-            itemBlock = itemBlock.nextConnection && itemBlock.nextConnection.targetBlock();
+        }
+        if (this.getInput('PLUS_ROW')) {
+            this.removeInput('PLUS_ROW');
+        }
+
+        // Re-add FILE inputs with individual minus buttons
+        for (let j = 1; j <= this.itemCount_; j++) {
+            const idx = j;
+            const input = this.appendValueInput('FILE_' + j)
+                .setCheck('String')
+                .appendField(new Blockly.FieldImage(
+                    EMAIL_MINUS_IMAGE, 15, 15, '-',
+                    function() { this.sourceBlock_.removeFileAt_(idx); }
+                ))
+                .appendField(Blockly.Translate('email_file'));
+            if (input.connection) {
+                input.connection._optional = true;
+            }
+            if (connections && connections[j - 1]) {
+                input.connection.connect(connections[j - 1]);
+            }
+            if (this.getInput('LOG')) {
+                this.moveInputBefore('FILE_' + j, 'LOG');
+            }
+        }
+
+        // Add + row at the bottom of the file section
+        this.appendDummyInput('PLUS_ROW')
+            .appendField(new Blockly.FieldImage(
+                EMAIL_PLUS_IMAGE, 15, 15, '+',
+                function() { this.sourceBlock_.addFile_(); }
+            ));
+        if (this.getInput('LOG')) {
+            this.moveInputBefore('PLUS_ROW', 'LOG');
         }
     },
-
-    /**
-     * Modify this block to have the correct number of attachment inputs.
-     * @private
-     * @this Blockly.Block
-     */
-    updateShape_: function() {
-        const workspace = this.workspace;
-
-        // Add new inputs.
-        for (let i = 0; i < this.attachmentCount_; i++) {
-            const inputName = 'FILE_' + (i + 1);
-            let input;
-            try {
-                input = this.getInput(inputName);
-            } catch (e) {
-                input = null;
-            }
-
-            if (!input) {
-                input = this.appendValueInput(inputName)
-                    .setCheck('String')
-                    .appendField(Blockly.Translate('email_file'));
-                if (input.connection) {
-                    input.connection._optional = true;
-                }
-
-                // Add shadow block after a short delay
-                if (workspace) {
-                    setTimeout(function(__input) {
-                        if (!__input.connection.isConnected()) {
-                            const _shadow = workspace.newBlock('text');
-                            _shadow.setShadow(true);
-                            _shadow.initSvg();
-                            _shadow.render();
-                            _shadow.outputConnection.connect(__input.connection);
-                        }
-                    }, 100, input);
-                }
-            }
-        }
-
-        // Remove deleted inputs.
-        try {
-            for (let i = this.attachmentCount_; this.getInput('FILE_' + (i + 1)); i++) {
-                this.removeInput('FILE_' + (i + 1));
-            }
-        } catch (e) {
-            // Ignore error if input does not exist
-        }
-    }
-};
-
-// Mutator blocks for configuring attachments
-Blockly.Blocks['email_attachments_container'] = {
-    /**
-     * Mutator block for container.
-     * @this Blockly.Block
-     */
-    init: function() {
-        this.setColour(Blockly.Sendto.HUE);
-        this.appendDummyInput()
-            .appendField(Blockly.Translate('email_file'));
-        this.appendStatementInput('STACK');
-        this.setTooltip('');
-        this.contextMenu = false;
-    }
-};
-
-Blockly.Blocks['email_attachment_item'] = {
-    /**
-     * Mutator block for add items.
-     * @this Blockly.Block
-     */
-    init: function() {
-        this.setColour(Blockly.Sendto.HUE);
-        this.appendDummyInput()
-            .appendField(Blockly.Translate('email_file'));
-        this.setPreviousStatement(true);
-        this.setNextStatement(true);
-        this.setTooltip('');
-        this.contextMenu = false;
-    }
 };
 
 Blockly.JavaScript['email'] = function(block) {
@@ -338,12 +259,10 @@ Blockly.JavaScript['email'] = function(block) {
         text += `  from: ${from},\n`;
     }
 
+    const fileCount = block.itemCount_ !== undefined ? block.itemCount_ : 2;
     const files = [];
-
-    // Handle variable number of attachments
-    const attachmentCount = block.attachmentCount_ || 2; // Default to 2 attachments for backward compatibility
-    for (let i = 1; i <= attachmentCount; i++) {
-        files.push(Blockly.JavaScript.valueToCode(block, 'FILE_' + i, Blockly.JavaScript.ORDER_ATOMIC));
+    for (let fi = 1; fi <= fileCount; fi++) {
+        files.push(Blockly.JavaScript.valueToCode(block, 'FILE_' + fi, Blockly.JavaScript.ORDER_ATOMIC));
     }
 
     let attachments = '';
@@ -352,7 +271,6 @@ Blockly.JavaScript['email'] = function(block) {
             if (!attachments) {
                 attachments = '  attachments:[\n';
             }
-
             attachments += `    { path: ${files[f]}, cid: 'file${f + 1}' },\n`;
         }
     }
