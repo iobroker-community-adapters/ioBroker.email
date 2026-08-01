@@ -1,4 +1,8 @@
 # Older changes
+## 1.4.0 (2024-11-17)
+* (simatec) Responsive Design added
+* (Jey-Cee) Admin-UI has been migrated to jsonConfig
+
 ## 1.3.1 (2024-06-09)
 * (klein0r) Updated Blockly definitions
 
