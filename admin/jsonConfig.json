@@ -153,6 +153,7 @@
                     "hidden": "data.transportOptions.service !== 'Office365'",
                     "type": "custom",
                     "bundlerType": "module",
+                    "guiApi": 2,
                     "i18n": true,
                     "url": "custom/customComponents.js",
                     "name": "ConfigCustomEmailSet/Components/Microsoft",
