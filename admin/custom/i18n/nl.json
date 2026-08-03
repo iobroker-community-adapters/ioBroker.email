@@ -1,0 +1,10 @@
+{
+  "Authorization token exists": "Autorisatietoken bestaat",
+  "Authorize this app by visiting this url:": "Autoriseer deze app door deze url te bezoeken:",
+  "Enter the code from that page here": "Voer hier de code van die pagina in",
+  "Get Microsoft Access": "Krijg Microsoft-toegang",
+  "Please allow popups in your browser for this page!": "Sta pop-ups toe in uw browser voor deze pagina!",
+  "Renew Microsoft Access": "Microsoft Access vernieuwen",
+  "Successfully authorized. Token valid till %s and will be automatically renewed.": "Succesvol geautoriseerd. Token geldig tot %s en wordt automatisch verlengd.",
+  "Successfully authorized. Token valid till %s but it can expire as the instance is not running.": "Succesvol geautoriseerd. Token geldig tot %s, maar kan verlopen omdat de instance niet draait."
+}

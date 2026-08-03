@@ -1,0 +1,10 @@
+{
+  "Authorization token exists": "Le jeton d'autorisation existe",
+  "Authorize this app by visiting this url:": "Autorisez cette application en visitant cette URL :",
+  "Enter the code from that page here": "Entrez le code de cette page ici",
+  "Get Microsoft Access": "Obtenir Microsoft Access",
+  "Please allow popups in your browser for this page!": "Veuillez autoriser les popups dans votre navigateur pour cette page !",
+  "Renew Microsoft Access": "Renouveler Microsoft Access",
+  "Successfully authorized. Token valid till %s and will be automatically renewed.": "Autorisation réussie. Jeton valide jusqu'à %s et sera automatiquement renouvelé.",
+  "Successfully authorized. Token valid till %s but it can expire as the instance is not running.": "Autorisation réussie. Jeton valide jusqu'à %s mais il peut expirer car l'instance n'est pas en cours d'exécution."
+}

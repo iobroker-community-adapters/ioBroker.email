@@ -1,0 +1,10 @@
+{
+  "Authorization token exists": "授权令牌已存在",
+  "Authorize this app by visiting this url:": "通过访问此 URL 来授权此应用程序：",
+  "Enter the code from that page here": "在此处输入该页面的代码",
+  "Get Microsoft Access": "获取 Microsoft Access",
+  "Please allow popups in your browser for this page!": "请允许浏览器弹出此页面！",
+  "Renew Microsoft Access": "续订 Microsoft Access",
+  "Successfully authorized. Token valid till %s and will be automatically renewed.": "授权成功。令牌有效期至 %s 并将自动续订。",
+  "Successfully authorized. Token valid till %s but it can expire as the instance is not running.": "授权成功。令牌有效期至 %s，但由于实例未运行，令牌可能会过期。"
+}

@@ -1,0 +1,10 @@
+{
+  "Authorization token exists": "O token de autorização existe",
+  "Authorize this app by visiting this url:": "Autorize este aplicativo visitando esta URL:",
+  "Enter the code from that page here": "Insira o código dessa página aqui",
+  "Get Microsoft Access": "Obtenha o Microsoft Access",
+  "Please allow popups in your browser for this page!": "Por favor, permita pop-ups no seu navegador para esta página!",
+  "Renew Microsoft Access": "Renovar o Microsoft Access",
+  "Successfully authorized. Token valid till %s and will be automatically renewed.": "Autorizado com sucesso. Token válido até %s e será renovado automaticamente.",
+  "Successfully authorized. Token valid till %s but it can expire as the instance is not running.": "Autorizado com sucesso. Token válido até %s, mas pode expirar, pois a instância não está em execução."
+}
