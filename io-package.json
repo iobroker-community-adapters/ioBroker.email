@@ -1,8 +1,21 @@
 {
   "common": {
     "name": "email",
-    "version": "2.0.5-alpha.0",
+    "version": "3.0.0",
     "news": {
+      "3.0.0": {
+        "en": "Adapter requires node.js >= 22 now\nAdapter requires admin >= 7.7.22 now\nAdapter requires js-controller >= 6.0.11 now\nSet up GitHub Copilot instructions with centralized ioBroker template (v0.5.7) and weekly monitoring workflow\nAdded configurable number of file attachments to the Blockly email block via plus/minus buttons\nMigrated to admin 8",
+        "de": "Der Adapter benötigt jetzt Node.js >= 22.\nDer Adapter benötigt jetzt Administratorrechte ab Version 7.7.22.\nDer Adapter benötigt jetzt js-controller >= 6.0.11.\nAnleitung zum Einrichten von GitHub Copilot mit zentralisierter ioBroker-Vorlage (v0.5.7) und wöchentlichem Überwachungs-Workflow\nDie Anzahl der Dateianhänge im Blockly-E-Mail-Block kann nun über Plus-/Minus-Schaltflächen konfiguriert werden.\nMigriert zu Admin 8",
+        "ru": "Для работы адаптера требуется Node.js версии >= 22.\nДля работы адаптера требуется версия admin >= 7.7.22.\nДля работы адаптера теперь требуется js-controller версии >= 6.0.11.\nНастройка инструкций GitHub Copilot с использованием централизованного шаблона ioBroker (v0.5.7) и еженедельного процесса мониторинга.\nДобавлена возможность настройки количества вложенных файлов в блок электронных писем Blockly с помощью кнопок «плюс»/«минус».\nПеренесено на админку 8",
+        "pt": "O adaptador agora requer Node.js >= 22.\nO adaptador agora requer o administrador na versão 7.7.22 ou superior.\nO adaptador agora requer js-controller >= 6.0.11.\nConfigure as instruções do GitHub Copilot com o modelo centralizado do ioBroker (v0.5.7) e o fluxo de trabalho de monitoramento semanal.\nAdicionamos um número configurável de anexos de arquivos ao bloco de e-mail do Blockly por meio de botões de mais/menos.\nMigrado para admin 8",
+        "nl": "De adapter vereist nu Node.js versie 22 of hoger.\nAdapter vereist nu beheerdersrechten >= 7.7.22.\nDe adapter vereist nu js-controller >= 6.0.11.\nInstructies voor het instellen van GitHub Copilot met een gecentraliseerde ioBroker-sjabloon (v0.5.7) en een wekelijkse monitoringworkflow\nHet is nu mogelijk om via plus- en minknoppen een instelbaar aantal bestandsbijlagen toe te voegen aan het Blockly-e-mailblok.\nOvergezet naar beheerder 8",
+        "fr": "L'adaptateur nécessite désormais Node.js >= 22.\nL'adaptateur nécessite désormais une version d'administrateur supérieure ou égale à 7.7.22.\nL'adaptateur requiert désormais js-controller >= 6.0.11\nConfigurez les instructions GitHub Copilot avec le modèle ioBroker centralisé (v0.5.7) et le workflow de surveillance hebdomadaire.\nAjout d'un nombre configurable de pièces jointes au bloc e-mail Blockly via des boutons plus/moins\nMigré vers l'administrateur 8",
+        "it": "L'adattatore ora richiede Node.js >= 22\nL'adattatore richiede ora l'amministratore >= 7.7.22\nL'adattatore richiede js-controller >= 6.0.11\nConfigura le istruzioni di GitHub Copilot con il template centralizzato ioBroker (v0.5.7) e il flusso di lavoro di monitoraggio settimanale.\nAggiunta la possibilità di configurare il numero di allegati consentiti nel blocco email di Blockly tramite i pulsanti più/meno.\nMigrato ad admin 8",
+        "es": "El adaptador ahora requiere node.js >= 22.\nEl adaptador ahora requiere administrador >= 7.7.22\nEl adaptador ahora requiere js-controller >= 6.0.11\nConfigurar las instrucciones de GitHub Copilot con la plantilla centralizada de ioBroker (v0.5.7) y el flujo de trabajo de monitorización semanal.\nSe agregó la opción de configurar el número de archivos adjuntos al bloque de correo electrónico de Blockly mediante botones de más/menos.\nMigrado a admin 8",
+        "pl": "Adapter wymaga teraz node.js >= 22\nAdapter wymaga teraz administratora >= 7.7.22\nAdapter wymaga teraz js-controller >= 6.0.11\nSkonfiguruj instrukcje GitHub Copilot z centralnym szablonem ioBroker (wersja 0.5.7) i cotygodniowym przepływem pracy monitorowania\nDodano konfigurowalną liczbę załączników do wiadomości e-mail Blockly za pomocą przycisków plus/minus\nPrzeniesiono do administratora 8",
+        "uk": "Адаптер тепер вимагає node.js >= 22\nАдаптер тепер вимагає адміністратора >= 7.7.22\nАдаптер тепер вимагає js-controller >= 6.0.11\nНалаштування інструкцій GitHub Copilot за допомогою централізованого шаблону ioBroker (версія 0.5.7) та щотижневого моніторингу робочого процесу\nДодано налаштовану кількість вкладених файлів до блоку електронної пошти Blockly за допомогою кнопок плюс/мінус\nПеренесено до адміністратора 8",
+        "zh-cn": "适配器现在需要 node.js 版本 >= 22。\n适配器现在需要管理员版本 >= 7.7.22。\n适配器现在需要 js-controller >= 6.0.11。\n使用集中式 ioBroker 模板 (v0.5.7) 和每周监控工作流程设置 GitHub Copilot 说明\n通过加/减按钮，为 Blockly 电子邮件模块添加了可配置的文件附件数量。\n已迁移至 admin 8"
+      },
       "2.0.5-alpha.0": {
         "en": "Fixed SMTP relay anonymous access by ignoring user and password when empty\nFixed Office365 OAuth email sending from scripts by ensuring fresh tokens are used\nDependencies have been updated",
         "de": "Problem bei Verwendung eines SMTP-Relay mit anonymen Zugriff ohne Angabe von Benutzer und Passwort wurde behoben.\nProblem beim Senden von Office365 OAuth-E-Mails, die von Skripten gesendet werden, wurde behoben.\nAbhängigkeiten wurden aktualisiert",
@@ -80,19 +93,6 @@
         "pl": "Dodano projekt odpowiedzialny",
         "uk": "Додано адаптивний дизайн",
         "zh-cn": "添加响应设计"
-      },
-      "1.3.1": {
-        "en": "Updated Blockly definitions",
-        "de": "Aktualisierte Blockly Definitionen",
-        "ru": "Обновленные детальные определения",
-        "pt": "Definições Blockly atualizadas",
-        "nl": "Bijgewerkte blokdefinities",
-        "fr": "Mise à jour des définitions par blocs",
-        "it": "Aggiornate definizioni Blockly",
-        "es": "Definiciones bloqueadas actualizadas",
-        "pl": "Aktualizacja definicji blockly",
-        "uk": "Оновлено блочні визначення",
-        "zh-cn": "更新的块状定义"
       }
     },
     "titleLang": {

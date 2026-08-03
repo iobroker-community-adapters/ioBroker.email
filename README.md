@@ -130,8 +130,7 @@ For other services see documentation of **Nodemailer**: `[https://github.com/nod
   Placeholder for the next version (at the beginning of the line):
   ### **WORK IN PROGRESS**
 -->
-
-### **WORK IN PROGRESS**
+### 3.0.0 (2026-08-03)
 * (copilot) Adapter requires node.js >= 22 now
 * (copilot) Adapter requires admin >= 7.7.22 now
 * (copilot) Adapter requires js-controller >= 6.0.11 now
@@ -154,19 +153,6 @@ For other services see documentation of **Nodemailer**: `[https://github.com/nod
 ### 2.0.2 (2025-03-14)
 * (@GermanBluefox) Renamed `dist` folder to `build`
 * (@GermanBluefox) Fixing pass decoding
-
-### 2.0.0 (2025-03-11)
-* (@GermanBluefox) Breaking change: Structure of configuration was corrected, and it could be they needed to be reconfigured
-* (@GermanBluefox) Made Outlook work again. Requires now to be authenticated via OAuth2
-* (mcm1957) Adapter requires js-controller 5.0.19 and admin 6.17.14 now
-* (mcm1957) EsLint uses @iobroker/linter-config now
-* (mcm1957) Dependencies have been updated
-* (@GermanBluefox) Migrated to TypeScript
-* (@GermanBluefox) Added "Ignore SSL errors" option
-
-### 1.4.0 (2024-11-17)
-* (simatec) Responsive Design added
-* (Jey-Cee) Admin-UI has been migrated to jsonConfig
 
 ## License
 
