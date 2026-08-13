@@ -1,0 +1,17 @@
+{
+    "email": "email",
+    "email_anyInstance": "Alle Instanzen",
+    "email_file": "Dateiname (optional)",
+    "email_from": "Von (optional)",
+    "email_is_html": "Sende als HTML",
+    "email_log": "Loglevel",
+    "email_log_debug": "debug",
+    "email_log_error": "error",
+    "email_log_info": "info",
+    "email_log_none": "keins",
+    "email_log_warn": "warning",
+    "email_subject": "Betreff (optional)",
+    "email_text": "Text",
+    "email_to": "An",
+    "email_tooltip": "Sende ein E-Mail"
+}

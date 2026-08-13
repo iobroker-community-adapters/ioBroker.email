@@ -1,0 +1,17 @@
+{
+    "email": "e-mail",
+    "email_anyInstance": "alle exemplaren",
+    "email_file": "bestand (optioneel)",
+    "email_from": "uit (optioneel)",
+    "email_is_html": "Versturen als HTML",
+    "email_log": "log-niveau",
+    "email_log_debug": "debug",
+    "email_log_error": "fout",
+    "email_log_info": "info",
+    "email_log_none": "geen",
+    "email_log_warn": "waarschuwing",
+    "email_subject": "onderwerp (optioneel)",
+    "email_text": "tekst",
+    "email_to": "naar",
+    "email_tooltip": "Stuur een e-mail"
+}

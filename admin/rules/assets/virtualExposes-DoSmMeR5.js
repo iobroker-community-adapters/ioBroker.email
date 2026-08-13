@@ -1,1 +1,0 @@
-import{t as e}from"./virtual_mf-exposes___mfe_internal__ActionSendEmail__customRuleBlocks_js-BUkdR6YX.js";export{e as default};

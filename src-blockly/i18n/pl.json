@@ -1,0 +1,17 @@
+{
+    "email": "e-mail",
+    "email_anyInstance": "wszystkie wystąpienia",
+    "email_file": "nazwa pliku (opcjonalnie)",
+    "email_from": "z (opcjonalnie)",
+    "email_is_html": "Wyślij jako HTML",
+    "email_log": "poziom dziennika ",
+    "email_log_debug": "debugować",
+    "email_log_error": "błąd",
+    "email_log_info": "informacje",
+    "email_log_none": "nikt",
+    "email_log_warn": "ostrzeżenie",
+    "email_subject": "temat (opcjonalnie)",
+    "email_text": "tekst",
+    "email_to": "dla",
+    "email_tooltip": "Wyślij e-mail"
+}

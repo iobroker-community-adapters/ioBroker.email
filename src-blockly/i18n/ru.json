@@ -1,0 +1,17 @@
+{
+    "email": "email",
+    "email_anyInstance": "На все драйвера",
+    "email_file": "имя файла (не обяз.)",
+    "email_from": "от (не обяз.)",
+    "email_is_html": "Формат HTML",
+    "email_log": "Протокол",
+    "email_log_debug": "debug",
+    "email_log_error": "ошибка",
+    "email_log_info": "инфо",
+    "email_log_none": "нет",
+    "email_log_warn": "warning",
+    "email_subject": "заголовок (не обяз.)",
+    "email_text": "сообщение",
+    "email_to": "кому",
+    "email_tooltip": "Послать email"
+}

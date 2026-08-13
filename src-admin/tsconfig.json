@@ -11,12 +11,11 @@
         "forceConsistentCasingInFileNames": true,
         "rootDir": "./src",
         "module": "ESNext",
-        "moduleResolution": "Node",
+        "moduleResolution": "Bundler",
         "resolveJsonModule": true,
         "isolatedModules": true,
         "noEmit": true,
         "jsx": "react-jsx",
-        "baseUrl": ".",
         "types": ["vite/client", "@iobroker/types"]
     },
     "include": ["src"],

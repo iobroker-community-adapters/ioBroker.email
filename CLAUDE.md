@@ -10,10 +10,12 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 
 ```bash
 npm run npm          # install root + src-admin + src-rules dependencies
-npm run build        # tsc (src -> build) + node tasks (admin UI + rules UI)
+npm run build        # tsc (src -> build) + node tasks.mts (admin UI + rules UI) + Blockly
 npm run tsc          # backend only: tsc -p tsconfig.build.json
-node tasks --admin-build   # only the src-admin bundle (clean, npm i, vite, copy)
-node tasks --rules-build   # only the src-rules bundle
+npm run build:blockly      # only the Blockly block: src-blockly -> admin/blockly.js
+npm run build:admin  # only the src-admin bundle (clean, npm i, vite, copy) = node tasks.mts --admin-build
+npm run build:rules  # only the src-rules bundle = node tasks.mts --rules-build
+npm run check        # type-check only: root + tasks.mts + src-blockly
 npm run lint         # eslint (root); src-admin and src-rules have their own `npm run lint`
 npm test             # test:js + test:package
 npm run test:integration   # boots a real js-controller and starts the adapter (slow)
@@ -23,7 +25,9 @@ npm run release-patch      # release-script; runs `npm run build` before committ
 
 Single test: `npx mocha --config test/mocharc.custom.json --grep "<pattern>"` (or `npx mocha test/package --exit`).
 
-Type-check without emitting: `npx tsc --noEmit -p tsconfig.json` — the `npm run check` script references a `tsconfig.check.json` that does not exist in this repo.
+Type-check without emitting: `npm run check`, or a single project with `npx tsc --noEmit -p tsconfig.json`.
+
+The build script is `tasks.mts` — TypeScript executed directly by node (native type stripping, no `tsx`/`ts-node`), so it needs Node >= 22.18. It is type-checked through `tsconfig.tasks.json` (not emitted), and eslint lints it through that same tsconfig via an override in `eslint.config.mjs`.
 
 ## Build artifacts are committed
 
@@ -36,7 +40,7 @@ Four independently built pieces end up in the npm package:
 1. **Adapter backend** — `src/main.ts` → `build/main.js` (`main` in package.json). A single `EmailAdapter extends Adapter` class. Supports compact mode: when required as a module it exports a factory instead of self-starting.
 2. **Admin config UI** — declarative `admin/jsonConfig.json` plus one React custom component built from `src-admin/` with Vite + Module Federation (federation name `ConfigCustomEmailSet`, exposes `./Components`). jsonConfig references it as `"url": "custom/customComponents.js"`, `"name": "ConfigCustomEmailSet/Components/Microsoft"`. Adding a component means exporting it from `src-admin/src/Components.tsx` and referencing that path in jsonConfig.
 3. **javascript-adapter rules block** — `src-rules/src/ActionSendEmail.tsx` → `admin/rules/customRuleBlocks.js`, wired up via `common.javascriptRules` in `io-package.json`. `ActionSendEmail.compile()` emits the `sendTo(...)` source that the rule executes.
-4. **Blockly block** — `admin/blockly.js` is hand-written, **not generated** from any source, and is excluded from eslint. It defines the `email` block; the attachment rows are dynamic (per-row **−** button, **+** button below, count serialized as `<mutation filecount="N">`, defaulting to 2 for blocks saved before the feature existed). Translations live inline in `Blockly.Words`.
+4. **Blockly block** — `src-blockly/` → `admin/blockly.js` (esbuild, `npm run build:blockly`, part of `npm run build`). The generated bundle is committed and excluded from eslint; edit the TypeScript source, never the bundle. It defines the `email` block; the attachment rows are dynamic (per-row **−** button, **+** button below, count serialized as `<mutation filecount="N">`, defaulting to 2 for blocks saved before the feature existed). Words live in `src-blockly/i18n/*.json` and are bundled into `Blockly.Words` at build time — `npm run translate` covers them via a second `-b` base file. See `src-blockly/README.md`.
 
 ### Message handling (`src/main.ts`)
 
@@ -56,6 +60,6 @@ Four independently built pieces end up in the npm package:
 ## Conventions
 
 - Formatting/linting comes from `@iobroker/eslint-config`: 4 spaces, single quotes, 120 columns, trailing commas, `arrowParens: 'avoid'`.
-- Translations: `admin/i18n/*.json` (jsonConfig, `"i18n": true`), `src-admin/src/i18n/*.json` and `src-rules/src/i18n/*.json` (copied into `admin/custom/i18n` and `admin/rules/i18n` by `tasks.js`). 11 languages; English is the source, `npm run translate` fills the rest.
+- Translations: `admin/i18n/*.json` (jsonConfig, `"i18n": true`), `src-admin/src/i18n/*.json` and `src-rules/src/i18n/*.json` (copied into `admin/custom/i18n` and `admin/rules/i18n` by `tasks.mts`). 11 languages; English is the source, `npm run translate` fills the rest.
 - Changelog: add entries under the `### **WORK IN PROGRESS**` placeholder in `README.md`. `io-package.json` → `common.news` is generated from it by the release script — do not hand-edit both.
 - The adapter is a `messaging`-type adapter with Sentry error reporting enabled via `common.plugins`.

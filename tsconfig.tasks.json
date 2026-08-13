@@ -1,0 +1,16 @@
+// Type checking for the build script. It is executed directly by node (type stripping),
+// so nothing is emitted here.
+{
+    "extends": "./tsconfig.json",
+    "compilerOptions": {
+        "noEmit": true,
+        "allowJs": false,
+        "checkJs": false,
+        "rootDir": ".",
+        "module": "NodeNext",
+        "moduleResolution": "nodenext",
+        "types": ["node"]
+    },
+    "include": ["tasks.mts"],
+    "exclude": []
+}

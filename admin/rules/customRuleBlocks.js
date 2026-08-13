@@ -1,1 +1,1 @@
-import{n as e,t}from"./assets/virtual_mf-REMOTE_ENTRY_ID___mfe_internal__ActionSendEmail__customRuleBlocks_js-CrRC_e55.js";export{t as get,e as init};
+import{n as e,t}from"./assets/virtual_mf-REMOTE_ENTRY_ID___mfe_internal__ActionSendEmail__customRuleBlocks_js-DhlabKGN.js";export{t as get,e as init};
