@@ -120,7 +120,7 @@
                 },
                 "transportOptions.ignoreSslErrors": {
                     "type": "checkbox",
-                    "label": "Ignore SSL certificate errors",
+                    "label": "Check SSL certificate",
                     "hidden": "data.transportOptions.service || (!data.transportOptions.secure && !data.transportOptions.requireTLS)",
                     "xs": 12,
                     "sm": 12,

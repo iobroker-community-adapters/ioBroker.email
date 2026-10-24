@@ -184,6 +184,25 @@
     email_tooltip: "Послать email"
   };
 
+  // src-blockly/i18n/uk.json
+  var uk_default = {
+    email: "email",
+    email_anyInstance: "всі екземпляри",
+    email_file: "ім'я файлу (необов'язково)",
+    email_from: "від (необов'язково)",
+    email_is_html: "Надіслати як HTML",
+    email_log: "рівень журналу",
+    email_log_debug: "debug",
+    email_log_error: "помилка",
+    email_log_info: "інфо",
+    email_log_none: "немає",
+    email_log_warn: "попередження",
+    email_subject: "тема (необов'язково)",
+    email_text: "текст",
+    email_to: "кому",
+    email_tooltip: "Надіслати email"
+  };
+
   // src-blockly/i18n/zh-cn.json
   var zh_cn_default = {
     email: "电子邮件",
@@ -215,6 +234,7 @@
     pl: pl_default,
     pt: pt_default,
     ru: ru_default,
+    uk: uk_default,
     "zh-cn": zh_cn_default
   };
   function installWords() {
