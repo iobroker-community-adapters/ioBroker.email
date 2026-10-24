@@ -59,9 +59,32 @@ class EmailAdapter extends adapter_core_1.Adapter {
     async main() {
         const systemConfig = await this.getForeignObjectAsync('system.config');
         this.systemLang = systemConfig?.common?.language || 'en';
+        if (await this.encryptStoredPassword()) {
+            // js-controller restarts the instance because of the changed configuration
+            return;
+        }
         if (this.config.transportOptions.service === 'Office365') {
             this.microsoftToken = new TokenRefresher_1.TokenRefresher(this, 'microsoftTokens', OAUTH_URL);
         }
+    }
+    /**
+     * Older versions stored the password in plain text. As it is declared in `encryptedNative` now, js-controller
+     * "decrypts" such a value into garbage, so it is encrypted once here.
+     *
+     * @returns true if the configuration was changed and the instance will be restarted
+     */
+    async encryptStoredPassword() {
+        const obj = await this.getForeignObjectAsync(`system.adapter.${this.namespace}`);
+        const pass = obj?.native?.transportOptions?.auth?.pass;
+        if (!obj || !pass || pass.startsWith('$/aes-192-cbc:')) {
+            return false;
+        }
+        this.log.info('Encrypting the stored password');
+        // Until the restart the plain password is used, because the one in the config is a wrongly decrypted value
+        this.config.transportOptions.auth.pass = pass;
+        obj.native.transportOptions.auth.pass = this.encrypt(pass);
+        await this.setForeignObjectAsync(obj._id, obj);
+        return true;
     }
     /** Process a `sendNotification` request */
     async processNotification(obj) {
@@ -158,18 +181,20 @@ ${readableInstances.join('\n')}
     }
     async sendEmail(options, message) {
         message ||= {};
-        options ||= this.config.transportOptions;
+        const useStandardTransport = !options;
+        // Work on a copy: the service rewrite below must not modify the instance configuration,
+        // otherwise e.g. Office365 loses its service after the first email and never gets a fresh access token again
+        options = JSON.parse(JSON.stringify(options || this.config.transportOptions));
         let transport;
-        if (options || !this.emailTransport || this.config.transportOptions.service === 'Office365') {
-            const useStandardTransport = !options;
-            options ||= this.config.transportOptions;
+        if (!useStandardTransport || !this.emailTransport || this.config.transportOptions.service === 'Office365') {
             if (options.host === 'undefined' || options.host === 'null') {
                 delete options.host;
             }
             if (options.port === 'undefined' || options.port === 'null') {
                 delete options.port;
             }
-            if (!options.host || !options.port) {
+            // A selected service has priority: host and port are hidden in the UI then, but could still be stored
+            if (options.service || !options.host || !options.port) {
                 if (options.host !== undefined) {
                     delete options.host;
                 }
@@ -225,7 +250,7 @@ ${readableInstances.join('\n')}
                 }
                 options.auth = {
                     type: 'OAuth2',
-                    user: (options.auth?.user) || this.config.transportOptions.auth?.user || '',
+                    user: options.auth?.user || this.config.transportOptions.auth?.user || '',
                     accessToken,
                 };
             }

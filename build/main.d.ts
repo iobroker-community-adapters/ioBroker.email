@@ -20,6 +20,13 @@ export declare class EmailAdapter extends Adapter {
     onStateChange(id: string, state: ioBroker.State | null | undefined): void;
     onMessage(obj: ioBroker.Message): void;
     main(): Promise<void>;
+    /**
+     * Older versions stored the password in plain text. As it is declared in `encryptedNative` now, js-controller
+     * "decrypts" such a value into garbage, so it is encrypted once here.
+     *
+     * @returns true if the configuration was changed and the instance will be restarted
+     */
+    encryptStoredPassword(): Promise<boolean>;
     /** Process a `sendNotification` request */
     processNotification(obj: ioBroker.Message): Promise<void>;
     /** Build up a mail object from the notification message */
