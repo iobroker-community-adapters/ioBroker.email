@@ -1,4 +1,8 @@
 # Older changes
+## 2.0.2 (2025-03-14)
+* (@GermanBluefox) Renamed `dist` folder to `build`
+* (@GermanBluefox) Fixing pass decoding
+
 ## 2.0.0 (2025-03-11)
 * (@GermanBluefox) Breaking change: Structure of configuration was corrected, and it could be they needed to be reconfigured
 * (@GermanBluefox) Made Outlook work again. Requires now to be authenticated via OAuth2

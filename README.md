@@ -130,7 +130,7 @@ For other services see documentation of **Nodemailer**: `[https://github.com/nod
   Placeholder for the next version (at the beginning of the line):
   ### **WORK IN PROGRESS**
 -->
-### **WORK IN PROGRESS**
+### 3.1.0 (2026-10-26)
 * (@GermanBluefox) Migrated the build script (`tasks.js` => `tasks.mts`) to TypeScript
 * (@GermanBluefox) Migrated blockly to TypeScript
 * (@GermanBluefox) Fixed Office365: emails sent from scripts or other adapters failed after the first email, because the access token was not refreshed (#653)
@@ -159,10 +159,6 @@ For other services see documentation of **Nodemailer**: `[https://github.com/nod
 
 ### 2.0.3 (2025-03-24)
 * (@GermanBluefox) Added t-online.de to the list of supported services
-
-### 2.0.2 (2025-03-14)
-* (@GermanBluefox) Renamed `dist` folder to `build`
-* (@GermanBluefox) Fixing pass decoding
 
 ## License
 
