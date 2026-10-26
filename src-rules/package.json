@@ -9,7 +9,7 @@
         "build": "tsc && vite build"
     },
     "dependencies": {
-        "@iobroker/gui-components": "^10.3.13",
+        "@iobroker/gui-components": "^10.3.14",
         "@iobroker/javascript-rules-dev": "^1.1.0",
         "@iobroker/types": "^7.2.5",
         "@module-federation/runtime": "^2.9.2",
