@@ -7,14 +7,7 @@ export default [
 
     {
         // specify files to exclude from linting here
-        ignores: [
-            '.__mf__temp/',
-            'admin/',
-            '**/*.test.js',
-            'test/**/*.js',
-            '*.config.mjs',
-            'build/',
-        ],
+        ignores: ['.__mf__temp/', 'admin/', '**/*.test.js', 'test/**/*.js', '*.config.mjs', 'build/'],
     },
     {
         rules: {

@@ -2,9 +2,9 @@ import react from '@vitejs/plugin-react';
 import commonjs from 'vite-plugin-commonjs';
 import { federation } from '@module-federation/vite';
 
-const makeShared = pkgs => {
-    const result = {};
-    pkgs.forEach(packageName => {
+const makeShared = (pkgs: string[]): { [key: string]: { requiredVersion: string; singleton: boolean } } => {
+    const result: { [key: string]: { requiredVersion: string; singleton: boolean } } = {};
+    pkgs.forEach((packageName: string) => {
         result[packageName] = {
             requiredVersion: '*',
             singleton: true,

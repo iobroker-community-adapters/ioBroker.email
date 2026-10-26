@@ -35,7 +35,7 @@ export default class Microsoft extends ConfigGeneric<ConfigGenericProps, Microso
     authWindow?: WindowProxy | null;
 
     async componentDidMount(): Promise<void> {
-        super.componentDidMount();
+        await super.componentDidMount();
         if (window.addEventListener) {
             window.addEventListener('message', this.onMessage as any, false);
         } else {
