@@ -1,0 +1,1 @@
+import{t as e}from"./Microsoft-Cbgwjtdk.js";var t={Microsoft:e};export{t as default};
