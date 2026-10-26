@@ -177,10 +177,10 @@
       "type": "module"
     }
   },
-  "protectedNative1": [
+  "protectedNative": [
     "transportOptions.auth.pass"
   ],
-  "encryptedNative1": [
+  "encryptedNative": [
     "transportOptions.auth.pass"
   ],
   "native": {
