@@ -130,6 +130,10 @@ For other services see documentation of **Nodemailer**: `[https://github.com/nod
   Placeholder for the next version (at the beginning of the line):
   ### **WORK IN PROGRESS**
 -->
+### **WORK IN PROGRESS**
+* (mcm1957) Adapter requires node.js >= 22.19.0, admin >= 8.1.0 and js-controller >= 7.2.4 now
+* (mcm1957) Dependencies have been updated
+
 ### 3.1.0 (2026-10-26)
 * (@GermanBluefox) Migrated the build script (`tasks.js` => `tasks.mts`) to TypeScript
 * (@GermanBluefox) Migrated blockly to TypeScript

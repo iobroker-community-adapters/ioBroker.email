@@ -154,12 +154,12 @@
     "tier": 3,
     "dependencies": [
       {
-        "js-controller": ">=6.0.11"
+        "js-controller": ">=7.2.4"
       }
     ],
     "globalDependencies": [
       {
-        "admin": ">=8.0.0"
+        "admin": ">=8.1.0"
       }
     ],
     "plugins": {
