@@ -1,4 +1,7 @@
 # Older changes
+## 2.0.3 (2025-03-24)
+* (@GermanBluefox) Added t-online.de to the list of supported services
+
 ## 2.0.2 (2025-03-14)
 * (@GermanBluefox) Renamed `dist` folder to `build`
 * (@GermanBluefox) Fixing pass decoding
