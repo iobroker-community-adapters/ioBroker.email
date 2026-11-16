@@ -1,8 +1,21 @@
 {
   "common": {
     "name": "email",
-    "version": "3.1.1",
+    "version": "3.1.2",
     "news": {
+      "3.1.2": {
+        "en": "Fixed build of the rules block (missing Emotion dependencies for MUI 9) and CI lint",
+        "de": "Build des Regelblocks (fehlende Emotion-Abhängigkeiten für MUI 9) und CI-Lint behoben",
+        "ru": "Исправлены сборка блока правил (не хватало зависимостей Emotion для MUI 9) и линт в CI",
+        "pt": "Corrigida a compilação do bloco de regras (dependências do Emotion em falta para o MUI 9) e o lint do CI",
+        "nl": "Build van het regelblok (ontbrekende Emotion-afhankelijkheden voor MUI 9) en CI-lint gerepareerd",
+        "fr": "Correction de la compilation du bloc de règles (dépendances Emotion manquantes pour MUI 9) et du lint CI",
+        "it": "Corretta la build del blocco regole (dipendenze Emotion mancanti per MUI 9) e il lint della CI",
+        "es": "Corregida la compilación del bloque de reglas (faltaban dependencias de Emotion para MUI 9) y el lint de CI",
+        "pl": "Naprawiono budowanie bloku reguł (brakujące zależności Emotion dla MUI 9) i lint w CI",
+        "uk": "Виправлено збірку блоку правил (бракувало залежностей Emotion для MUI 9) та лінт у CI",
+        "zh-cn": "修复了规则块的构建（缺少 MUI 9 所需的 Emotion 依赖）和 CI lint"
+      },
       "3.1.1": {
         "en": "Adapter requires node.js >= 22.19.0, admin >= 8.1.0 and js-controller >= 7.2.4 now\nDependencies have been updated",
         "de": "Adapter benötigt jetzt node.js >= 22.19.0, admin >= 8.1.0 und js-controller >= 7.2.4\nAbhängigkeiten wurden aktualisiert",
@@ -80,19 +93,6 @@
         "pl": "Dodano t- online. de do listy usług wspieranych",
         "uk": "Додано t-online. де до списку допоміжних послуг",
         "zh-cn": "添加t在线. 服务清单"
-      },
-      "2.0.2": {
-        "en": "Renamed `dist` folder to `build`\nFixing pass decoding",
-        "de": "Umbenannt `dist` Ordner zu `build `\nDecodierung des Festpasses",
-        "ru": "Переименованная папка «dist» в «build» пункт\nДекодирование фиксирующих пропусков",
-        "pt": "Renomeada pasta `dist` para `build \"\nDescodificação do passe de fixação",
-        "nl": "Gehernoemde map van de dist. Wat\nDecodering van de pass",
-        "fr": "Renommé dossier `dist` pour `build \"\nCorrection du décodage de la passe",
-        "it": "Rinominata cartella `dist` a `build #\nDecodifica del passaggio di fissaggio",
-        "es": "Carpeta llamada `dist` para `compilar `\nFijación paso decodificación",
-        "pl": "Zmień nazwę folderu 'dist' na 'build'\nDekodowanie pass",
-        "uk": "Перейменована папка `dist` для `build й\nВиправлення проходу декодування",
-        "zh-cn": "将“ dist” 文件夹重命名为“ 构建 ” `\n正在修复密码"
       }
     },
     "titleLang": {

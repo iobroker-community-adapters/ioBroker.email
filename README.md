@@ -130,8 +130,8 @@ For other services see documentation of **Nodemailer**: `[https://github.com/nod
   Placeholder for the next version (at the beginning of the line):
   ### **WORK IN PROGRESS**
 -->
-### **WORK IN PROGRESS**
-* (@GermanBluefox) Fixed build of the rules block (missing emotion dependencies for MUI 9) and CI lint
+### 3.1.2 (2026-11-16)
+* (@GermanBluefox) Fixed build of the rules block (missing Emotion dependencies for MUI 9) and CI lint
 
 ### 3.1.1 (2026-11-15)
 * (mcm1957) Adapter requires node.js >= 22.19.0, admin >= 8.1.0 and js-controller >= 7.2.4 now
@@ -158,10 +158,6 @@ For other services see documentation of **Nodemailer**: `[https://github.com/nod
 ### 2.0.5-alpha.0 (2025-10-06)
 * (@copilot) Fixed SMTP relay anonymous access by ignoring user and password when empty
 * (@copilot) Fixed Office365 OAuth email sending from scripts by ensuring fresh tokens are used
-* (mcm1957) Dependencies have been updated
-
-### 2.0.4 (2025-04-15)
-* (@mcm1957) `From email address is not equal to the configured email address for authentication.` changed to debug level.
 * (mcm1957) Dependencies have been updated
 
 ## License
