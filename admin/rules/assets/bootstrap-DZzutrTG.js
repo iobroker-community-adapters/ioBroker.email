@@ -1,1 +1,0 @@
-import{k as e,r as t,t as n}from"./_virtual_mf___mfe_internal__ActionSendEmail__mf_owner__154192000229362__loadShare__shared-BTwgrbHG.js";n.createRoot(document.getElementById(`root`)).render(t(e.StrictMode,{}));
