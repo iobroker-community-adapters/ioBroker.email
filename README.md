@@ -84,6 +84,66 @@ sendTo('email', {
 To send email from another adapter, use `adapter.sendTo` function.
 
 
+## SMTP troubleshooting
+
+Check the adapter version and use one mailbox you control. Do not include household data,
+device details, real alarm content, attachments or credentials in a diagnostic message.
+
+### Check the saved transport first
+
+For a custom relay, select **User defined** and enter its documented host, port and authentication
+settings. A selected named service takes priority over stored host/port values.
+
+For a relay that requires STARTTLS on port 587, leave **SSL connection** off, enable
+**Always use STARTTLS** and enable **Check SSL certificate**. Implicit TLS, commonly on port 465,
+is a different mode and must follow the provider's instructions. Do not fix a certificate error
+by disabling validation: check the hostname, certificate chain and system clock instead.
+
+The internal `ignoreSslErrors` option name is historical: in the current custom-transport path,
+`true` enables certificate verification. Prefer the current **Check SSL certificate** UI label
+when reviewing the saved configuration.
+
+### Follow one synthetic message
+
+Use a specific instance and replace the example addresses with your authorized sender and own
+recipient. This sends a real email; run it once in an isolated test setup. It uses the saved
+instance transport, without per-message `options` overrides.
+
+```js
+sendTo('email.0', 'send', {
+    from: 'sender@example.com',
+    to: 'recipient@example.net',
+    subject: 'ioBroker SMTP diagnostic - unique test ID',
+    text: 'Synthetic diagnostic message. No household or device data.',
+}, result => {
+    if (result && result.error) {
+        log('SMTP attempt failed; review the adapter log locally.', 'warn');
+    } else {
+        log('Adapter callback received; inspect the SMTP response and recipient mailbox.');
+    }
+});
+```
+
+Interpret the evidence in order:
+
+1. Confirm the script ran, selected the intended instance and reached the callback. The adapter
+   filters identical message objects received within one second; avoid loops and repeated clicks.
+2. Inspect adapter logs locally for a connection, TLS, authentication or recipient error. A callback
+   alone is not success: check its `error` field and the adapter's SMTP response.
+3. A successful SMTP response means that the next server accepted the message. It does not prove
+   arrival in the inbox or that anyone read it. Check later delivery failures and relay logs where
+   available before deciding whether another attempt is necessary.
+4. Inspect the owned recipient mailbox, including filtering folders, and correlate the unique test
+   subject and time. Redact addresses, host/device identifiers, message bodies and authentication
+   material before sharing diagnostics publicly.
+
+SMTP Senpai is an optional custom-relay example: use the host and credentials supplied for your
+account, port 587 with STARTTLS, certificate checking enabled and a verified sender domain.
+See its [SMTP configuration reference](https://en.mailsenpai.com/smtp-api/).
+This documentation contribution comes from its operator, MailSenpai; it is not a native adapter
+preset, maintainer endorsement or a claim of runtime-tested compatibility. The diagnostic
+sequence also applies to other relays using their own documented settings.
+
 ## Supported services
 - 1und1 / ionos
 - AOL
@@ -130,6 +190,9 @@ For other services see documentation of **Nodemailer**: `[https://github.com/nod
   Placeholder for the next version (at the beginning of the line):
   ### **WORK IN PROGRESS**
 -->
+### **WORK IN PROGRESS**
+* (MailSenpai) Documented custom SMTP troubleshooting with a synthetic, single-recipient example
+
 ### 3.1.1 (2026-11-15)
 * (mcm1957) Adapter requires node.js >= 22.19.0, admin >= 8.1.0 and js-controller >= 7.2.4 now
 * (mcm1957) Dependencies have been updated
