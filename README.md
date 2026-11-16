@@ -130,6 +130,9 @@ For other services see documentation of **Nodemailer**: `[https://github.com/nod
   Placeholder for the next version (at the beginning of the line):
   ### **WORK IN PROGRESS**
 -->
+### **WORK IN PROGRESS**
+* (@GermanBluefox) Fixed build of the rules block (missing emotion dependencies for MUI 9) and CI lint
+
 ### 3.1.1 (2026-11-15)
 * (mcm1957) Adapter requires node.js >= 22.19.0, admin >= 8.1.0 and js-controller >= 7.2.4 now
 * (mcm1957) Dependencies have been updated
