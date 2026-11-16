@@ -12,9 +12,10 @@ export default [
             'test/**/*.js',
             '*.config.mjs',
             'build/**/*',
-            'src-admin/build/**/*',
-            'src-admin/.__mf__temp/**/*',
-            'src-rules/build/**/*',
+            // src-admin and src-rules are separate projects with their own dependencies and
+            // eslint configs (`cd src-admin && npm run lint`), the root CI does not install them
+            'src-admin/**/*',
+            'src-rules/**/*',
             'admin/**/*',
             '**/adapter-config.d.ts',
 
