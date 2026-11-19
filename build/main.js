@@ -13,6 +13,7 @@ exports.EmailAdapter = void 0;
 const adapter_core_1 = require("@iobroker/adapter-core");
 const nodemailer_1 = require("nodemailer");
 const TokenRefresher_1 = require("./lib/TokenRefresher");
+const help_1 = require("./lib/help");
 const OAUTH_URL = 'https://oauth2.iobroker.in/microsoft';
 class EmailAdapter extends adapter_core_1.Adapter {
     emailTransport = null;
@@ -38,7 +39,13 @@ class EmailAdapter extends adapter_core_1.Adapter {
         this.microsoftToken?.onStateChange(id, state);
     }
     onMessage(obj) {
-        if (obj?.command === 'send') {
+        if (obj?.command === 'help') {
+            // A description of all commands for AI agents and scripts
+            if (obj.callback) {
+                this.sendTo(obj.from, obj.command, { help: help_1.HELP, commands: help_1.COMMANDS }, obj.callback);
+            }
+        }
+        else if (obj?.command === 'send') {
             this.processMessage(obj).catch(error => this.log.error(`Cannot process message: ${error}`));
         }
         else if (obj?.command === 'sendNotification') {

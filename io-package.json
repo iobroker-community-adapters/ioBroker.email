@@ -135,7 +135,8 @@
     "messagebox": true,
     "supportedMessages": {
       "custom": true,
-      "notifications": true
+      "notifications": true,
+      "help": true
     },
     "readme": "https://github.com/iobroker-community-adapters/ioBroker.email/blob/master/README.md",
     "enabled": true,

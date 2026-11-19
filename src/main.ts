@@ -16,6 +16,7 @@ import type {
 } from './types';
 import { createTransport, type Transporter } from 'nodemailer';
 import { TokenRefresher } from './lib/TokenRefresher';
+import { COMMANDS, HELP } from './lib/help';
 const OAUTH_URL = 'https://oauth2.iobroker.in/microsoft';
 
 export class EmailAdapter extends Adapter {
@@ -47,7 +48,12 @@ export class EmailAdapter extends Adapter {
     }
 
     onMessage(obj: ioBroker.Message): void {
-        if (obj?.command === 'send') {
+        if (obj?.command === 'help') {
+            // A description of all commands for AI agents and scripts
+            if (obj.callback) {
+                this.sendTo(obj.from, obj.command, { help: HELP, commands: COMMANDS }, obj.callback);
+            }
+        } else if (obj?.command === 'send') {
             this.processMessage(obj).catch(error => this.log.error(`Cannot process message: ${error}`));
         } else if (obj?.command === 'sendNotification') {
             this.processNotification(obj).catch(error => this.log.error(`Cannot process message: ${error}`));

@@ -83,6 +83,10 @@ sendTo('email', {
 
 To send email from another adapter, use `adapter.sendTo` function.
 
+`sendTo('email.0', 'help', {})` answers `{ help, commands }`: a description of all messages with their parameters
+for AI agents (e.g. ioBroker.pi-agent) and script authors, and the list of all commands with `write` (whether the
+command has an effect, e.g. sends an email).
+
 
 ## Supported services
 - 1und1 / ionos
@@ -130,6 +134,9 @@ For other services see documentation of **Nodemailer**: `[https://github.com/nod
   Placeholder for the next version (at the beginning of the line):
   ### **WORK IN PROGRESS**
 -->
+### **WORK IN PROGRESS**
+* (@GermanBluefox) Added the message `help`: a description of all messages for AI agents (e.g. pi-agent), and `common.supportedMessages.help`
+
 ### 3.1.2 (2026-11-16)
 * (@GermanBluefox) Fixed build of the rules block (missing Emotion dependencies for MUI 9) and CI lint
 
