@@ -1,8 +1,21 @@
 {
   "common": {
     "name": "email",
-    "version": "3.1.2",
+    "version": "3.2.0",
     "news": {
+      "3.2.0": {
+        "en": "Added the message `help`: a description of all messages for AI agents (e.g. pi-agent), and `common.supportedMessages.help`",
+        "de": "Die Meldung `help`, eine Beschreibung aller Nachrichten für KI-Agenten (z. B. pi-agent), und `common.supportedMessages.Help` hinzugefügt",
+        "ru": "Добавлено сообщение `help`: описание всех сообщений для агентов искусственного интеллекта (например, pi-agent) и `Common.supportedMessages.help`",
+        "pt": "Adicionada a mensagem `help`: uma descrição de todas as mensagens dos agentes de IA (p. ex. pi-agent) e `common.supportedMessages.help`",
+        "nl": "De boodschap `help` toegevoegd: een beschrijving van alle berichten voor AI-agenten (bijv. pi-agent), en `Common.SupportedMessages.help`",
+        "fr": "Ajout du message « help » : description de tous les messages pour les agents IA (p.ex. pi-agent) et de « common.supportedMessages.help »",
+        "it": "Aggiunto «help»: una descrizione di tutti i messaggi per gli agenti AI (es. pi-agent) e `common.supportedMessages.help`",
+        "es": "Añadió el mensaje `help`: una descripción de todos los mensajes de los agentes de IA (p. ej. pi-agent) y `Common.SupportedMessages.Help`",
+        "pl": "Dodano komunikat „help”: opis wszystkich wiadomości dla agentów AI (np. pi-agent) oraz `common.supportedMessages.Help`",
+        "uk": "Додано повідомлення `help`: опис усіх повідомлень для агентів штучного інтелекту (наприклад, pi-агент) та `Common.SupportedMessages.help`",
+        "zh-cn": "添加了消息 “帮助”：对 AI 代理（例如 pi-agent）的所有消息的描述，以及 “common.supportedMessages.Help”"
+      },
       "3.1.2": {
         "en": "Fixed build of the rules block (missing Emotion dependencies for MUI 9) and CI lint",
         "de": "Build des Regelblocks (fehlende Emotion-Abhängigkeiten für MUI 9) und CI-Lint behoben",
@@ -80,19 +93,6 @@
         "pl": "'Z adresu e-mail nie jest równy konfigurowanemu adresowi e-mail do uwierzytelniania.' Zmieniono na poziom debugowania.\nZaktualizowano zależności",
         "uk": "`Від адреси електронної пошти не дорівнює налаштованій адресі електронної пошти для ідентифікації.` змінено на рівень відключення.\nЗалежність було оновлено",
         "zh-cn": "`来自电子邮件地址不等于所配置的用于认证的电子邮件地址'。 改为调试级别.\n依赖关系已更新"
-      },
-      "2.0.3": {
-        "en": "Added t-online.de to the list of supported services",
-        "de": "Hinzugefügt t-online. de in die Liste der unterstützten Dienste",
-        "ru": "Добавлено t-online. Перечень поддерживаемых услуг",
-        "pt": "Adicionado t-online. de para a lista de serviços suportados",
-        "nl": "Toegevoegd t-online. de lijst van ondersteunde diensten",
-        "fr": "Ajouté en ligne. de la liste des services soutenus",
-        "it": "Aggiunto t-online. de all'elenco dei servizi supportati",
-        "es": "Añadido t-online. de la lista de servicios apoyados",
-        "pl": "Dodano t- online. de do listy usług wspieranych",
-        "uk": "Додано t-online. де до списку допоміжних послуг",
-        "zh-cn": "添加t在线. 服务清单"
       }
     },
     "titleLang": {

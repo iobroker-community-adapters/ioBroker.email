@@ -134,7 +134,7 @@ For other services see documentation of **Nodemailer**: `[https://github.com/nod
   Placeholder for the next version (at the beginning of the line):
   ### **WORK IN PROGRESS**
 -->
-### **WORK IN PROGRESS**
+### 3.2.0 (2026-11-19)
 * (@GermanBluefox) Added the message `help`: a description of all messages for AI agents (e.g. pi-agent), and `common.supportedMessages.help`
 
 ### 3.1.2 (2026-11-16)
@@ -161,11 +161,6 @@ For other services see documentation of **Nodemailer**: `[https://github.com/nod
 * (@copilot) Set up GitHub Copilot instructions with centralized ioBroker template (v0.5.7) and weekly monitoring workflow
 * (@ipod86) Added configurable number of file attachments to the Blockly email block via plus/minus buttons
 * (@GermanBluefox) Migrated to admin 8
-
-### 2.0.5-alpha.0 (2025-10-06)
-* (@copilot) Fixed SMTP relay anonymous access by ignoring user and password when empty
-* (@copilot) Fixed Office365 OAuth email sending from scripts by ensuring fresh tokens are used
-* (mcm1957) Dependencies have been updated
 
 ## License
 

@@ -1,1 +1,0 @@
-import{t as e}from"./Microsoft-75_1fxyQ.js";var t={Microsoft:e};export{t as default};

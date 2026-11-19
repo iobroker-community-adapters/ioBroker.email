@@ -1,4 +1,9 @@
 # Older changes
+## 2.0.5-alpha.0 (2025-10-06)
+* (@copilot) Fixed SMTP relay anonymous access by ignoring user and password when empty
+* (@copilot) Fixed Office365 OAuth email sending from scripts by ensuring fresh tokens are used
+* (mcm1957) Dependencies have been updated
+
 ## 2.0.4 (2025-04-15)
 * (@mcm1957) `From email address is not equal to the configured email address for authentication.` changed to debug level.
 * (mcm1957) Dependencies have been updated
