@@ -9,6 +9,11 @@
  */
 import { Adapter, type AdapterOptions } from '@iobroker/adapter-core';
 import type { EmailAdapterConfig, EmailTransportOptions, FilteredNotificationCategory, NotificationMessageObject } from './types';
+/** What the mail server answered: its response line and the accepted recipients */
+interface SentInfo {
+    response: string;
+    accepted?: unknown[];
+}
 export declare class EmailAdapter extends Adapter {
     config: EmailAdapterConfig;
     private emailTransport;
@@ -45,5 +50,6 @@ export declare class EmailAdapter extends Adapter {
         to?: string;
         subject?: string;
         text?: string;
-    } | string): Promise<string>;
+    } | string): Promise<SentInfo>;
 }
+export {};

@@ -134,6 +134,9 @@ For other services see documentation of **Nodemailer**: `[https://github.com/nod
   Placeholder for the next version (at the beginning of the line):
   ### **WORK IN PROGRESS**
 -->
+### **WORK IN PROGRESS**
+* (@GermanBluefox) Added the standard commands of the shared catalog: message.send (`send` also takes `recipient`, `title`, `file`, `files` and answers `ok` and `sent` besides `result`), message.getRecipients (`getRecipients`: the recipients of the settings); a double, an empty message and unknown commands are answered with an error
+
 ### 3.2.0 (2026-11-19)
 * (@GermanBluefox) Added the message `help`: a description of all messages for AI agents (e.g. pi-agent), and `common.supportedMessages.help`
 

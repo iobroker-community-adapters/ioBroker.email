@@ -14,6 +14,7 @@ const adapter_core_1 = require("@iobroker/adapter-core");
 const nodemailer_1 = require("nodemailer");
 const TokenRefresher_1 = require("./lib/TokenRefresher");
 const help_1 = require("./lib/help");
+const message_1 = require("./lib/message");
 const OAUTH_URL = 'https://oauth2.iobroker.in/microsoft';
 class EmailAdapter extends adapter_core_1.Adapter {
     emailTransport = null;
@@ -48,6 +49,12 @@ class EmailAdapter extends adapter_core_1.Adapter {
         else if (obj?.command === 'send') {
             this.processMessage(obj).catch(error => this.log.error(`Cannot process message: ${error}`));
         }
+        else if (obj?.command === 'getRecipients') {
+            // message.getRecipients of the shared catalog: the recipients of the settings, nothing is sent
+            if (obj.callback) {
+                this.sendTo(obj.from, obj.command, { recipients: (0, message_1.recipientsOf)(this.config.defaults?.to) }, obj.callback);
+            }
+        }
         else if (obj?.command === 'sendNotification') {
             this.processNotification(obj).catch(error => this.log.error(`Cannot process message: ${error}`));
         }
@@ -61,6 +68,9 @@ class EmailAdapter extends adapter_core_1.Adapter {
                 .catch(error => {
                 this.log.error(`Cannot get authorize URL: ${error}`);
             });
+        }
+        else if (obj?.callback) {
+            this.sendTo(obj.from, obj.command, { error: `Unknown command "${obj.command}"`, reason: 'NOT_SUPPORTED' }, obj.callback);
         }
     }
     async main() {
@@ -147,17 +157,32 @@ ${readableInstances.join('\n')}
     }
     async processMessage(obj) {
         if (!obj?.message) {
+            if (obj?.callback) {
+                this.sendTo(obj.from, 'send', { error: 'The message is empty', reason: 'BAD_REQUEST' }, obj.callback);
+            }
             return;
         }
         // filter out a double message
         const json = JSON.stringify(obj.message);
         if (this.lastMessageTime && this.lastMessageText === json && Date.now() - this.lastMessageTime < 1000) {
-            return this.log.debug(`Filter out double message [first was for ${Date.now() - this.lastMessageTime}ms]: ${json}`);
+            this.log.debug(`Filter out double message [first was for ${Date.now() - this.lastMessageTime}ms]: ${json}`);
+            if (obj.callback) {
+                const error = 'The same email was sent less than 1 s ago';
+                this.sendTo(obj.from, 'send', { error, reason: 'DUPLICATE' }, obj.callback);
+            }
+            return;
         }
         this.lastMessageTime = Date.now();
         this.lastMessageText = json;
         try {
-            let response;
+            if (typeof obj.message === 'object') {
+                // recipient, title, file and files of message.send (the shared catalog)
+                await (0, message_1.applyCatalogParameters)(obj.message, async (id, path) => {
+                    const { file } = await this.readFileAsync(id, path);
+                    return Buffer.isBuffer(file) ? file : Buffer.from(file);
+                });
+            }
+            let info;
             if (obj.message.options) {
                 const options = JSON.parse(JSON.stringify(obj.message.options));
                 options.secure = options.secure === 'true' || options.secure === true;
@@ -170,13 +195,15 @@ ${readableInstances.join('\n')}
                     }
                 }
                 delete obj.message.options;
-                response = await this.sendEmail(options, obj.message);
+                info = await this.sendEmail(options, obj.message);
             }
             else {
-                response = await this.sendEmail(null, obj.message);
+                info = await this.sendEmail(null, obj.message);
             }
             if (obj.callback) {
-                this.sendTo(obj.from, 'send', { result: response }, obj.callback);
+                // result as before; ok and sent (the accepted recipients) of message.send of the shared catalog
+                const sent = Array.isArray(info.accepted) ? info.accepted.length : 1;
+                this.sendTo(obj.from, 'send', { result: info.response, ok: true, sent }, obj.callback);
             }
         }
         catch (error) {
@@ -320,7 +347,7 @@ ${readableInstances.join('\n')}
             else {
                 this.log.info(`sent to ${message.to}`);
                 this.log.debug(`Response: ${info.response}`);
-                resolve(info.response);
+                resolve({ response: info.response, accepted: info.accepted });
             }
         }));
     }
